@@ -1,9 +1,9 @@
 ---
-title: "Ansys/en"
-url: "https://docs.alliancecan.ca/wiki/Ansys/en"
+title: "Ansys"
+url: "https://docs.alliancecan.ca/wiki/Ansys"
 category: "General"
-last_modified: "2026-05-05T21:17:00Z"
-page_id: 4948
+last_modified: "2026-05-15T20:23:56Z"
+page_id: 4568
 display_title: "Ansys"
 ---
 
@@ -52,7 +52,7 @@ where the  can be found in the first line of the license file with format "SERVE
 
 To test if your ansys.lic is configured and working properly with your license server, run the following sequence of commands on the same cluster that you will be submitting jobs to:
 
- [login-node:~] cd /tmp
+[login-node:~] cd /tmp
  [login-node:/tmp] salloc --time1:0:0 --mem1000M --accountdef-YOURUSERID
  [compute-node/tmp] module load StdEnv/2023; module load ansys/2025R2.04
  [compute-node:/tmp] $EBROOTANSYS/v$(echo ${EBVERSIONANSYS:2:2}${EBVERSIONANSYS:5:1})/licensingclient/linx64/lmutil lmstat -c $ANSYSLMD_LICENSE_FILE | grep "ansyslmd: UP" 1> /dev/null && echo Success  echo Fail
@@ -61,7 +61,7 @@ Fail output indicates a problem with the licensing setup somewhere and jobs will
 
 If there is an Ansys license server checkout problem, then the following message will appear in slurm output files when fluent jobs are started by slurm scripts in the queue *OR* when fluent is start interactively simply by doing the following:
 
- [compute-node:/tmp] fluent -g 2d -n 2
+[compute-node:/tmp] fluent -g 2d -n 2
  Connected License Server List:
  Hit return to exit.
 
@@ -69,10 +69,10 @@ If there is an Ansys license server checkout problem, then the following message
 
 Ansys simulations are typically forward compatible but NOT backwards compatible.  This means that simulations created using an older version of Ansys can be expected to load and run fine with any newer version.  For example, a simulation created and saved with ansys/2022R2 should load and run smoothly with ansys/2023R2 but NOT the other way around.  While it may be possible to start a simulation running with an older version random error messages or crashing will likely occur.  Regarding Fluent simulations, if you cannot recall which version of ansys was used to create your cas file try grepping it as follows to look for clues :
 
- $ grep -ia fluent combustor.cas
+$ grep -ia fluent combustor.cas
    (0 "fluent15.0.7  build-id: 596")
 
- $ grep -ia fluent cavity.cas.h5
+$ grep -ia fluent cavity.cas.h5
    ANSYS_FLUENT 24.1 Build 1018
 
 == Platform support ==
@@ -81,7 +81,7 @@ Ansys provides detailed platform support information describing software/hardwar
 
 == What's new ==
 
-Ansys posts Product Release and Updates for the latest releases.  Similar information for previous releases can generally be pulled up for various application topics by visiting the Ansys blog page and using the FILTERS search bar.  For example, searching on What’s New Fluent 2024 gpu pulls up a document with title What’s New for Ansys Fluent in 2024 R1? containing a wealth of the latest gpu support information. Specifying a version number in the Press Release search bar is also a good way to find new release information.   Recently a module for the latest ANSYS release was installed  ansys/2025R1.02 however to use it requires a suitably updated license server such as CMCs.  The upgrade of the SHARCNET license server is underway however until it is complete (and this message updated accordingly) it will only support jobs run with  ansys/2024R2.04 or older. To request a new version be installed or a problem with an exiting module please submit a ticket.
+Information for the latest Ansys release can be found here for example Ansys 2026 R1 at the time of this writing.  Posts for previous releases can be found by visiting the Ansys blog page and then scrolling down to the FILTERS search bar.  Inputting for example What’s New Fluent 2024 gpu should pull up a document containing the latest gpu support information for that release. The Press Release search bar is also a good way to find release specific information.
 
 == Service packs ==
 
@@ -151,17 +151,17 @@ The first step is to transfer your User-Defined Function or UDF (namely the samp
 
 To tell fluent to interpret your UDF at runtime, add the following command line into your journal file before the cas/dat files are read or initialized. The filename sampleudf.c should be replaced with the name of your source file.  The command remains the same regardless if the simulation is being run in serial or parallel.  To ensure the UDF can be found in the same directory as the journal file, open your cas file in the fluent gui, remove any managed definitions and resave it.   Doing this will ensure only the following command/method is in control when fluent runs. To use an interpreted UDF with parallel jobs, it will need to be parallelized as described in the section below.
 
- define/user-defined/interpreted-functions "sampleudf.c" "cpp" 10000 no
+define/user-defined/interpreted-functions "sampleudf.c" "cpp" 10000 no
 
 ==== Compiled ====
 
 To use this approach, your UDF must be compiled on an Alliance cluster at least once.  Doing so will create a libudf subdirectory structure containing the required libudf.so shared library.   The libudf directory cannot simply be copied from a remote system (such as your laptop) to the Alliance since the library dependencies of the shared library will not be satisfied, resulting in fluent crashing on startup.  That said, once you have compiled your UDF on an Alliance cluster, you can transfer the newly created libudf to any other Alliance cluster, providing your account loads the same StdEnv environment module version.  Once copied, the UDF can be used by uncommenting the second (load) libudf line below in your journal file when submitting jobs to the cluster.  Both (compile and load) libudf lines should not be left uncommented in your journal file when submitting jobs on the cluster, otherwise your UDF will automatically (re)compiled for each and every job.  Not only is this highly inefficient, but it will also lead to racetime-like build conflicts if multiple jobs are run from the same directory. Besides configuring your journal file to build your UDF, the fluent gui may also be used.  To do this, navigate to the Compiled UDFs Dialog Box, add the UDF source file and click Build.   When using a compiled UDF with parallel jobs, your source file should be parallelized as discussed in the section below.
 
- define/user-defined/compiled-functions compile libudf yes sampleudf.c "" ""
+define/user-defined/compiled-functions compile libudf yes sampleudf.c "" ""
 
 and/or
 
- define/user-defined/compiled-functions load libudf
+define/user-defined/compiled-functions load libudf
 
 ==== Parallel ====
 
@@ -200,7 +200,7 @@ Before submitting a Workbench job to the queue with a slurm script, you must ini
 # In the Ansys Workbench popup, when asked The current project has been modified. Do you want to save it?, click on the No button.
 # Quit Workbench and submit your job using one of the Slurm scripts shown below.
 
- Since a Compute Node with upto 96cores, 768GB memory and 8hours runtime can now be reserved for an OnDemand desktop session, consider running your Workbench simulations directly from within the Workbench native gui when possible as a more intuitive option compared to submitting the job to the queue with a slurm script.
+Since a Compute Node with upto 96cores, 768GB memory and 8hours runtime can now be reserved for an OnDemand desktop session, consider running your Workbench simulations directly from within the Workbench native gui when possible as a more intuitive option compared to submitting the job to the queue with a slurm script.
 
 === Slurm scripts ===
 
@@ -218,7 +218,7 @@ In the following slurm scripts, lines beginning with ##SBATCH are commented.
 
 Ansys allocates 1024 MB total memory and 1024 MB database memory by default for APDL jobs. These values can be manually specified (or changed) by adding arguments -m 1024 and/or -db 1024 to the mapdl command line in the above scripts. When using a remote institutional license server with multiple Ansys licenses, it may be necessary to add -p aa_r or -ppf anshpc, depending on which Ansys module you are using. As always, perform detailed scaling tests before running production jobs to ensure that the optimal number of cores and minimum amount memory is specified in your scripts. The single node (SMP Shared Memory Parallel) scripts will typically perform better than the multinode (DIS Distributed Memory Parallel) scripts and therefore should be used whenever possible. To help avoid compatibility issues the Ansys module loaded in your script should ideally match the version used to generate the input file:
 
-  [gra-login2:~/testcase] cat YOURAPDLFILE.inp | grep version
+ [gra-login2:~/testcase] cat YOURAPDLFILE.inp | grep version
  ! ANSYS input file written by Workbench version 2019 R3
 
 == Rocky ==
@@ -235,7 +235,7 @@ Slurm scripts for using AnsysEDT is provided in a separate wiki page here.
 
 To run Ansys programs in graphical mode using an OnDemand or Jupyterhub desktop click one of the following links :
 
-  NIBI: https://ondemand.sharcnet.ca
+ NIBI: https://ondemand.sharcnet.ca
  FIR: https://jupyterhub.fir.alliancecan.ca
  RORQUAL: https://jupyterhub.rorqual.alliancecan.ca
  NARVAL:  https://jupyterhub.narval.alliancecan.ca/

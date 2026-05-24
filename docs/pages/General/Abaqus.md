@@ -2,7 +2,7 @@
 title: "Abaqus"
 url: "https://docs.alliancecan.ca/wiki/Abaqus"
 category: "General"
-last_modified: "2026-03-19T21:56:59Z"
+last_modified: "2026-05-22T18:31:13Z"
 page_id: 7347
 display_title: "Abaqus"
 ---
@@ -29,10 +29,14 @@ Similar to previously installed modules the abaqus/2026 module is configured by 
 
 [l2 (login node):~/mysimdir] cat abaqus_v6.env
  license_server_type=DSLS
- dsls_license_config="DSLicSrv.txt"
+ dsls_license_config="/path/to/DSLicSrv.txt"
 
 [l2 (login node):~/mysimdir] DSLicSrv.txt
  YOUR-SERVER-HOSTNAME:PORT-NUMBER
+
+== License Queuing ==
+
+The default setup for the license server is to queue jobs started on the cluster by slurm if not enough tokens are available.  There are two options to alter this behaviour ie) so jobs don't sit idle on a cluster compute node waiting for a license indefinitely wasting valuable resources.  The first option is to terminate a job immediately if not enough licenses are available therefore never entering a queued.  To specify this setting create a simple text file in your submit directory named abaqus_v6.env containing the single line: lmlicensequeuing=OFF.  The second option is to specify a finite wait time where the job can enter into a queued state on the license server such as 1 minute by adding the line: lmhanglimit=1.  If within 1 minute sufficient licenses do not come available then the job will be dequeud by the license server and in turn be terminated by slurm.  For each option some messages will be printed at the bottom of the slurm output file as annotated in the Example section near the bottom of this wiki.
 
 = Version compatibility =
 
@@ -276,7 +280,54 @@ The following shows the situation where a user submitted two 6-core jobs (each r
     roberpj c107 /dev/tty (v62.6) (license3.sharcnet.ca/27050 1042), start Mon 11/25 17:15, 10 licenses
     roberpj c292 /dev/tty (v62.6) (license3.sharcnet.ca/27050 125) queued for 10 licenses
 
-To avoid license shortage problems when submitting multiple jobs when working with expensive Abaqus tokens either use a job dependency, job array or at the very least set up a slurm email notification to know when your job completes before manually submitting another one.
+To avoid license shortage problems when submitting multiple jobs when working with expensive Abaqus tokens either use a job dependency, job array or at the very least set up a slurm email notification to know when your job completes before manually submitting another one.  There are two easier options to dealing with this situation :
+
+Option 1)
+
+Disable non-interactive (analysis) jobs from starting on a cluster compute node after being submitted to the queue and then becoming idle (when not enough tokens are unavailable  the default bahaviour) create a text file in your submit directory (before submitting the job) with the following one line contents and the job will instead terminate immediately :
+
+ [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+ lmlicensequeuing=OFF
+
+When a job immediately terminates (without entering a QUEUED state to wait for a license) the end of the corresponding slurm output file will contain messages such as :
+
+ Abaqus 2026
+ Checkout exceeds MAX specified in options file.
+ FlexNet Licensing error:-87,147
+ Number of requested licenses: 14
+ Number of total licenses:     78
+ Number of licenses in use:    14
+ Number of available licenses: 64
+ This may be due to insufficient licenses.
+ ValueError: not enough values to unpack (expected 2, got 1)
+ During handling of the above exception, another exception occurred:
+ Exception: DriverLM: can't parse host/port from umbrella
+ Abaqus Error: Error checking out Abaqus license.
+ Abaqus/Analysis exited with errors
+
+Option 2)
+
+Specify a setting in minutes so that a started job will enter a QUEUED state to wait for a license before being automatically DEQUEUED and terminating if a license does not become available in time :
+
+ [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+  lmhanglimit=1
+
+When a job terminates this way, after being queued and no license comes available in the specified time according to the lmhanlimit value (1minute in this example) the messages at the end of the slurm output file will instead appear as :
+
+ Abaqus 2026
+ "standard" license request queued for the License Server on license1.computecanada.ca.
+ Total time in queue: 0 seconds.
+ "standard" license request queued for the License Server on license1.computecanada.ca.
+ Total time in queue: 30 seconds.
+ "standard" license request queued for the License Server on license1.computecanada.ca.
+ Total time in queue: 60 seconds.
+ Time limit of in queue has been exceeded. Exiting.
+ This may be due to insufficient licenses.
+ ValueError: not enough values to unpack (expected 2, got 1)
+ During handling of the above exception, another exception occurred:
+ Exception: DriverLM: can't parse host/port from umbrella
+ Abaqus Error: Error checking out Abaqus license.
+ Abaqus/Analysis exited with errors
 
 === Specify job resources ===
 To ensure optimal usage of both your Abaqus tokens and our resources, it's important to carefully specify the required memory and ncpus in your Slurm script.  The values can be determined by submitting a few short test jobs to the queue then checking their utilization.  For completed jobs use seff JobNumber to show the total Memory Utilized and Memory Efficiency. If the Memory Efficiency is less than ~90%, decrease the value of the #SBATCH --mem= setting in your Slurm script accordingly.  Notice that the seff JobNumber command also shows the total CPU (time) Utilized and CPU Efficiency. If the CPU Efficiency is less than ~90%, perform scaling tests to determine the optimal number of CPUs for optimal performance and then update the value of #SBATCH --cpus-per-task= in your Slurm script.  For running jobs, use the srun --overlap --jobid=29821580 --pty top -d 5 -u $USER command to watch the %CPU, %MEM and RES for each Abaqus parent process on the compute node. The %CPU and %MEM columns display the percent usage relative to the total available on the node while the RES column shows the per process resident memory size (in human readable format for values over 1GB). Further information regarding how to monitor jobs is available on our documentation wiki

@@ -2,7 +2,7 @@
 title: "COMSOL/en"
 url: "https://docs.alliancecan.ca/wiki/COMSOL/en"
 category: "General"
-last_modified: "2026-02-24T11:40:00Z"
+last_modified: "2026-05-15T15:27:26Z"
 page_id: 6233
 display_title: "COMSOL"
 ---
@@ -42,9 +42,9 @@ If initial license checkout attempts fail, create a support case with CMC
 
 == Checking license use ==
 
-To determine the number of licenses checked out by your running comsol job(s) it is necessary to query the licence server you are using.  As described | here, this maybe done using the lmstat command. However, as this command is not installed with COMSOL by default, the following one liner workaround which uses lmutil from the latest installed ansys module may be run on any cluster login node instead.  As long as you rely upon the standard ~/.licenses/comsol.lic to define which license server you are using, it should work, but may take a minute to return if the server is busy.
+To determine the number of licenses checked out by your running comsol jobs it is necessary to query the licence server.  As described here this maybe done using the lmutil command.  However as this particular command is not installed with the COMSOL by default the following one-liner command maybe used instead.  To use it, simply copy/paste the following one-liner into your terminal window on a cluster login node and hit enter.  It will then read your ~/.licenses/comsol.lic to determine which COMSOL server you are using and may take ~30sec to return.  While it should work when run on any login node of Nibi, Narval, Rorqual or Trillium clusters for CMC license holders, it may or may not work with other institutional servers depending on how they are configured.
 
-  [l2 (login-node):~] module load ansys; $EBROOTANSYS/v$(echo ${EBVERSIONANSYS:2:2}${EBVERSIONANSYS:5:1})/licensingclient/linx64/lmutil lmstat -c ~/.licenses/comsol.lic -a | sed '/^$/d' | egrep 'License|UP|$USER|Total of'  | grep -v 'Total of 0'
+   touch ~/.licenses/ansys.lic; module load ansys; $EBROOTANSYS/v$(echo ${EBVERSIONANSYS:2:2}${EBVERSIONANSYS:5:1})/licensingclient/linx64/lmutil lmstat -c ~/.licenses/comsol.lic -a | sed '/^$/d' | egrep 'License|UP|$USER|Total of'  | grep -v 'Total of 0'; module unload ansys
 
 == Installed products ==
 

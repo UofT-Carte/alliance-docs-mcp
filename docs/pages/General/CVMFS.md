@@ -1,16 +1,16 @@
 ---
-title: "CVMFS/en"
-url: "https://docs.alliancecan.ca/wiki/CVMFS/en"
+title: "CVMFS"
+url: "https://docs.alliancecan.ca/wiki/CVMFS"
 category: "General"
-last_modified: "2024-03-11T16:10:27Z"
-page_id: 16159
+last_modified: "2026-05-18T15:25:44Z"
+page_id: 16064
 display_title: "CVMFS"
 ---
 
 This page describes the CERN Virtual Machine File System (CVMFS). We use CVMFS to distribute software, data and other content. Refer to accessing CVMFS for instructions on configuring a CVMFS client to access content, and to the official documentation and webpage for further information.
 
 == Introduction ==
-CVMFS is a distributed read-only content distribution system, implemented as a POSIX filesystem in user space (FUSE) using HTTP transport. It was originally developed for the LHC (Large Hadron Collider) experiments at CERN to deliver software to virtual machines and to replace diverse shared software installation areas and package management systems at numerous computing sites.  It is designed to deliver software in a fast, scalable and reliable fashion, and is now also used to distribute data. The scale of usage across dozens of projects involves ~1010 files and directories, ~102 compute sites, and ~105 clients around the world. The CernVM Monitor shows many research groups which use CVMFS and the stratum sites which replicate their repositories.
+CVMFS is a distributed read-only content distribution system, implemented as a POSIX filesystem in user space (FUSE) using HTTP transport. It was originally developed for the LHC (Large Hadron Collider) experiments at CERN to deliver software to virtual machines and to replace diverse shared software installation areas and package management systems at numerous computing sites.  It is designed to deliver software in a fast, scalable and reliable fashion, and is now also used to distribute data. The scale of usage across dozens of projects involves ~1010 files, ~300 repositories, ~102 compute sites, and ~105 clients around the world. The CernVM Monitor shows many research groups which use CVMFS and the stratum sites which replicate their repositories.
 
 === Features ===
 * Only one copy of the software needs to be maintained, and can be propagated to and used at multiple sites.  Commonly used software can be installed on CVMFS in order to reduce remote software administration.

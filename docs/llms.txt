@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-05-17T08:09:24.409188+00:00
-# Total pages: 454
+# Generated: 2026-05-24T08:15:49.329922+00:00
+# Total pages: 455
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -84,6 +84,7 @@
 - CUDA tutorial (User Guide): https://docs.alliancecan.ca/wiki/CUDA_tutorial/en
 - CUDA/en (General): https://docs.alliancecan.ca/wiki/CUDA/en
 - CVMFS (General): https://docs.alliancecan.ca/wiki/CVMFS/en
+- CVMFS (General): https://docs.alliancecan.ca/wiki/CVMFS
 - Cedar (General): https://docs.alliancecan.ca/wiki/Cedar/en
 - Cellranger (General): https://docs.alliancecan.ca/wiki/Cellranger
 - CephFS (General): https://docs.alliancecan.ca/wiki/CephFS
@@ -266,7 +267,7 @@
 - National systems (General): https://docs.alliancecan.ca/wiki/National_systems/en
 - NetCDF (General): https://docs.alliancecan.ca/wiki/NetCDF
 - NetCDF/en (General): https://docs.alliancecan.ca/wiki/NetCDF/en
-- Nextcloud (General): https://docs.alliancecan.ca/wiki/Nextcloud/en
+- Nextcloud/en (General): https://docs.alliancecan.ca/wiki/Nextcloud/en
 - Nextflow (General): https://docs.alliancecan.ca/wiki/Nextflow/en
 - Niagara (General): https://docs.alliancecan.ca/wiki/Niagara/en
 - Niagara Quickstart (General): https://docs.alliancecan.ca/wiki/Niagara_Quickstart/en

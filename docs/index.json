@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-05-17T08:09:24.402148+00:00",
-  "total_pages": 454,
+  "last_updated": "2026-05-24T08:15:49.322392+00:00",
+  "total_pages": 455,
   "pages": [
     {
       "page_id": 10049,
@@ -385,7 +385,7 @@
       "title": "Automation in the context of multifactor authentication/en",
       "url": "https://docs.alliancecan.ca/wiki/Automation_in_the_context_of_multifactor_authentication/en",
       "category": "General",
-      "last_modified": "2026-02-20T19:34:39Z",
+      "last_modified": "2026-05-13T14:51:30Z",
       "file_path": "docs/pages/General/Automation_in_the_context_of_multifactor_authentication.md",
       "slug": "Automation_in_the_context_of_multifactor_authentication"
     },
@@ -466,7 +466,7 @@
       "title": "Bioinformatics/en",
       "url": "https://docs.alliancecan.ca/wiki/Bioinformatics/en",
       "category": "General",
-      "last_modified": "2026-04-29T20:10:02Z",
+      "last_modified": "2026-05-15T15:20:53Z",
       "file_path": "docs/pages/General/Bioinformatics.md",
       "slug": "Bioinformatics"
     },
@@ -592,7 +592,7 @@
       "title": "COMSOL/en",
       "url": "https://docs.alliancecan.ca/wiki/COMSOL/en",
       "category": "General",
-      "last_modified": "2026-02-24T11:40:00Z",
+      "last_modified": "2026-05-15T15:27:26Z",
       "file_path": "docs/pages/General/COMSOL.md",
       "slug": "COMSOL"
     },
@@ -2086,7 +2086,7 @@
       "title": "Multifactor authentication/en",
       "url": "https://docs.alliancecan.ca/wiki/Multifactor_authentication/en",
       "category": "General",
-      "last_modified": "2026-02-10T16:05:44Z",
+      "last_modified": "2026-05-13T14:50:01Z",
       "file_path": "docs/pages/General/Multifactor_authentication.md",
       "slug": "Multifactor_authentication"
     },
@@ -2146,10 +2146,10 @@
     },
     {
       "page_id": 14336,
-      "title": "Nextcloud",
+      "title": "Nextcloud/en",
       "url": "https://docs.alliancecan.ca/wiki/Nextcloud/en",
       "category": "General",
-      "last_modified": "2024-06-12T15:51:09Z",
+      "last_modified": "2026-05-20T15:01:18Z",
       "file_path": "docs/pages/General/Nextcloud.md",
       "slug": "Nextcloud"
     },
@@ -3760,7 +3760,7 @@
       "title": "Ansys",
       "url": "https://docs.alliancecan.ca/wiki/Ansys",
       "category": "General",
-      "last_modified": "2026-03-28T10:39:45Z",
+      "last_modified": "2026-05-15T20:23:56Z",
       "file_path": "docs/pages/General/Ansys.md",
       "slug": "Ansys"
     },
@@ -3823,7 +3823,7 @@
       "title": "Abaqus",
       "url": "https://docs.alliancecan.ca/wiki/Abaqus",
       "category": "General",
-      "last_modified": "2026-03-19T21:56:59Z",
+      "last_modified": "2026-05-22T18:31:13Z",
       "file_path": "docs/pages/General/Abaqus.md",
       "slug": "Abaqus"
     },
@@ -4087,6 +4087,15 @@
       "last_modified": "2026-04-24T16:32:16Z",
       "file_path": "docs/pages/General/Multi-Instance_GPU.md",
       "slug": "Multi-Instance_GPU"
+    },
+    {
+      "page_id": 16064,
+      "title": "CVMFS",
+      "url": "https://docs.alliancecan.ca/wiki/CVMFS",
+      "category": "General",
+      "last_modified": "2026-05-18T15:25:44Z",
+      "file_path": "docs/pages/General/CVMFS.md",
+      "slug": "CVMFS"
     }
   ]
 }

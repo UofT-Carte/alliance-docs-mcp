@@ -2,7 +2,7 @@
 title: "Automation in the context of multifactor authentication/en"
 url: "https://docs.alliancecan.ca/wiki/Automation_in_the_context_of_multifactor_authentication/en"
 category: "General"
-last_modified: "2026-02-20T19:34:39Z"
+last_modified: "2026-05-13T14:51:30Z"
 page_id: 24806
 display_title: "Automation in the context of multifactor authentication"
 ---
@@ -24,6 +24,8 @@ This constraint specifies that the key can only be used from IP addresses that m
 
 === command="COMMAND" ===
 This constraint forces the command COMMAND to be executed when the connection is established. This is so that you may restrict which commands can be used with this key.
+
+Any path in the COMMAND may be absolute (that is from /) or relative to the home directory.
 
 == Convenience wrapper scripts to use for command= ==
 command constraints can specify any command, but they are most useful when using a wrapper script which will accept or reject commands based on which command is being called. You can write your own script, but for convenience, we provide a number of such scripts which allow common actions. These scripts are defined in this git repository.

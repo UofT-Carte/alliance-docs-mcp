@@ -1,9 +1,9 @@
 ---
-title: "Multifactor authentication"
-url: "https://docs.alliancecan.ca/wiki/Multifactor_authentication"
+title: "Multifactor authentication/en"
+url: "https://docs.alliancecan.ca/wiki/Multifactor_authentication/en"
 category: "General"
-last_modified: "2026-03-06T22:47:49Z"
-page_id: 16662
+last_modified: "2026-05-13T14:50:01Z"
+page_id: 22441
 display_title: "Multifactor authentication"
 ---
 
@@ -112,7 +112,7 @@ Once multifactor authentication is enabled on your account, you will be required
 File:CCDB MFA prompt.png
 
 = Configuring common SSH clients =
-Command line clients will typically support multifactor authentication without additional configuration. This is however often not the case for graphical clients. Below are instructions specific to a few of them.
+Command line clients will typically support multifactor authentication without additional configuration. This is however often not the case for all clients. Below are instructions specific to a few of them.
 
 == FileZilla ==
 FileZilla will ask the password and second factor each time a transfer is initiated because by default, transfers use independent connections which are closed automatically after some idle time.
@@ -195,9 +195,7 @@ Then, ensure that the box beside Segmented downloads with multiple connections p
 No. Only Duo Mobile will work.
 
 == I do not have a smartphone or tablet, and I do not want to buy a Yubikey ==
-Unfortunately, that means you will not be able to use our services when multifactor authentication becomes mandatory. A Yubikey hardware
-token is the cheapest way to enable multifactor authentication on your account, and is expected to be covered by the principal investigator's
-research funding like any other work-related hardware. Mandating multifactor authentication is a requirement from our funding bodies.
+Unfortunately, that means you cannot use our services. Multifactor authentication is mandatory. A Yubikey hardware token is the cheapest way to enable multifactor authentication on your account, and is expected to be covered by the principal investigator's research funding like any other work-related hardware. Mandating multifactor authentication is a requirement from our funding bodies.
 
 == Why can't you send me one time passcodes through SMS ? ==
 Sending SMS costs money which we do not have. Multifactor using SMS is also widely regarded as insecure by most security experts.
@@ -206,14 +204,8 @@ Sending SMS costs money which we do not have. Multifactor using SMS is also wide
 No, Duo does not support sending one time code through email.
 
 == I have an older Android phone and I cannot download the Duo Mobile application from the Google Play site. Can I still use Duo ? ==
-Yes. However, you have to download the application from the Duo website:
 
-* For Android 8 and 9, the latest compatible version is DuoMobile-4.33.0.apk
-* For Android 10, the latest compatible version is DuoMobile-4.56.0.apk
-
-For validation, official SHA-256 checksums are listed here.
-
-For installation instructions, see this page.
+Duo Mobile is only available for Android versions that receive security updates. While you might be able to download and install it manually on older Android versions by following these instructions, the application might not work properly or at all, and the Duo service might reject authentication attempts.
 
 == I want to disable multifactor authentication. How do I do this? ==
 Multifactor authentication is mandatory.  Users cannot disable it. Exceptions can only be granted for automation purposes. If you find that multifactor authentication is annoying, we recommend applying one of the configurations listed above, depending on the SSH client you are using. Our recorded webinars also contain many tips on how to make MFA less burdensome to use.
