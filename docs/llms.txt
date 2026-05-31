@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-05-24T08:15:49.329922+00:00
-# Total pages: 455
+# Generated: 2026-05-31T08:33:24.125085+00:00
+# Total pages: 456
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -320,6 +320,7 @@
 - Python/en (General): https://docs.alliancecan.ca/wiki/Python/en
 - QGIS (General): https://docs.alliancecan.ca/wiki/QGIS
 - QIIME (General): https://docs.alliancecan.ca/wiki/QIIME/en
+- Qiskit (General): https://docs.alliancecan.ca/wiki/Qiskit
 - Qiskit/en (General): https://docs.alliancecan.ca/wiki/Qiskit/en
 - Quantum ESPRESSO (General): https://docs.alliancecan.ca/wiki/Quantum_ESPRESSO/en
 - QuantumATK (General): https://docs.alliancecan.ca/wiki/QuantumATK

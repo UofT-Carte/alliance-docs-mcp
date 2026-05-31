@@ -1,9 +1,9 @@
 ---
-title: "Using nearline storage/en"
-url: "https://docs.alliancecan.ca/wiki/Using_nearline_storage/en"
+title: "Using nearline storage"
+url: "https://docs.alliancecan.ca/wiki/Using_nearline_storage"
 category: "General"
-last_modified: "2026-04-17T17:55:56Z"
-page_id: 9323
+last_modified: "2026-05-25T18:14:21Z"
+page_id: 5571
 display_title: "Using nearline storage"
 ---
 
@@ -46,7 +46,7 @@ Creating a tar or dar file for a large volume of data can be resource-intensive.
 
 === Use a terminal multiplexer ===
 
-Archiving large file collections can take several hours or even days. Your SSH session might be interrupted before your program finishes, or you might want to close your session, keep your program running in the background, and come back to it later. Run tar or dar in a terminal multiplexer such as tmux to manage these issues.
+Archiving large file collections can take several hours or even days. Your SSH session might be interrupted before your program finishes, or you might want to close your session, keep your program running in the background, and come back to it later. Run tar or dar in a terminal multiplexer such as tmux or a utility such as screen to manage these issues.
 
 === Use dar in non-interactive mode ===
 
@@ -59,7 +59,7 @@ Tape as a storage medium has these advantages over disk and solid-state (SSD) me
 # The volume of data stored can be easily expanded by buying more tapes.
 # Energy consumption per unit of data stored is effectively zero.
 
-Consequently we can offer much greater volumes of storage on /nearline than we can on /project.  Also, keeping inactive data off of /project reduces the load and improves its performance.
+Consequently we can offer much greater capacity of storage on /nearline than we can on /project.  Also, keeping inactive data off of /project reduces the load and backup demands and improves its performance.
 
 == How it works ==
 
@@ -106,15 +106,21 @@ You can explicitly force a file to be recalled from tape without actually readin
 
 /nearline is only accessible as a directory on login nodes and on DTNs (Data Transfer Nodes).
 
-To use /nearline, just put files into your ~/nearline/PROJECT directory. After a period of time (24 hours as of February 2019), they will be copied onto tape. If the file remains unchanged for another period (24 hours as of February 2019), the copy on disk will be removed, making the file virtualized on tape.
+To use /nearline, just put files into your ~/nearline/PROJECT directory. After a period of time (24 hours), they will be copied onto tape. If the file remains unchanged for another period (24 hours), the copy on disk will be removed, making the file virtualized on tape.
 
 If you accidentally (or deliberately) delete a file from ~/nearline, the tape copy will be retained for up to 60 days. To restore such a file contact technical support with the full path for the file(s) and desired version (by date), just as you would for restoring a backup. Note that since you will need the full path for the file, it is important for you to retain a copy of the complete directory structure of your /nearline space. For example, you can run the command ls -R > ~/nearline_contents.txt from the ~/nearline/PROJECT directory so that you have a copy of the location of all the files.
 
-/nearline service similar to that on Béluga, except:
+/nearline service similar to that on Fir, except:
+# The files on /nearline are backed-up daily, but they are not necessarily migrated to tape.
+## Only the oldest and largest files are migrated to tape.
+
+/nearline service similar to that on Fir, except:
 # It may take longer than 24 hours for the first tape copy of the data to be created.
 # The disk copy will not be erased (leaving only the tape copies) until 60 days have passed.
 
-/nearline service similar to that on Béluga.
+/nearline service similar to that on Fir, except:
+# Your nearline spaces are in ~/links/nearlines.
+# As of April 2026, the files on /nearline are backed-up daily, but they are not getting migrated to tape yet.
 
 HPSS is the /nearline service on Trillium.
 There are three methods to access the service:
