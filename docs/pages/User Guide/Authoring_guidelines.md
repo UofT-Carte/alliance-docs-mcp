@@ -2,7 +2,7 @@
 title: "Authoring guidelines/en"
 url: "https://docs.alliancecan.ca/wiki/Authoring_guidelines/en"
 category: "User Guide"
-last_modified: "2025-09-17T14:33:33Z"
+last_modified: "2026-05-29T21:24:02Z"
 page_id: 108
 display_title: "Authoring guidelines"
 ---
@@ -84,6 +84,15 @@ When you have written a page, you should tag it for translation. Here are the st
 #Review the translation units. Check that code blocks and wiki markup are excluded, and all plain text is included.
 #In the “Priority languages” section, write either “fr” or “en” as the priority language, that is, the language into which it needs to be translated.
 #Click on “Mark this version for translation”
+
+===Things not to do with translation tags===
+Translation tags are what identify a unit of translation. They look like . They are entirely managed by the translation extension. When you edit a page:
+* do NOT edit translation tags
+* do NOT copy translation tags
+* do NOT move translation tags
+* do NOT create translation tags
+* do NOT duplicate translation tags
+The only safe thing to do with translation tags is to DELETE them, and let the extension tag the page again when you mark it for translation.
 
 ===Mark changes to a page for translation===
 First, try to mark a page for translation only once it is stable.

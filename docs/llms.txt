@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-05-31T08:33:24.125085+00:00
+# Generated: 2026-06-07T08:43:47.564889+00:00
 # Total pages: 456
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -49,7 +49,7 @@
 - Archiving and compressing files (General): https://docs.alliancecan.ca/wiki/Archiving_and_compressing_files/en
 - Arrow/en (General): https://docs.alliancecan.ca/wiki/Arrow/en
 - Astronomy and High Energy Physics Interactive Analysis Facility (General): https://docs.alliancecan.ca/wiki/Astronomy_and_High_Energy_Physics_Interactive_Analysis_Facility
-- Authoring guidelines (User Guide): https://docs.alliancecan.ca/wiki/Authoring_guidelines/en
+- Authoring guidelines/en (User Guide): https://docs.alliancecan.ca/wiki/Authoring_guidelines/en
 - Automating VM creation (General): https://docs.alliancecan.ca/wiki/Automating_VM_creation/en
 - Automation in the context of multifactor authentication/en (General): https://docs.alliancecan.ca/wiki/Automation_in_the_context_of_multifactor_authentication/en
 - Autotools (General): https://docs.alliancecan.ca/wiki/Autotools/en
