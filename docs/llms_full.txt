@@ -1,6 +1,6 @@
 # Alliance Documentation - Full Content
-# Generated: 2026-06-07T08:43:47.567381+00:00
-# Total pages: 456
+# Generated: 2026-06-14T09:00:37.898540+00:00
+# Total pages: 457
 ================================================================================
 
 
@@ -1499,6 +1499,7 @@ Category: General
 
 
 __FORCETOC__
+
 Abaqus FEA is a software suite for finite element analysis and computer-aided engineering.
 
 = Licensing =
@@ -1509,7 +1510,7 @@ Abaqus software modules are available on the Alliance clusters, however you must
 
 To configure your account on a cluster to use a FLEXnet-based (aka FlexLM) Abaqus license server, a single file named ~/.licenses/abaqus.lic must be created, specifying its fully qualified hostname FLEXnet-SERVER-HOSTNAME and license manager daemon port number LMGRD-PORT-NUMBER. These two pieces of information are then assigned to the ABAQUSLM_LICENSE_FILE environment variable whenever an Abaqus module is loaded by reading
 
- [l2 (login node):~/.licenses] cat abaqus.lic
+[l2 (login node):~/.licenses] cat abaqus.lic
  prepend_path("ABAQUSLM_LICENSE_FILE","LMGRD-PORT-NUMBER@FLEXnet-SERVER-HOSTNAME")
 
 To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_LICENSE_FILE.
@@ -1518,11 +1519,11 @@ To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_
 
 To use a DSLS based license server (Dassault Systèmes License Server), you must first configure two small text files named abaqus_v6.env and DSLicSrv.txt so Abaqus can find the DSLS license server. You may either put a copy of abaqus_v6.env file into each abaqus working directory **OR**  put a single copy into your home directory.  Note that the abaqus_v6.env file must contain the absolute path to your  DSLicSrv.txt file so that both the dslsstat command and abaqus command will run properly.  Otherwise you will need to set export DSLS_CONFIG=/path/to/DSLicSrv.txt for every job you submit.  For example, placing both files into your home directory, you would just need to replace  with the output from "echo $USER" and then substitute the server IP and PORT values into  DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER in the following :
 
- [l2 (login node):~ ] cat abaqus_v6.env
+[l2 (login node):~ ] cat abaqus_v6.env
  license_server_type=DSLS
  dsls_license_config="/home//DSLicSrv.txt"
 
-  [l2 (login node):~ ] cat DSLicSrv.txt
+ [l2 (login node):~ ] cat DSLicSrv.txt
   DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER
 
 With both files setup, you may now check if the license server is reachable and responding by running:
@@ -1534,20 +1535,31 @@ With both files setup, you may now check if the license server is reachable and 
 
 == New servers ==
 
-If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports of your Abaqus server are reachable from all cluster compute nodes. For help, please write to technical support and be sure to include the following:
-* flexlm port number & static vendor port number (FLEXnet server),
-* administrative port number & licensing client port number (DSLS server),
-* fully qualified domain name or IPV4 address of your new Abaqus server.
+If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports (https protocol) of your Abaqus server are reachable from all cluster compute nodes through the client/server firewalls. For help, please write to technical support and be sure to include the following:
+* FLEXnet SERVER: flex lmgrd port number (default 27000), static vendor port number (default 28000)
+* DSLS SERVER: administrative port number (default 4084), licensing client port number (default 4085)
+* Fully qualified domain name or IPV4 address of your new Abaqus server
 You will be sent a list of cluster IP addresses (known as NAT nodes) so that your administrator can open the local server firewall to allow connections from the cluster on both ports. Please note that a special license agreement must generally be negotiated and signed by both SIMULIA and your institution before a campus license may be legally used on Alliance hardware located remotely at another institution.
 
 == License queuing ==
 The default setup for the license server is to queue jobs started on the cluster by Slurm if not enough tokens are available. There are two options to alter this behaviour ie) so jobs don't sit idle on a cluster compute node waiting for a license indefinitely wasting valuable resources. The first option is to terminate a job immediately if not enough licenses are available, therefore never entering a queue. To specify this setting, create a text file named abaqus_v6.env in either your /home OR working (submit) directory containing the line: lmlicensequeuing=OFF. The second option is to specify a finite wait time where the job can enter into a queued state on the license server such as 1 minute by adding the line: lmhanglimit=1. If within 1 minute sufficient licenses do not come available then the job will be dequeud by the license server and in turn be terminated by Slurm.  For each option, messages will be printed at the bottom of the Slurm output file as shown in the Example below.
 
-= Version compatibility =
+= Version notes =
 
-== Module change ==
+== 2026 ==
 
-A new module for abaqus/2026 is now installed into the default StdEnv/2023 environment. This new version resolves the *** buffer overflow detected *** error with abaqus/2021 on all recent clusters. Note that each Slurm script on this wiki page has been updated to work with both abaqus/2026 and abaqus/2021 where possible therefore all personal Slurm scripts should likewise be updated by researchers.  The abaqus/2026 module contains the initial Abaqus 2026 Golden release. Another module named abaqus/2026.2606 containing Abaqus 2026 FP.CFA.2606 level updates will be installed next.
+A new module abaqus/2026 containing the initial Abaqus 2026 Golden/GA release has been installed into the default StdEnv/2023 environment.  Another module named abaqus/2026.2614 containing the latest SIMULIA Established Products 2026 Fix Packs currently at level FD02 (FP.2614) will be made available as soon as possible. To verify your setup run the following :
+
+ module load abaqus/2026
+ module load intel/2024
+ abaqus verify -all
+
+All tests should Succeed except for CAE (unless you log into an ondemand/juypter graphical desktop
+) and TOSCA (unless you set export FED_DSFLEX_LICENSE_CONFIG=port@hostname) before running the verification.
+
+== 2021 ==
+
+Its recommended to discontinue use of abaqus/2021 installed under the previous StdEnv/2020 since this legacy version generates *** buffer overflow detected *** error on all recent clusters.  To workaround this problem an unshare workaround has been added into each slurm script found in this wiki.  This however only works on single node jobs and does not guarantee accurate results.
 
 = Cluster job submission =
 
@@ -1665,7 +1677,7 @@ To completely satisfy the recommended "MEMORY TO OPERATIONS REQUIRED MINIMIZE I/
 
 To determine the required Slurm memory for multi-node Slurm scripts, memory estimates (per compute process) required to minimize I/O are given in the output dat file of completed jobs. If mp_host_split is not specified (or is set to 1) then the total number of compute processes will equal the number of nodes. The mem-per-cpu value can then be roughly determined by multiplying the largest memory estimate by the number of nodes and then dividing by the number or ntasks. However, if a value for mp_host_split is specified (greater than 1) than the mem-per-cpu value can be roughly determined from the largest memory estimate times the number of nodes times the value of mp_host_split divided by the number of tasks. Note that mp_host_split must be less than or equal to the number of cores per node assigned by Slurm at runtime otherwise Abaqus will terminate. This scenario can be controlled by uncommenting to specify a value for tasks-per-node. The following definitive statement is given in every output dat file and mentioned here for reference:
 
-  THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
+ THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
  THE "MEMORY" PARAMETER AND THE AMOUNT OF PHYSICAL MEMORY AVAILABLE ON THE MACHINE. PLEASE SEE
  THE "ABAQUS ANALYSIS USER'S MANUAL" FOR MORE DETAILS. THE ACTUAL USAGE OF MEMORY AND OF DISK
  SPACE FOR SCRATCH DATA WILL DEPEND ON THIS UPPER LIMIT AS WELL AS THE MEMORY REQUIRED TO MINIMIZE
@@ -1775,12 +1787,12 @@ When the output of query I) above indicates that a job for a particular username
 
 The following shows the situation where a user submitted two 6-core jobs (each requiring 12 tokens) in quick succession. The scheduler then started each job on a different node in the order they were submitted. Since the user had 10 Abaqus compute tokens, the first job (27527287) was able to acquire exactly enough (10) tokens for the solver to begin running. The second job (27527297) not having access to any more tokens entered an idle "queued" state (as can be seen from the lmstat output) until the first job completed, wasting the available resources and depreciating the user's fair share level in the process ...
 
- [l2 (nibi login node):~] sq
+[l2 (nibi login node):~] sq
             JOBID     USER              ACCOUNT           NAME  ST  TIME_LEFT NODES CPUS TRES_PER_N MIN_MEM NODELIST (REASON)
          27530366  roberpj         cc-debug_cpu  scriptsp2.txt   R    9:56:13     1    6        N/A      8G     c107  (None)
          27530407  roberpj         cc-debug_cpu  scriptsp2.txt   R    9:59:37     1    6        N/A      8G     c292  (None)
 
- [l2 (nibi login node):~] abaqus licensing lmstat -c $ABAQUSLM_LICENSE_FILE -a | egrep "Users|start|queued"
+[l2 (nibi login node):~] abaqus licensing lmstat -c $ABAQUSLM_LICENSE_FILE -a | egrep "Users|start|queued"
  Users of abaqus:  (Total of 78 licenses issued;  Total of 53 licenses in use)
     roberpj c107 /dev/tty (v62.6) (license3.sharcnet.ca/27050 1042), start Mon 11/25 17:15, 10 licenses
     roberpj c292 /dev/tty (v62.6) (license3.sharcnet.ca/27050 125) queued for 10 licenses
@@ -1791,12 +1803,12 @@ Option 1)
 
 Disable non-interactive (analysis) jobs from starting on a cluster compute node after being submitted to the queue and then becoming idle (when not enough tokens are unavailable the default bahaviour) create a text file in your submit directory (before submitting the job) with the following one line contents and the job will instead terminate immediately.
 
- [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+[l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
  lmlicensequeuing=OFF
 
 When a job immediately terminates (without entering a QUEUED state to wait for a license) the end of the corresponding Slurm output file will contain messages such as
 
- Abaqus 2026
+Abaqus 2026
  Checkout exceeds MAX specified in options file.
  FlexNet Licensing error:-87,147
  Number of requested licenses: 14
@@ -1814,12 +1826,12 @@ Option 2)
 
 Specify a setting in minutes so that a started job will enter a QUEUED state to wait for a license before being automatically DEQUEUED and terminating if a license does not become available in time.
 
- [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+[l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
   lmhanglimit=1
 
 When a job terminates this way, after being queued and no license comes available in the specified time according to the lmhanlimit value (1minute in this example) the messages at the end of the Slurm output file will instead appear as
 
- Abaqus 2026
+Abaqus 2026
  "standard" license request queued for the License Server on license1.computecanada.ca.
  Total time in queue: 0 seconds.
  "standard" license request queued for the License Server on license1.computecanada.ca.
@@ -1869,6 +1881,7 @@ Category: General
 
 
 __FORCETOC__
+
 Abaqus FEA is a software suite for finite element analysis and computer-aided engineering.
 
 = Licensing =
@@ -1879,7 +1892,7 @@ Abaqus software modules are available on the Alliance clusters, however you must
 
 To configure your account on a cluster to use a FLEXnet-based (aka FlexLM) Abaqus license server, a single file named ~/.licenses/abaqus.lic must be created, specifying its fully qualified hostname FLEXnet-SERVER-HOSTNAME and license manager daemon port number LMGRD-PORT-NUMBER. These two pieces of information are then assigned to the ABAQUSLM_LICENSE_FILE environment variable whenever an Abaqus module is loaded by reading
 
- [l2 (login node):~/.licenses] cat abaqus.lic
+[l2 (login node):~/.licenses] cat abaqus.lic
  prepend_path("ABAQUSLM_LICENSE_FILE","LMGRD-PORT-NUMBER@FLEXnet-SERVER-HOSTNAME")
 
 To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_LICENSE_FILE.
@@ -1888,11 +1901,11 @@ To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_
 
 To use a DSLS based license server (Dassault Systèmes License Server), you must first configure two small text files named abaqus_v6.env and DSLicSrv.txt so Abaqus can find the DSLS license server. You may either put a copy of abaqus_v6.env file into each abaqus working directory **OR**  put a single copy into your home directory.  Note that the abaqus_v6.env file must contain the absolute path to your  DSLicSrv.txt file so that both the dslsstat command and abaqus command will run properly.  Otherwise you will need to set export DSLS_CONFIG=/path/to/DSLicSrv.txt for every job you submit.  For example, placing both files into your home directory, you would just need to replace  with the output from "echo $USER" and then substitute the server IP and PORT values into  DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER in the following :
 
- [l2 (login node):~ ] cat abaqus_v6.env
+[l2 (login node):~ ] cat abaqus_v6.env
  license_server_type=DSLS
  dsls_license_config="/home//DSLicSrv.txt"
 
-  [l2 (login node):~ ] cat DSLicSrv.txt
+ [l2 (login node):~ ] cat DSLicSrv.txt
   DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER
 
 With both files setup, you may now check if the license server is reachable and responding by running:
@@ -1904,20 +1917,31 @@ With both files setup, you may now check if the license server is reachable and 
 
 == New servers ==
 
-If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports of your Abaqus server are reachable from all cluster compute nodes. For help, please write to technical support and be sure to include the following:
-* flexlm port number & static vendor port number (FLEXnet server),
-* administrative port number & licensing client port number (DSLS server),
-* fully qualified domain name or IPV4 address of your new Abaqus server.
+If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports (https protocol) of your Abaqus server are reachable from all cluster compute nodes through the client/server firewalls. For help, please write to technical support and be sure to include the following:
+* FLEXnet SERVER: flex lmgrd port number (default 27000), static vendor port number (default 28000)
+* DSLS SERVER: administrative port number (default 4084), licensing client port number (default 4085)
+* Fully qualified domain name or IPV4 address of your new Abaqus server
 You will be sent a list of cluster IP addresses (known as NAT nodes) so that your administrator can open the local server firewall to allow connections from the cluster on both ports. Please note that a special license agreement must generally be negotiated and signed by both SIMULIA and your institution before a campus license may be legally used on Alliance hardware located remotely at another institution.
 
 == License queuing ==
 The default setup for the license server is to queue jobs started on the cluster by Slurm if not enough tokens are available. There are two options to alter this behaviour ie) so jobs don't sit idle on a cluster compute node waiting for a license indefinitely wasting valuable resources. The first option is to terminate a job immediately if not enough licenses are available, therefore never entering a queue. To specify this setting, create a text file named abaqus_v6.env in either your /home OR working (submit) directory containing the line: lmlicensequeuing=OFF. The second option is to specify a finite wait time where the job can enter into a queued state on the license server such as 1 minute by adding the line: lmhanglimit=1. If within 1 minute sufficient licenses do not come available then the job will be dequeud by the license server and in turn be terminated by Slurm.  For each option, messages will be printed at the bottom of the Slurm output file as shown in the Example below.
 
-= Version compatibility =
+= Version notes =
 
-== Module change ==
+== 2026 ==
 
-A new module for abaqus/2026 is now installed into the default StdEnv/2023 environment. This new version resolves the *** buffer overflow detected *** error with abaqus/2021 on all recent clusters. Note that each Slurm script on this wiki page has been updated to work with both abaqus/2026 and abaqus/2021 where possible therefore all personal Slurm scripts should likewise be updated by researchers.  The abaqus/2026 module contains the initial Abaqus 2026 Golden release. Another module named abaqus/2026.2606 containing Abaqus 2026 FP.CFA.2606 level updates will be installed next.
+A new module abaqus/2026 containing the initial Abaqus 2026 Golden/GA release has been installed into the default StdEnv/2023 environment.  Another module named abaqus/2026.2614 containing the latest SIMULIA Established Products 2026 Fix Packs currently at level FD02 (FP.2614) will be made available as soon as possible. To verify your setup run the following :
+
+ module load abaqus/2026
+ module load intel/2024
+ abaqus verify -all
+
+All tests should Succeed except for CAE (unless you log into an ondemand/juypter graphical desktop
+) and TOSCA (unless you set export FED_DSFLEX_LICENSE_CONFIG=port@hostname) before running the verification.
+
+== 2021 ==
+
+Its recommended to discontinue use of abaqus/2021 installed under the previous StdEnv/2020 since this legacy version generates *** buffer overflow detected *** error on all recent clusters.  To workaround this problem an unshare workaround has been added into each slurm script found in this wiki.  This however only works on single node jobs and does not guarantee accurate results.
 
 = Cluster job submission =
 
@@ -2035,7 +2059,7 @@ To completely satisfy the recommended "MEMORY TO OPERATIONS REQUIRED MINIMIZE I/
 
 To determine the required Slurm memory for multi-node Slurm scripts, memory estimates (per compute process) required to minimize I/O are given in the output dat file of completed jobs. If mp_host_split is not specified (or is set to 1) then the total number of compute processes will equal the number of nodes. The mem-per-cpu value can then be roughly determined by multiplying the largest memory estimate by the number of nodes and then dividing by the number or ntasks. However, if a value for mp_host_split is specified (greater than 1) than the mem-per-cpu value can be roughly determined from the largest memory estimate times the number of nodes times the value of mp_host_split divided by the number of tasks. Note that mp_host_split must be less than or equal to the number of cores per node assigned by Slurm at runtime otherwise Abaqus will terminate. This scenario can be controlled by uncommenting to specify a value for tasks-per-node. The following definitive statement is given in every output dat file and mentioned here for reference:
 
-  THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
+ THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
  THE "MEMORY" PARAMETER AND THE AMOUNT OF PHYSICAL MEMORY AVAILABLE ON THE MACHINE. PLEASE SEE
  THE "ABAQUS ANALYSIS USER'S MANUAL" FOR MORE DETAILS. THE ACTUAL USAGE OF MEMORY AND OF DISK
  SPACE FOR SCRATCH DATA WILL DEPEND ON THIS UPPER LIMIT AS WELL AS THE MEMORY REQUIRED TO MINIMIZE
@@ -2145,12 +2169,12 @@ When the output of query I) above indicates that a job for a particular username
 
 The following shows the situation where a user submitted two 6-core jobs (each requiring 12 tokens) in quick succession. The scheduler then started each job on a different node in the order they were submitted. Since the user had 10 Abaqus compute tokens, the first job (27527287) was able to acquire exactly enough (10) tokens for the solver to begin running. The second job (27527297) not having access to any more tokens entered an idle "queued" state (as can be seen from the lmstat output) until the first job completed, wasting the available resources and depreciating the user's fair share level in the process ...
 
- [l2 (nibi login node):~] sq
+[l2 (nibi login node):~] sq
             JOBID     USER              ACCOUNT           NAME  ST  TIME_LEFT NODES CPUS TRES_PER_N MIN_MEM NODELIST (REASON)
          27530366  roberpj         cc-debug_cpu  scriptsp2.txt   R    9:56:13     1    6        N/A      8G     c107  (None)
          27530407  roberpj         cc-debug_cpu  scriptsp2.txt   R    9:59:37     1    6        N/A      8G     c292  (None)
 
- [l2 (nibi login node):~] abaqus licensing lmstat -c $ABAQUSLM_LICENSE_FILE -a | egrep "Users|start|queued"
+[l2 (nibi login node):~] abaqus licensing lmstat -c $ABAQUSLM_LICENSE_FILE -a | egrep "Users|start|queued"
  Users of abaqus:  (Total of 78 licenses issued;  Total of 53 licenses in use)
     roberpj c107 /dev/tty (v62.6) (license3.sharcnet.ca/27050 1042), start Mon 11/25 17:15, 10 licenses
     roberpj c292 /dev/tty (v62.6) (license3.sharcnet.ca/27050 125) queued for 10 licenses
@@ -2161,12 +2185,12 @@ Option 1)
 
 Disable non-interactive (analysis) jobs from starting on a cluster compute node after being submitted to the queue and then becoming idle (when not enough tokens are unavailable the default bahaviour) create a text file in your submit directory (before submitting the job) with the following one line contents and the job will instead terminate immediately.
 
- [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+[l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
  lmlicensequeuing=OFF
 
 When a job immediately terminates (without entering a QUEUED state to wait for a license) the end of the corresponding Slurm output file will contain messages such as
 
- Abaqus 2026
+Abaqus 2026
  Checkout exceeds MAX specified in options file.
  FlexNet Licensing error:-87,147
  Number of requested licenses: 14
@@ -2184,12 +2208,12 @@ Option 2)
 
 Specify a setting in minutes so that a started job will enter a QUEUED state to wait for a license before being automatically DEQUEUED and terminating if a license does not become available in time.
 
- [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+[l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
   lmhanglimit=1
 
 When a job terminates this way, after being queued and no license comes available in the specified time according to the lmhanlimit value (1minute in this example) the messages at the end of the Slurm output file will instead appear as
 
- Abaqus 2026
+Abaqus 2026
  "standard" license request queued for the License Server on license1.computecanada.ca.
  Total time in queue: 0 seconds.
  "standard" license request queued for the License Server on license1.computecanada.ca.
@@ -4307,7 +4331,7 @@ When using the Nibi cluster, I_MPI_HYDRA_BOOTSTRAP=ssh must be manually set when
  [mpiexec@g4.nibi.sharcnet] HYD_bstrap_setup (../../../../../src/pm/i_hydra/libhydra/bstrap/src/intel/i_hydra_bstrap.c:1063): error waiting for event
  [mpiexec@g4.nibi.sharcnet] Error setting up the bootstrap proxies
 
-==== Jupyterhub desktop ====
+==== JupyterHub desktop ====
 
 Compute node (no GPU requested)
 
@@ -4831,7 +4855,7 @@ When using the Nibi cluster, I_MPI_HYDRA_BOOTSTRAP=ssh must be manually set when
  [mpiexec@g4.nibi.sharcnet] HYD_bstrap_setup (../../../../../src/pm/i_hydra/libhydra/bstrap/src/intel/i_hydra_bstrap.c:1063): error waiting for event
  [mpiexec@g4.nibi.sharcnet] Error setting up the bootstrap proxies
 
-==== Jupyterhub desktop ====
+==== JupyterHub desktop ====
 
 Compute node (no GPU requested)
 
@@ -5898,7 +5922,7 @@ pip install python-openstackclient
 
 #  In the legacy cloud web user interface, shut down the instance and detach the volume.If the volume is for booting an instance, delete the instance, but keep the volume.Create an image of the desired volume (Volumes -> Volumes and Upload to Image from the drop-down menu).Make sure to select RAW as the disk format.
 #  The command line can also be used to do this:
-openstack image create –volume   --privateThis command runs in the background and may take some time. Once the image is created, it will show up under Compute -> Images with the name you specified in the previous step. You can obtain the id of the image by clicking on its name. Eventually the command line will show the status go from saving to active; this may take an hour or longer, depending on the size of your volume.
+openstack image create --volume   --privateThis command runs in the background and may take some time. Once the image is created, it will show up under Compute -> Images with the name you specified in the previous step. You can obtain the id of the image by clicking on its name. Eventually the command line will show the status go from saving to active; this may take an hour or longer, depending on the size of your volume.
 openstack image show
 #  In the legacy cloud session, download the image (replace the  and  with real values).
 openstack image save --file
@@ -6226,7 +6250,7 @@ pip install python-openstackclient
 
 #  In the legacy cloud web user interface, shut down the instance and detach the volume.If the volume is for booting an instance, delete the instance, but keep the volume.Create an image of the desired volume (Volumes -> Volumes and Upload to Image from the drop-down menu).Make sure to select RAW as the disk format.
 #  The command line can also be used to do this:
-openstack image create –volume   --privateThis command runs in the background and may take some time. Once the image is created, it will show up under Compute -> Images with the name you specified in the previous step. You can obtain the id of the image by clicking on its name. Eventually the command line will show the status go from saving to active; this may take an hour or longer, depending on the size of your volume.
+openstack image create --volume   --privateThis command runs in the background and may take some time. Once the image is created, it will show up under Compute -> Images with the name you specified in the previous step. You can obtain the id of the image by clicking on its name. Eventually the command line will show the status go from saving to active; this may take an hour or longer, depending on the size of your volume.
 openstack image show
 #  In the legacy cloud session, download the image (replace the  and  with real values).
 openstack image save --file
@@ -24873,7 +24897,7 @@ Then submit the job to the scheduler:
 
 
 ================================================================================
-PAGE: Metrix
+PAGE: Metrix/en
 URL: https://docs.alliancecan.ca/wiki/Metrix/en
 Category: General
 ================================================================================
@@ -24881,46 +24905,209 @@ Category: General
 
 = Summary =
 
-The Metrix portal is a website for Alliance users. It collects information on computing nodes and management servers to interactively generate data that allow users to track their resource usage (CPU, GPU, memory, filesystem) in real time.
+The Metrix portal is a website for Alliance users. It collects information on compute nodes and management servers, to interactively generate data so you can track your resource usage (CPUs, GPUs, memory, filesystems) in real time.
 
 Rorqual	https://metrix.rorqual.alliancecan.ca
 Narval 	https://portail.narval.calculquebec.ca
 Nibi   	https://portal.nibi.sharcnet.ca
 
-Filersystem performance
+Filesystem performance
 
-Here you have the graphs for bandwidth and metadata operations, along with viewing options last week, last day and last hour.
+Here you have the graphs for bandwidths and metadata operations, along with viewing options (last week, last day and last hour).
 
 Login nodes
 
-CPU, memory, system load, and network usage statistics are presented, with viewing options last week, last day, and last hour.
+Under this tab are presented  usage statistics for CPUs, memory, system load, and network, with viewing options (last week, last day, and last hour).
 
-Scheduling
+Scheduler
 
-This tab shows statistics for the cluster's allocated cores and GPUs, with viewing options last week, last day, and last hour.
+This tab shows statistics for the cluster's allocated cores and GPUs, with viewing options (last week, last day, and last hour).
 
 Scientific software
 
-These graphs show the software with CPU cores and GPUs that are more frequently used.
+These graphs show the software most frequently used, with CPU cores and GPUs.
 
 Data transfer nodes
 
-Bandwidth statistics for data transfer nodes are presented in this tab.
+Bandwidth statistics for data transfer nodes are shown under this tab.
 
-= Usert summary =
-Under this tab, you find your quotas for various filesystems, followed by your last 10 tasks. You can select a task by its number to see the details. Also, by clicking on (More Details), you are redirected to the "Task statistics" tab, where all your tasks are listed.
+= User portal =
+Under this tab, you find your quotas for the filesystems, followed by your 10 last jobs. You can select a job by its number to see the details. Also, by clicking on (More details), you are redirected to the Job statistics tab, where all your jobs are listed.
 
-= Task statistics =
-The first block shows your current usage (CPU core, memory, and GPUs). These statistics represent the average resources used by all currently running tasks. You can easily compare the resources allocated to you with those you actually use.
+= Job statistics =
+The first block shows your current usage (CPU cores, memory, and GPUs). These statistics represent the average usage by all currently running jobs. You can easily compare the resources allocated to you with those you actually use.
 
-You then have access to an average of the last few days, presented in the form of a graph.
+You then have a graph of the average for the last few days.
+
+Next is a representation of your activity on the filesystems. On the left, the graph shows the number of disk write commands you have performed (input/output operations per second). On the right, you see the amount of data transferred to the servers over a given period (Bandwidth).
+
+The next section shows all the jobs you have already started, which are currently running or pending. In the top left corner, you can filter jobs by their status (OOM, completed, running, etc.). In the top right corner, you can search by job ID or by job name. Finally, in the bottom right corner, there is an option to quickly navigate between pages by performing multiple jumps.
+
+== CPU jobs ==
+At the top, you see the job name, its number, your username, and the status. Details of your submission script are displayed by clicking on Show submitted job script. If the job was launched in interactive mode, the submission script will not be available.
+
+The working directory and the submission command can be seen by clicking on  Show submit command.
+
+The next section shows information on the scheduler. To display the information on your CPU account, click on your account number.
+
+In the Ressources section, you can see the resources used by your job by comparing columns Allocated and Used for the listed parameters.
+
+The CPU graph shows the CPU cores you have requested, over time. On the right, you can select the cores you want to see. Please note that this graph is not available for very short jobs.
+
+This graphs shows the usage of the memory you requested, over time.
+
+The Processes and threads graph shows different parameters. For a multithread job, adding parameters Running threads and Sleeping threads should  not exceed twice the number of cores requested. However, having some Sleeping threads is normal for certain types of programs  (java, Matlab, commercial software or complex programs). There is also a parameter for the program applications that have been executed over time.
+
+The following graphs show filesystem usage by the current job, and not for the entire node. On the left, we have the number of I/O operations per second (IOPS). On the right, the graph illustrates the data transfer rate between the job and the filesystem, over time. This helps identify periods of high or low filesystem activity.
+
+Resource statistics for the entire node may be inaccurate if the node is shared by multiple users. The graph on the left shows the evolution of the bandwidth used by the job over time, in relation to software, licenses, etc. The graph on the right shows the evolution of the network bandwidth used by a job or a set of jobs via the Infiniband network, over time. We can observe periods of massive data transfer (e.g., reading/writing on a filesystem (Lustre), MPI communication between nodes).
+
+The graph on the left shows the evolution of the number of input/output operations per second (IOPS) performed on the local disk, over time. The graph on the right shows the evolution of the bandwidth used on the local disk over time, that is, the amount of data read or written per second.
+
+Usage of local disk space
+
+Power consumption
+
+== CPU jobs (job arrays)==
+
+The page for a CPU job in an array is the same as that for a regular CPU job, except for the Other jobs in the array section. The table lists the other job numbers that are part of the job array, along with information about their status, name, start time, and finish time.
+
+== GPU jobs ==
+
+At the top, you see the job name, its number, your username, and the status. Details of your submission script are displayed by clicking on Show submitted job script. If the job was launched in interactive mode, the submission script will not be available.
+
+The working directory and the submission command are shown by clicking on  Show submit command.
+
+The next section shows information on the scheduler. To display the information on your GPU account, click on your account number.
+
+In the Ressources section, you can see the resources used by your job by comparing columns Allocated and Used for the listed parameters.
+
+The CPU graph shows the CPU cores you have requested, over time. On the right, you can select the cores you want to see. Please note that this graph is not available for very short jobs.
+
+This next graph shows the usage of the memory you requested for CPUs, over time.
+
+The Processes and threads graph shows different parameters.
+
+The following graphs show the usage of the filesystem by the current job, and not for the entire node. On the left, we have the number of I/O operations per second (IOPS). On the right, the graph illustrates the data transfer rate between the job and the filesystem, over time. This helps identify periods of high or low filesystem activity.
+
+The GPU graph shows your GPU usage. The Streaming Multiprocessors (SM) setting indicates the percentage of time taken by the GPU to execute a warp (a group of consecutive threads) in the last sampling. This value should be around 80%. For SM occupancy (defined as the ratio between the number of warps assigned to an SM and the maximum number of warps an SM can handle), a value around 50% is generally expected. Regarding the Tensor setting, the value should be as high as possible. Ideally, your code should use this part of the GPU, which is optimized for multiplications and convolutions of multidimensional matrices. Finally, for FP64, FP32, and FP16 floating-point operations, you should observe significant activity on only one of these, depending on the precision specified by your code.
+
+On the left, you have a graph showing the memory used by the GPU. On the right, a graph of the GPU's memory access cycles shows the percentage of cycles during which the device's memory interface is active sending or receiving data.
+
+The GPU power graph displays the evolution of the GPU's power consumption (in watts), over time.
+
+This next graph shows the GPU bandwidth on the PCIe bus (or PCI Express, for Peripheral Component Interconnect Express).
+
+For statistics on the resources of the entire node, please note that they may be inaccurate if the node is shared among multiple users. The graph on the left shows the evolution of the bandwidth used by the job, over time, in relation to software, licenses, etc. The graph on the right shows the evolution of the network bandwidth used by a job or set of jobs via the Infiniband network, over time. Periods of massive data transfer can be observed (e.g., reading/writing to a filesystem (Lustre), MPI communication between nodes).
+
+The graph on the left shows the evolution of the number of input/output operations per second (IOPS) performed on the local disk, over time. The graph on the right shows the evolution of the bandwidth used on the local disk, over time; that is, the amount of data read or written per second.
+
+Usage of local disk space
+
+Power consumption
+
+= Account statistics =
+
+The Account Statistics section shows your group's usage in two subsections: CPU and GPU.
+
+== CPU accounts ==
+
+Here you have the total number of CPU cores requested by your group, along with their corresponding usage over the past few months. You can also track your priority status, which varies based on your usage.
+
+Applications used most frequently
+
+Here are the resources used by each user in your group.
+
+This graph shows the CPU cores wasted by each user, over time.
+
+Here you see the memory used by each user in your group.
+
+This graph shows the memory wasted by each user.
 
 You then have a representation of your activity on the filesystems. On the left, the graph shows the number of disk write commands you have performed. (input/output operations per second (IOPS)) On the right, you see the amount of data transferred to the servers over a given period. (Bandwidth)
 
-The next section shows all the tasks you have already started, which are currently running or pending. In the top left corner, you can filter tasks by their status (OOM, completed, running, etc.). In the top right corner, you can search by job ID or by name. Finally, in the bottom right corner, there is an option to quickly navigate between pages by performing multiple jumps.
+This lists the last jobs ran by all members of the group.
 
-== CPU task page ==
-At the top, you see the task name, its number, your username, and the status. Details of your submission script are displayed by clicking on Voir le script de la tâche. If the task was launched in interactive mode, the submission script will not be available.
+== GPU accounts ==
+
+Here you can see the total GPU requests for your group, along with their usage over the past few months. You can also track your priority, which varies based on your usage.
+
+This graph shows the software more frequently used.
+
+Here you see the resources used by each user in your group.
+
+This graph shows the quantity of GPUs wasted by each user.
+
+Here you see the CPU allocated and used by your GPU jobs.
+
+This graph shows the CPUs wasted by your GPU jobs.
+
+Here you see the memory used by each user in your group.
+
+This graph shows the memory wasted by each user.
+
+You then have a representation of your activity on the filesystems. On the left, the graph shows the number of disk write commands you have performed. (input/output operations per second (IOPS)) On the right, you see the amount of data transferred to the servers over a given period. (Bandwidth)
+
+Here you see the last jobs that were run by your group.
+
+= Cloud statistics =
+
+The table Your Instances displays all the virtual machines associated with your account. The Flavor column refers to the virtual machine type. The UUID column is a unique identifier assigned to each virtual machine.
+
+Each virtual machine has its own usage statistics (CPU cores, memory, disk bandwidth, IOPS and network bandwidth) that can be shown for the last month, week, day or hour.
+
+
+================================================================================
+PAGE: Metrix/en-ca
+URL: https://docs.alliancecan.ca/wiki/Metrix/en-ca
+Category: General
+================================================================================
+
+
+= Aperçu =
+
+Le portail Metrix est un site web destiné aux usagers de l'Alliance. Il exploite les informations collectées sur les nœuds de calcul et les serveurs de gestion pour générer, de manière interactive, des données permettant aux usagers de suivre en temps réel leur utilisation des ressources (CPU, GPU, mémoire, système de fichiers).
+
+Rorqual	https://metrix.rorqual.alliancecan.ca
+Narval 	http://metrix.narval.alliancecan.ca
+Nibi   	https://portal.nibi.sharcnet.ca
+tamIA  	https://portail.tamia.ecpia.ca
+Vulcan 	http://metrix.vulcan.alliancecan.ca
+
+Performance des système de fichiers
+
+On retrouve ici les graphiques de bandes passantes et d'opérations sur les métadonnées, accompagnés des options de visualisation suivantes: dernière semaine, dernier jour et dernière heure.
+
+Nœuds de connexion
+
+Les statistiques d’utilisation des CPU, de la mémoire, de la charge système et du réseau sont présentées dans cet onglet, avec les options de visualisation suivantes : dernière semaine, dernier jour et dernière heure.
+
+Ordonnancement
+
+Cet onglet présente des statistiques sur les cœurs et les GPU alloués de la grappe, avec les options de visualisation suivantes : dernière semaine, dernier jour et dernière heure.
+
+Logiciels scientifiques
+
+Les logiciels les plus utilisés avec les cœurs CPU et les GPU sont présentés sous forme de graphiques.
+
+Nœuds de transfert de données
+
+Les statistiques de bande passante des nœuds de transfert de données sont présentées dans cet onglet.
+
+= Sommaire utilisateur =
+Sous l'onglet sommaire utilisateur, vous trouverez vos quotas des différents systèmes de fichiers, suivis de vos 10 dernières tâches. Vous pouvez en sélectionner une par son numéro et accéder à la page détaillée. De plus, en cliquant sur (Plus de détails), vous serez redirigé directement vers l'onglet Statistiques des tâches, où vous allez retrouver toutes vos tâches.
+
+= Statistiques des tâches =
+Le premier bloc affiche votre utilisation actuelle (Cœur CPU, mémoire et GPUs). Ces statistiques représentent la moyenne des ressources utilisées par l’ensemble des tâches en cours d’exécution. Vous pouvez comparer facilement les ressources qui vous sont allouées à celles que vous utilisez réellement.
+
+Vous avez ensuite accès à une moyenne des derniers jours, présentée sous forme de graphique.
+
+Vous avez ensuite une représentation de votre activité sur les systèmes de fichiers. À gauche, le graphique montre le nombre de commandes d’écriture sur disque que vous avez effectuées. (input/output operations per second (IOPS)) À droite, vous voyez la quantité de données transférées vers les serveurs sur une période donnée. (Bande passante)
+
+La section suivante présente l’ensemble des tâches que vous avez déjà lancées, qui sont actuellement en cours d’exécution ou en attente. En haut à gauche, vous pouvez filtrer les tâches par statut (OOM, completed, running, etc.). En haut à droite, vous pouvez effectuer une recherche par numéro de tâche (Job ID) ou par nom. Enfin, en bas à droite, une option vous permet de naviguer rapidement entre les pages en effectuant des sauts multiples.
+
+== Page d'une tâche CPU ==
+Vous avez en haut le nom de la tâche, son numéro et votre nom d'utilisateur ainsi que le statut. Les détails de votre script de soumission s'affichent en cliquant sur Voir le script de la tâche. Si la tâche a été lancée en mode interactif, le script de soumission ne sera pas disponible.
 
 Le répertoire de travail et la commande de soumission sont accessibles en cliquant sur Voir la commande de soumission.
 
@@ -24936,13 +25123,13 @@ Le graphique Process and threads vous permet d'observer différents paramètres 
 
 Les graphiques suivants représentent l'utilisation du système de fichier pour la tâche en cours et non du nœud au complet. À gauche, une représentation du nombre d’opérations d’entrée/sortie par seconde (IOPS) est affichée. À droite, le graphique illustre le débit de transfert de données entre la tâche et le système de fichiers au fil du temps. Ce graphique permet d’identifier les périodes d’activité intense ou de faible utilisation du système de fichiers.
 
-Resource statistics for the entire node may be inaccurate if the node is shared between multiple users. The graph on the left shows the evolution of the bandwidth used by the task over time, in relation to software, licenses, etc. The graph on the right shows the evolution of the network bandwidth used by a task or a set of tasks via the Infiniband network, over time. We can observe periods of massive data transfer (e.g.: reading/writing on a filesystem (Lustre), MPI communication between nodes).
+Pour les statistiques des ressources du nœud au complet, sachez quelles peuvent être imprécises si le nœud est partagé entre plusieurs utilisateurs. Le graphique de gauche, illustre l'évolution de la bande passante utilisée par la tâche au fil du temps, en lien avec les logiciels, les licences, etc. Le graphique de droite représente l’évolution de la bande passante réseau utilisée par une tâche ou un ensemble de tâches via le réseau Infiniband, au fil du temps. On peut y observer les périodes de transfert massif de données (ex. : lecture/écriture sur un système de fichiers (Lustre), communication MPI entre nœuds).
 
 Le graphique de gauche illustre l’évolution du nombre d’opérations d’entrée/sortie par seconde (IOPS) effectuées sur le disque local au fil du temps. Celui de droite montre l’évolution de la bande passante utilisée sur le disque local au fil du temps, c’est-à-dire la quantité de données lues ou écrites par seconde.
 
-Use of local disk space
+Représentation graphique de l’utilisation de l’espace disque local.
 
-Capacity used
+Représentation graphique de la puissance utilisée.
 
 == Page d'une tâche CPU (vecteur de tâches, job array)==
 
@@ -24972,65 +25159,66 @@ Le graphique GPU représente votre utilisation des GPU. Le paramètre Streaming 
 
 Le graphique de puissance GPU affiche l’évolution de la consommation énergétique (en watts) du GPU au fil du temps.
 
-À gauche, la bande passante GPU sur le bus PCIe (ou PCI Express, pour Peripheral Component Interconnect Express). À droite, bande passante GPU sur le bus NVlink. Le bus NVLink est une technologie développée par NVIDIA pour permettre une communication ultra-rapide entre plusieurs GPU.
+This next graph shows the GPU bandwidth on the PCIe bus (or PCI Express, for Peripheral Component Interconnect Express).
+thumb|900px|center
 
 Pour les statistiques des ressources du nœud au complet, sachez quelles peuvent être imprécises si le nœud est partagé entre plusieurs utilisateurs. Le graphique de gauche, illustre l'évolution de la bande passante utilisée par la tâche au fil du temps, en lien avec les logiciels, les licences, etc. Le graphique de droite représente l’évolution de la bande passante réseau utilisée par une tâche ou un ensemble de tâches via le réseau Infiniband, au fil du temps. On peut y observer les périodes de transfert massif de données (ex. : lecture/écriture sur un système de fichiers (Lustre), communication MPI entre nœuds).
 
 Le graphique de gauche illustre l’évolution du nombre d’opérations d’entrée/sortie par seconde (IOPS) effectuées sur le disque local au fil du temps. Celui de droite montre l’évolution de la bande passante utilisée sur le disque local au fil du temps, c’est-à-dire la quantité de données lues ou écrites par seconde.
 
-Use of local disk space
+Représentation graphique de l’utilisation de l’espace disque local.
 
-Capacity used
+Représentation graphique de la puissance utilisée.
 
-= Account statistics =
+= Statistiques d'un compte =
 
 La section Statistique d'un compte regroupe l'utilisation de votre groupe dans deux sous-sections: CPU et GPU.
 
-== CPU account statistics==
+== Statistiques d'un compte CPU ==
 
 Vous y trouverez la somme des demandes de votre groupe pour les cœurs CPU, ainsi que leur utilisation correspondante au cours des derniers mois. Vous pouvez également suivre l'évolution de votre priorité, qui varie en fonction de votre utilisation.
 
-This graph shows the applications that are used more frequently.
+Ce graphique montre les applications les plus couramment utilisées.
 
 Vous pouvez consulter ici l'utilisation des ressources par chacun des utilisateurs de votre groupe.
 
-This graph shows the CPU cores wasted by each user, over time.
+Ce graphique montre l’évolution dans le temps des cœurs CPU gaspillés par chaque utilisateur du groupe.
 
 Vous pouvez consulter ici l’utilisation de la mémoire par chacun des utilisateurs de votre groupe.
 
-This graph shows the memory wasted by each user.
+Ce graphique représente la mémoire gaspillée par chaque utilisateur.
 
 Vous avez ensuite une représentation de votre activité sur les systèmes de fichiers. À gauche, le graphique montre le nombre de commandes d’écriture sur disque que vous avez effectuées. (input/output operations per second (IOPS)) À droite, vous voyez la quantité de données transférées vers les serveurs sur une période donnée. (Bande passante)
 
 Vous avez une liste des dernières tâches qui ont été effectuées pour l'ensemble du groupe.
 
-== GPU account statistics==
+== Statistiques d'un compte GPU ==
 
-Here you can see the total GPU requests for your group, along with their usage over the past few months. You can also track your priority, which varies based on your usage.
+Vous retrouvez ici la somme des demandes GPUs de votre groupe, ainsi que l'utilisation correspondante au cours des derniers mois. Vous pouvez également suivre l’évolution de votre priorité, qui varie en fonction de votre utilisation.
 
-This graph shows the software that are more frequently used.
+Ce graphique représente les applications les plus couramment utilisées.
 
-Here you see the resources used by each user in your group.
+Vous pouvez consulter ici l’utilisation des ressources par chacun des utilisateurs de votre groupe.
 
-This graph shows the quantity of GPUs wasted by each user.
+Le graphique suivant représente, dans le temps, la quantité de GPU gaspillés par utilisateur.
 
-Here you see the CPU allocated and used by your GPU tasks.
+Vous avez ensuite les cœurs CPUs alloués et utilisés dans vos tâches GPU.
 
-This graph shows the CPUs wasted by your GPU tasks.
+Cette figure illustre ici le gaspillage des CPUs dans le cadre de vos tâches GPU.
 
-Here you see the memory used by each user in your group.
+Vous pouvez visualiser ici l'utilisation de la mémoire pour chaque utilisateur de votre groupe.
 
-This graph shows the memory wasted by each user.
+Ce graphique illustre la mémoire gaspillée par chaque utilisateur.
 
 Vous avez ensuite une représentation de votre activité sur les systèmes de fichiers. À gauche, le graphique montre le nombre de commandes d’écriture sur disque que vous avez effectuées. (input/output operations per second (IOPS)) À droite, vous voyez la quantité de données transférées vers les serveurs sur une période donnée. (Bande passante)
 
-Here you see the last tasks that were run by your group.
+Voici la liste des dernières tâches effectuées au niveau de votre groupe.
 
-= Cloud statistics =
+= Statistiques du cloud =
 
 Le premier tableau « Vos instances » présente l'ensemble des machines virtuelles associées à un compte. La colonne « Saveur » fait référence au type de machine virtuelle. La colonne « UUID » correspond à un identifiant unique attribué à chaque machine virtuelle.
 
-Then, each virtual machine has its own usage statistics (CPU cores, memory, disk bandwidth, IOPS and network bandwidth) that can be shown for the last month, week, day or hour.
+Ensuite, chaque machine virtuelle dispose de ses propres statistiques d'utilisation (Cœurs CPU, Mémoire, Bande passante disque, IOPS disque et Bande passante réseau) affichables pour le dernier mois, la dernière semaine, le dernier jour ou la dernière heure.
 
 
 ================================================================================
@@ -42678,7 +42866,7 @@ This page is specifically for the Open OnDemand service attached to Trillium.  G
 
 = Porting existing virtual environments to Open OnDemand =
 
-IMPORTANT: Because of the change of operating system and software stack, your existing virtual environment kernels for Python may not work right away in the OnDemand site. You should be able to activate your Python environments in a Trillium terminal (see Terminal access) below, with all required Trillium modules loaded, and then issue the command venv2jup to get them working correctly.
+IMPORTANT: Because of the change of operating system and software stack, your existing virtual environment kernels for Python may not work right away in the OnDemand site. You should be able to activate your Python environments in a Trillium terminal (see Terminal access) below, with all required Trillium modules loaded, and then issue the command venv2jup to get them working correctly. Please see JupyterLab Configuration for full instructions.
 
 =Introduction=
 
@@ -42754,6 +42942,24 @@ If you would like an application installed please email us at support@scinet.uto
 * Jupyter Lab Video Tutorial
 * Trillium Desktop Video Tutorial
 
+==JupyterLab Configuration==
+
+There are two ways to run JupyterLab:
+
+Option 1: Working with the default Python 3 (ipykernel)
+
+The default kernel comes with the following Python packages pre-installed: numpy, redis, jwcrypto, jupyterlmod, matplotlib, h5py, cython, pandas, ipympl, jupyterlab_favorites and jupyter-resource-usage. You can start a JupyterLab session with the default kernel and use these packages without any additional configuration. If you need to use other packages that are not listed above, you can load the required modules prior to starting your kernel by using the Software Modules tab located at the far left of the interface, see Fig. 7. If your kernel is already running you will need to shut it down and start it again for the changes to take effect by clicking Kernel > Shut Down Kernel in the top menu.
+
+If you want to use a Python package that is not installed by default or included as a software module, you can create a Python virtual environment with the required packages installed and run it as a JupyterLab kernel (see Option 2 below).
+
+Option 2: Working with a custom Python virtual environment.
+
+From a terminal (started either in JupyterLab or by clicking Cluster -> Trillium Shell Access from the OnDemand navigation bar) you can create your own Python virtual environment and install the packages you need. For example, to create a virtual environment called myenv and install the numpy package, you can run the following commands:
+
+To turn this into a JupyterLab kernel, run the venv2jup command from within the activated virtual environment:
+
+When you start a JupyterLab session, you should now see your virtual environment, myenv, as a kernel option.
+
 =Running an application GUI=
 
 If you would like to run software that has a graphical user interface (GUI) and is not yet installed as an interactive application, such as Octave or Blender, you can do so using the Trillium Desktop application. This app provides a remote desktop environment that you can access through your web browser. In the following example, we will run Octave's GUI:
@@ -42787,6 +42993,8 @@ The extra fields at the top of the page allow you to change how your job is subm
 Once you are happy with your job script, click on the Submit button to submit the job to the scheduler and save your script to the Script Location. If your job was submitted successfully, you will see a confirmation message at the top of the page with your job ID: .
 
 Note: The template scripts provided in Open Composer are basic examples to get you started. You will need to modify the job script further to suit your specific needs, such as loading your required modules and specifying input/output files. The job script still needs to conform to the limits set by the Trillium Slurm scheduler. Please refer to the Trillium documentation for more information on how to write job scripts.
+
+For more detailed instructions on Open Composer please see the user manual.
 
 * Open Composer Video Tutorial
 
@@ -42829,7 +43037,7 @@ Trillium has a wide variety of software that can be accessed via modules. They c
 
 = Debugging errors =
 
-If you encounter any errors while using an interactive Open OnDemand job, you can check the logs for more information. To access the logs, navigate to the My Interactive Sessions tab and find your active session. Click on the output.log link (see Figure. 14) to open a separate tab which displays the output of your job. This file contains the standard output and error messages generated by the job, which can help you identify any issues that may have occurred during the session. If you require further assistance, click on the  button shown in your job's session card. Please include the output.log file and any other relevant information to help us assist you more effectively.
+If you encounter any errors while using an interactive Open OnDemand job, you can check the logs for more information. To access the logs, navigate to the My Interactive Sessions tab and find your active session. Click on the output.log link (see Figure. 15) to open a separate tab which displays the output of your job. This file contains the standard output and error messages generated by the job, which can help you identify any issues that may have occurred during the session. If you require further assistance, click on the  button shown in your job's session card. Please include the output.log file and any other relevant information to help us assist you more effectively.
 
 = Video tutorials =
 
@@ -42884,7 +43092,7 @@ This page is specifically for the Open OnDemand service attached to Trillium.  G
 
 = Porting existing virtual environments to Open OnDemand =
 
-IMPORTANT: Because of the change of operating system and software stack, your existing virtual environment kernels for Python may not work right away in the OnDemand site. You should be able to activate your Python environments in a Trillium terminal (see Terminal access) below, with all required Trillium modules loaded, and then issue the command venv2jup to get them working correctly.
+IMPORTANT: Because of the change of operating system and software stack, your existing virtual environment kernels for Python may not work right away in the OnDemand site. You should be able to activate your Python environments in a Trillium terminal (see Terminal access) below, with all required Trillium modules loaded, and then issue the command venv2jup to get them working correctly. Please see JupyterLab Configuration for full instructions.
 
 =Introduction=
 
@@ -42960,6 +43168,24 @@ If you would like an application installed please email us at support@scinet.uto
 * Jupyter Lab Video Tutorial
 * Trillium Desktop Video Tutorial
 
+==JupyterLab Configuration==
+
+There are two ways to run JupyterLab:
+
+Option 1: Working with the default Python 3 (ipykernel)
+
+The default kernel comes with the following Python packages pre-installed: numpy, redis, jwcrypto, jupyterlmod, matplotlib, h5py, cython, pandas, ipympl, jupyterlab_favorites and jupyter-resource-usage. You can start a JupyterLab session with the default kernel and use these packages without any additional configuration. If you need to use other packages that are not listed above, you can load the required modules prior to starting your kernel by using the Software Modules tab located at the far left of the interface, see Fig. 7. If your kernel is already running you will need to shut it down and start it again for the changes to take effect by clicking Kernel > Shut Down Kernel in the top menu.
+
+If you want to use a Python package that is not installed by default or included as a software module, you can create a Python virtual environment with the required packages installed and run it as a JupyterLab kernel (see Option 2 below).
+
+Option 2: Working with a custom Python virtual environment.
+
+From a terminal (started either in JupyterLab or by clicking Cluster -> Trillium Shell Access from the OnDemand navigation bar) you can create your own Python virtual environment and install the packages you need. For example, to create a virtual environment called myenv and install the numpy package, you can run the following commands:
+
+To turn this into a JupyterLab kernel, run the venv2jup command from within the activated virtual environment:
+
+When you start a JupyterLab session, you should now see your virtual environment, myenv, as a kernel option.
+
 =Running an application GUI=
 
 If you would like to run software that has a graphical user interface (GUI) and is not yet installed as an interactive application, such as Octave or Blender, you can do so using the Trillium Desktop application. This app provides a remote desktop environment that you can access through your web browser. In the following example, we will run Octave's GUI:
@@ -42993,6 +43219,8 @@ The extra fields at the top of the page allow you to change how your job is subm
 Once you are happy with your job script, click on the Submit button to submit the job to the scheduler and save your script to the Script Location. If your job was submitted successfully, you will see a confirmation message at the top of the page with your job ID: .
 
 Note: The template scripts provided in Open Composer are basic examples to get you started. You will need to modify the job script further to suit your specific needs, such as loading your required modules and specifying input/output files. The job script still needs to conform to the limits set by the Trillium Slurm scheduler. Please refer to the Trillium documentation for more information on how to write job scripts.
+
+For more detailed instructions on Open Composer please see the user manual.
 
 * Open Composer Video Tutorial
 
@@ -43035,7 +43263,7 @@ Trillium has a wide variety of software that can be accessed via modules. They c
 
 = Debugging errors =
 
-If you encounter any errors while using an interactive Open OnDemand job, you can check the logs for more information. To access the logs, navigate to the My Interactive Sessions tab and find your active session. Click on the output.log link (see Figure. 14) to open a separate tab which displays the output of your job. This file contains the standard output and error messages generated by the job, which can help you identify any issues that may have occurred during the session. If you require further assistance, click on the  button shown in your job's session card. Please include the output.log file and any other relevant information to help us assist you more effectively.
+If you encounter any errors while using an interactive Open OnDemand job, you can check the logs for more information. To access the logs, navigate to the My Interactive Sessions tab and find your active session. Click on the output.log link (see Figure. 15) to open a separate tab which displays the output of your job. This file contains the standard output and error messages generated by the job, which can help you identify any issues that may have occurred during the session. If you require further assistance, click on the  button shown in your job's session card. Please include the output.log file and any other relevant information to help us assist you more effectively.
 
 = Video tutorials =
 

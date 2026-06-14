@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-06-07T08:43:47.557804+00:00",
-  "total_pages": 456,
+  "last_updated": "2026-06-14T09:00:37.888417+00:00",
+  "total_pages": 457,
   "pages": [
     {
       "page_id": 10049,
@@ -250,7 +250,7 @@
       "title": "Ansys/en",
       "url": "https://docs.alliancecan.ca/wiki/Ansys/en",
       "category": "General",
-      "last_modified": "2026-05-30T15:02:01Z",
+      "last_modified": "2026-06-11T14:18:59Z",
       "file_path": "docs/pages/General/Ansys.md",
       "slug": "Ansys"
     },
@@ -1876,10 +1876,10 @@
     },
     {
       "page_id": 31422,
-      "title": "Metrix",
+      "title": "Metrix/en",
       "url": "https://docs.alliancecan.ca/wiki/Metrix/en",
       "category": "General",
-      "last_modified": "2025-09-24T18:53:41Z",
+      "last_modified": "2026-06-05T16:11:06Z",
       "file_path": "docs/pages/General/Metrix.md",
       "slug": "Metrix"
     },
@@ -3823,7 +3823,7 @@
       "title": "Abaqus",
       "url": "https://docs.alliancecan.ca/wiki/Abaqus",
       "category": "General",
-      "last_modified": "2026-05-29T22:15:56Z",
+      "last_modified": "2026-06-01T20:18:53Z",
       "file_path": "docs/pages/General/Abaqus.md",
       "slug": "Abaqus"
     },
@@ -3877,7 +3877,7 @@
       "title": "Trillium Open OnDemand Quickstart",
       "url": "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart",
       "category": "General",
-      "last_modified": "2026-05-29T21:23:11Z",
+      "last_modified": "2026-06-11T14:55:16Z",
       "file_path": "docs/pages/General/Trillium_Open_OnDemand_Quickstart.md",
       "slug": "Trillium_Open_OnDemand_Quickstart"
     },
@@ -4066,7 +4066,7 @@
       "title": "Arbutus Migration Guide",
       "url": "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide",
       "category": "User Guide",
-      "last_modified": "2026-04-13T17:25:56Z",
+      "last_modified": "2026-06-04T14:03:27Z",
       "file_path": "docs/pages/User Guide/Arbutus_Migration_Guide.md",
       "slug": "Arbutus_Migration_Guide"
     },
@@ -4105,6 +4105,15 @@
       "last_modified": "2026-05-25T19:46:51Z",
       "file_path": "docs/pages/General/Qiskit.md",
       "slug": "Qiskit"
+    },
+    {
+      "page_id": 33374,
+      "title": "Metrix/en-ca",
+      "url": "https://docs.alliancecan.ca/wiki/Metrix/en-ca",
+      "category": "General",
+      "last_modified": "2026-06-05T16:12:04Z",
+      "file_path": "docs/pages/General/Metrix_en-ca.md",
+      "slug": "Metrix_en-ca"
     }
   ]
 }

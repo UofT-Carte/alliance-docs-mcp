@@ -1,9 +1,9 @@
 ---
-title: "Arbutus Migration Guide/en"
-url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en"
+title: "Arbutus Migration Guide"
+url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide"
 category: "User Guide"
-last_modified: "2026-05-11T19:39:48Z"
-page_id: 9289
+last_modified: "2026-06-04T14:03:27Z"
+page_id: 9230
 display_title: "Arbutus Migration Guide"
 ---
 
@@ -144,7 +144,7 @@ pip install python-openstackclient
 
 #  In the legacy cloud web user interface, shut down the instance and detach the volume.If the volume is for booting an instance, delete the instance, but keep the volume.Create an image of the desired volume (Volumes -> Volumes and Upload to Image from the drop-down menu).Make sure to select RAW as the disk format.
 #  The command line can also be used to do this:
-openstack image create –volume   --privateThis command runs in the background and may take some time. Once the image is created, it will show up under Compute -> Images with the name you specified in the previous step. You can obtain the id of the image by clicking on its name. Eventually the command line will show the status go from saving to active; this may take an hour or longer, depending on the size of your volume.
+openstack image create --volume   --privateThis command runs in the background and may take some time. Once the image is created, it will show up under Compute -> Images with the name you specified in the previous step. You can obtain the id of the image by clicking on its name. Eventually the command line will show the status go from saving to active; this may take an hour or longer, depending on the size of your volume.
 openstack image show
 #  In the legacy cloud session, download the image (replace the  and  with real values).
 openstack image save --file

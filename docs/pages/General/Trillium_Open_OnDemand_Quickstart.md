@@ -1,9 +1,9 @@
 ---
-title: "Trillium Open OnDemand Quickstart/en"
-url: "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart/en"
+title: "Trillium Open OnDemand Quickstart"
+url: "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart"
 category: "General"
-last_modified: "2026-05-29T21:24:01Z"
-page_id: 32168
+last_modified: "2026-06-11T14:55:16Z"
+page_id: 32098
 display_title: "Trillium Open OnDemand Quickstart"
 ---
 
@@ -11,7 +11,7 @@ This page is specifically for the Open OnDemand service attached to Trillium.  G
 
 = Porting existing virtual environments to Open OnDemand =
 
-IMPORTANT: Because of the change of operating system and software stack, your existing virtual environment kernels for Python may not work right away in the OnDemand site. You should be able to activate your Python environments in a Trillium terminal (see Terminal access) below, with all required Trillium modules loaded, and then issue the command venv2jup to get them working correctly.
+IMPORTANT: Because of the change of operating system and software stack, your existing virtual environment kernels for Python may not work right away in the OnDemand site. You should be able to activate your Python environments in a Trillium terminal (see Terminal access) below, with all required Trillium modules loaded, and then issue the command venv2jup to get them working correctly. Please see JupyterLab Configuration for full instructions.
 
 =Introduction=
 
@@ -87,6 +87,24 @@ If you would like an application installed please email us at support@scinet.uto
 * Jupyter Lab Video Tutorial
 * Trillium Desktop Video Tutorial
 
+==JupyterLab Configuration==
+
+There are two ways to run JupyterLab:
+
+Option 1: Working with the default Python 3 (ipykernel)
+
+The default kernel comes with the following Python packages pre-installed: numpy, redis, jwcrypto, jupyterlmod, matplotlib, h5py, cython, pandas, ipympl, jupyterlab_favorites and jupyter-resource-usage. You can start a JupyterLab session with the default kernel and use these packages without any additional configuration. If you need to use other packages that are not listed above, you can load the required modules prior to starting your kernel by using the Software Modules tab located at the far left of the interface, see Fig. 7. If your kernel is already running you will need to shut it down and start it again for the changes to take effect by clicking Kernel > Shut Down Kernel in the top menu.
+
+If you want to use a Python package that is not installed by default or included as a software module, you can create a Python virtual environment with the required packages installed and run it as a JupyterLab kernel (see Option 2 below).
+
+Option 2: Working with a custom Python virtual environment.
+
+From a terminal (started either in JupyterLab or by clicking Cluster -> Trillium Shell Access from the OnDemand navigation bar) you can create your own Python virtual environment and install the packages you need. For example, to create a virtual environment called myenv and install the numpy package, you can run the following commands:
+
+To turn this into a JupyterLab kernel, run the venv2jup command from within the activated virtual environment:
+
+When you start a JupyterLab session, you should now see your virtual environment, myenv, as a kernel option.
+
 =Running an application GUI=
 
 If you would like to run software that has a graphical user interface (GUI) and is not yet installed as an interactive application, such as Octave or Blender, you can do so using the Trillium Desktop application. This app provides a remote desktop environment that you can access through your web browser. In the following example, we will run Octave's GUI:
@@ -120,6 +138,8 @@ The extra fields at the top of the page allow you to change how your job is subm
 Once you are happy with your job script, click on the Submit button to submit the job to the scheduler and save your script to the Script Location. If your job was submitted successfully, you will see a confirmation message at the top of the page with your job ID: .
 
 Note: The template scripts provided in Open Composer are basic examples to get you started. You will need to modify the job script further to suit your specific needs, such as loading your required modules and specifying input/output files. The job script still needs to conform to the limits set by the Trillium Slurm scheduler. Please refer to the Trillium documentation for more information on how to write job scripts.
+
+For more detailed instructions on Open Composer please see the user manual.
 
 * Open Composer Video Tutorial
 
@@ -162,7 +182,7 @@ Trillium has a wide variety of software that can be accessed via modules. They c
 
 = Debugging errors =
 
-If you encounter any errors while using an interactive Open OnDemand job, you can check the logs for more information. To access the logs, navigate to the My Interactive Sessions tab and find your active session. Click on the output.log link (see Figure. 14) to open a separate tab which displays the output of your job. This file contains the standard output and error messages generated by the job, which can help you identify any issues that may have occurred during the session. If you require further assistance, click on the  button shown in your job's session card. Please include the output.log file and any other relevant information to help us assist you more effectively.
+If you encounter any errors while using an interactive Open OnDemand job, you can check the logs for more information. To access the logs, navigate to the My Interactive Sessions tab and find your active session. Click on the output.log link (see Figure. 15) to open a separate tab which displays the output of your job. This file contains the standard output and error messages generated by the job, which can help you identify any issues that may have occurred during the session. If you require further assistance, click on the  button shown in your job's session card. Please include the output.log file and any other relevant information to help us assist you more effectively.
 
 = Video tutorials =
 

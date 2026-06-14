@@ -1,13 +1,14 @@
 ---
-title: "Abaqus/en"
-url: "https://docs.alliancecan.ca/wiki/Abaqus/en"
+title: "Abaqus"
+url: "https://docs.alliancecan.ca/wiki/Abaqus"
 category: "General"
-last_modified: "2026-05-29T21:20:32Z"
-page_id: 10030
+last_modified: "2026-06-01T20:18:53Z"
+page_id: 7347
 display_title: "Abaqus"
 ---
 
 __FORCETOC__
+
 Abaqus FEA is a software suite for finite element analysis and computer-aided engineering.
 
 = Licensing =
@@ -18,7 +19,7 @@ Abaqus software modules are available on the Alliance clusters, however you must
 
 To configure your account on a cluster to use a FLEXnet-based (aka FlexLM) Abaqus license server, a single file named ~/.licenses/abaqus.lic must be created, specifying its fully qualified hostname FLEXnet-SERVER-HOSTNAME and license manager daemon port number LMGRD-PORT-NUMBER. These two pieces of information are then assigned to the ABAQUSLM_LICENSE_FILE environment variable whenever an Abaqus module is loaded by reading
 
- [l2 (login node):~/.licenses] cat abaqus.lic
+[l2 (login node):~/.licenses] cat abaqus.lic
  prepend_path("ABAQUSLM_LICENSE_FILE","LMGRD-PORT-NUMBER@FLEXnet-SERVER-HOSTNAME")
 
 To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_LICENSE_FILE.
@@ -27,11 +28,11 @@ To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_
 
 To use a DSLS based license server (Dassault Systèmes License Server), you must first configure two small text files named abaqus_v6.env and DSLicSrv.txt so Abaqus can find the DSLS license server. You may either put a copy of abaqus_v6.env file into each abaqus working directory **OR**  put a single copy into your home directory.  Note that the abaqus_v6.env file must contain the absolute path to your  DSLicSrv.txt file so that both the dslsstat command and abaqus command will run properly.  Otherwise you will need to set export DSLS_CONFIG=/path/to/DSLicSrv.txt for every job you submit.  For example, placing both files into your home directory, you would just need to replace  with the output from "echo $USER" and then substitute the server IP and PORT values into  DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER in the following :
 
- [l2 (login node):~ ] cat abaqus_v6.env
+[l2 (login node):~ ] cat abaqus_v6.env
  license_server_type=DSLS
  dsls_license_config="/home//DSLicSrv.txt"
 
-  [l2 (login node):~ ] cat DSLicSrv.txt
+ [l2 (login node):~ ] cat DSLicSrv.txt
   DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER
 
 With both files setup, you may now check if the license server is reachable and responding by running:
@@ -43,20 +44,31 @@ With both files setup, you may now check if the license server is reachable and 
 
 == New servers ==
 
-If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports of your Abaqus server are reachable from all cluster compute nodes. For help, please write to technical support and be sure to include the following:
-* flexlm port number & static vendor port number (FLEXnet server),
-* administrative port number & licensing client port number (DSLS server),
-* fully qualified domain name or IPV4 address of your new Abaqus server.
+If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports (https protocol) of your Abaqus server are reachable from all cluster compute nodes through the client/server firewalls. For help, please write to technical support and be sure to include the following:
+* FLEXnet SERVER: flex lmgrd port number (default 27000), static vendor port number (default 28000)
+* DSLS SERVER: administrative port number (default 4084), licensing client port number (default 4085)
+* Fully qualified domain name or IPV4 address of your new Abaqus server
 You will be sent a list of cluster IP addresses (known as NAT nodes) so that your administrator can open the local server firewall to allow connections from the cluster on both ports. Please note that a special license agreement must generally be negotiated and signed by both SIMULIA and your institution before a campus license may be legally used on Alliance hardware located remotely at another institution.
 
 == License queuing ==
 The default setup for the license server is to queue jobs started on the cluster by Slurm if not enough tokens are available. There are two options to alter this behaviour ie) so jobs don't sit idle on a cluster compute node waiting for a license indefinitely wasting valuable resources. The first option is to terminate a job immediately if not enough licenses are available, therefore never entering a queue. To specify this setting, create a text file named abaqus_v6.env in either your /home OR working (submit) directory containing the line: lmlicensequeuing=OFF. The second option is to specify a finite wait time where the job can enter into a queued state on the license server such as 1 minute by adding the line: lmhanglimit=1. If within 1 minute sufficient licenses do not come available then the job will be dequeud by the license server and in turn be terminated by Slurm.  For each option, messages will be printed at the bottom of the Slurm output file as shown in the Example below.
 
-= Version compatibility =
+= Version notes =
 
-== Module change ==
+== 2026 ==
 
-A new module for abaqus/2026 is now installed into the default StdEnv/2023 environment. This new version resolves the *** buffer overflow detected *** error with abaqus/2021 on all recent clusters. Note that each Slurm script on this wiki page has been updated to work with both abaqus/2026 and abaqus/2021 where possible therefore all personal Slurm scripts should likewise be updated by researchers.  The abaqus/2026 module contains the initial Abaqus 2026 Golden release. Another module named abaqus/2026.2606 containing Abaqus 2026 FP.CFA.2606 level updates will be installed next.
+A new module abaqus/2026 containing the initial Abaqus 2026 Golden/GA release has been installed into the default StdEnv/2023 environment.  Another module named abaqus/2026.2614 containing the latest SIMULIA Established Products 2026 Fix Packs currently at level FD02 (FP.2614) will be made available as soon as possible. To verify your setup run the following :
+
+ module load abaqus/2026
+ module load intel/2024
+ abaqus verify -all
+
+All tests should Succeed except for CAE (unless you log into an ondemand/juypter graphical desktop
+) and TOSCA (unless you set export FED_DSFLEX_LICENSE_CONFIG=port@hostname) before running the verification.
+
+== 2021 ==
+
+Its recommended to discontinue use of abaqus/2021 installed under the previous StdEnv/2020 since this legacy version generates *** buffer overflow detected *** error on all recent clusters.  To workaround this problem an unshare workaround has been added into each slurm script found in this wiki.  This however only works on single node jobs and does not guarantee accurate results.
 
 = Cluster job submission =
 
@@ -174,7 +186,7 @@ To completely satisfy the recommended "MEMORY TO OPERATIONS REQUIRED MINIMIZE I/
 
 To determine the required Slurm memory for multi-node Slurm scripts, memory estimates (per compute process) required to minimize I/O are given in the output dat file of completed jobs. If mp_host_split is not specified (or is set to 1) then the total number of compute processes will equal the number of nodes. The mem-per-cpu value can then be roughly determined by multiplying the largest memory estimate by the number of nodes and then dividing by the number or ntasks. However, if a value for mp_host_split is specified (greater than 1) than the mem-per-cpu value can be roughly determined from the largest memory estimate times the number of nodes times the value of mp_host_split divided by the number of tasks. Note that mp_host_split must be less than or equal to the number of cores per node assigned by Slurm at runtime otherwise Abaqus will terminate. This scenario can be controlled by uncommenting to specify a value for tasks-per-node. The following definitive statement is given in every output dat file and mentioned here for reference:
 
-  THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
+ THE UPPER LIMIT OF MEMORY THAT CAN BE ALLOCATED BY ABAQUS WILL IN GENERAL DEPEND ON THE VALUE OF
  THE "MEMORY" PARAMETER AND THE AMOUNT OF PHYSICAL MEMORY AVAILABLE ON THE MACHINE. PLEASE SEE
  THE "ABAQUS ANALYSIS USER'S MANUAL" FOR MORE DETAILS. THE ACTUAL USAGE OF MEMORY AND OF DISK
  SPACE FOR SCRATCH DATA WILL DEPEND ON THIS UPPER LIMIT AS WELL AS THE MEMORY REQUIRED TO MINIMIZE
@@ -284,12 +296,12 @@ When the output of query I) above indicates that a job for a particular username
 
 The following shows the situation where a user submitted two 6-core jobs (each requiring 12 tokens) in quick succession. The scheduler then started each job on a different node in the order they were submitted. Since the user had 10 Abaqus compute tokens, the first job (27527287) was able to acquire exactly enough (10) tokens for the solver to begin running. The second job (27527297) not having access to any more tokens entered an idle "queued" state (as can be seen from the lmstat output) until the first job completed, wasting the available resources and depreciating the user's fair share level in the process ...
 
- [l2 (nibi login node):~] sq
+[l2 (nibi login node):~] sq
             JOBID     USER              ACCOUNT           NAME  ST  TIME_LEFT NODES CPUS TRES_PER_N MIN_MEM NODELIST (REASON)
          27530366  roberpj         cc-debug_cpu  scriptsp2.txt   R    9:56:13     1    6        N/A      8G     c107  (None)
          27530407  roberpj         cc-debug_cpu  scriptsp2.txt   R    9:59:37     1    6        N/A      8G     c292  (None)
 
- [l2 (nibi login node):~] abaqus licensing lmstat -c $ABAQUSLM_LICENSE_FILE -a | egrep "Users|start|queued"
+[l2 (nibi login node):~] abaqus licensing lmstat -c $ABAQUSLM_LICENSE_FILE -a | egrep "Users|start|queued"
  Users of abaqus:  (Total of 78 licenses issued;  Total of 53 licenses in use)
     roberpj c107 /dev/tty (v62.6) (license3.sharcnet.ca/27050 1042), start Mon 11/25 17:15, 10 licenses
     roberpj c292 /dev/tty (v62.6) (license3.sharcnet.ca/27050 125) queued for 10 licenses
@@ -300,12 +312,12 @@ Option 1)
 
 Disable non-interactive (analysis) jobs from starting on a cluster compute node after being submitted to the queue and then becoming idle (when not enough tokens are unavailable the default bahaviour) create a text file in your submit directory (before submitting the job) with the following one line contents and the job will instead terminate immediately.
 
- [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+[l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
  lmlicensequeuing=OFF
 
 When a job immediately terminates (without entering a QUEUED state to wait for a license) the end of the corresponding Slurm output file will contain messages such as
 
- Abaqus 2026
+Abaqus 2026
  Checkout exceeds MAX specified in options file.
  FlexNet Licensing error:-87,147
  Number of requested licenses: 14
@@ -323,12 +335,12 @@ Option 2)
 
 Specify a setting in minutes so that a started job will enter a QUEUED state to wait for a license before being automatically DEQUEUED and terminating if a license does not become available in time.
 
- [l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
+[l2 (nibi login node):~/submitdirectory] cat abaqus_v6.env
   lmhanglimit=1
 
 When a job terminates this way, after being queued and no license comes available in the specified time according to the lmhanlimit value (1minute in this example) the messages at the end of the Slurm output file will instead appear as
 
- Abaqus 2026
+Abaqus 2026
  "standard" license request queued for the License Server on license1.computecanada.ca.
  Total time in queue: 0 seconds.
  "standard" license request queued for the License Server on license1.computecanada.ca.

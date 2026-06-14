@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-06-07T08:43:47.564889+00:00
-# Total pages: 456
+# Generated: 2026-06-14T09:00:37.895991+00:00
+# Total pages: 457
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -234,7 +234,8 @@
 - Materials Studio (General): https://docs.alliancecan.ca/wiki/Materials_Studio/en
 - Meltdown and Spectre bugs (General): https://docs.alliancecan.ca/wiki/Meltdown_and_Spectre_bugs/en
 - MetaPhlAn (General): https://docs.alliancecan.ca/wiki/MetaPhlAn/en
-- Metrix (General): https://docs.alliancecan.ca/wiki/Metrix/en
+- Metrix/en (General): https://docs.alliancecan.ca/wiki/Metrix/en
+- Metrix/en-ca (General): https://docs.alliancecan.ca/wiki/Metrix/en-ca
 - Migrating between clusters (General): https://docs.alliancecan.ca/wiki/Migrating_between_clusters/en
 - Migration to the new standard environment (General): https://docs.alliancecan.ca/wiki/Migration_to_the_new_standard_environment/en
 - Migration2016:Migrating to SFU Storage (Migration2016): https://docs.alliancecan.ca/wiki/Migration2016:Migrating_to_SFU_Storage

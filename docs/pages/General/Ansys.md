@@ -2,7 +2,7 @@
 title: "Ansys/en"
 url: "https://docs.alliancecan.ca/wiki/Ansys/en"
 category: "General"
-last_modified: "2026-05-30T15:02:01Z"
+last_modified: "2026-06-11T14:18:59Z"
 page_id: 4948
 display_title: "Ansys"
 ---
@@ -329,7 +329,7 @@ When using the Nibi cluster, I_MPI_HYDRA_BOOTSTRAP=ssh must be manually set when
  [mpiexec@g4.nibi.sharcnet] HYD_bstrap_setup (../../../../../src/pm/i_hydra/libhydra/bstrap/src/intel/i_hydra_bstrap.c:1063): error waiting for event
  [mpiexec@g4.nibi.sharcnet] Error setting up the bootstrap proxies
 
-==== Jupyterhub desktop ====
+==== JupyterHub desktop ====
 
 Compute node (no GPU requested)
 
