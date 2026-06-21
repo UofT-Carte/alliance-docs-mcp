@@ -2,7 +2,7 @@
 title: "Nibi/en"
 url: "https://docs.alliancecan.ca/wiki/Nibi/en"
 category: "General"
-last_modified: "2026-05-07T16:48:24Z"
+last_modified: "2026-06-11T14:19:02Z"
 page_id: 27510
 display_title: "Nibi"
 ---
@@ -17,26 +17,34 @@ Portal: portal.nibi.sharcnet.ca
 
 Nibi, the Anishinaabemowin word for water, is a general purpose cluster of 134,400 CPU cores and 288 H100 NVIDIA GPUs. Built by Hypertec, the cluster is hosted and operated by SHARCNET at University of Waterloo.
 
+=Access=
+Each researcher must request access in CCDB, via Resources--> Access Systems.
+
+* Select Nibi from the list on the left.
+* Select I request access.
+
+It can take up to one hour for your access to be enabled.
+
 =Storage=
 Parallel storage: 25 petabytes, all SSD from VAST Data for /home, /project and /scratch.
 
-Note that Vast implements space accounting for quotas differently: you are "charged" for the apparent size of your files.  This is in contrast to some Lustre configurations, which transparently compress files, and charge for the space used after compression.
+Note that Vast implements space accounting for quotas differently. You are "charged" for the apparent size of your files.  This is in contrast to some Lustre configurations, which transparently compress files and charge for the space used after compression.
 
-Note also that Nibi is using a new, experimental mechanism for handling /scratch.  As on all systems, you have a soft and hard limit, but on Nibi, the soft limit is low (1TB), and you have a 60d grace period.  After the grace period expires, the soft limit is enforced (no further file creation/expansion).  To fix this, your usage must drop below the soft limit.
+Note also that Nibi is using a new, experimental mechanism for handling /scratch.  As on all systems, you have a soft and a hard limit, but on Nibi, the soft limit is low (1TB), and you have a 60d grace period.  After the grace period expires, the soft limit is enforced (no further file creation/expansion). To rectify this, your usage must drop below the soft limit.
 
 =Interconnect fabric=
 * Nokia 200/400G ethernet
-** 200 Gbit/s network bandwidth for CPU nodes.
-** 200 Gbit/s non-blocking network bandwidth between all Nvidia GPU nodes.
-** 200 Gbit/s network bandwidth between all AMD GPU nodes.
-** 24x100 Gbit/s connection to the VAST storage nodes.
+** 200 Gbit/s network bandwidth for CPU nodes,
+** 200 Gbit/s non-blocking network bandwidth between all Nvidia GPU nodes,
+** 200 Gbit/s network bandwidth between all AMD GPU nodes,
+** 24x100 Gbit/s connection to the VAST storage nodes,
 ** 2:1 blocking at 400 Gbit/s uplinks for all compute nodes.
 
-The topology of the network is described in the file:
+The topology of the network is described in the file
 
  /etc/slurm/topology.conf
 
-For better performance of tightly coupled multi-node jobs, you may constrain them to use only one network switch, by adding this option to your job submission script:
+For better performance of tightly coupled multinode jobs, you may constrain them to use only one network switch, by adding this next option to your job submission script
 
  #SBATCH --switches=1
 
@@ -66,7 +74,7 @@ To request one or more full H100 GPUs, you need to use one of the following Slur
 ** --gpus-per-node=h100:4
 * For multiple full H100 GPUs spread anywhere: --gpus=h100:n (replace n with the number of GPUs you want)
 
-Approximately half of the GPU nodes are configured with MIG technology, and only 3 GPU instance sizes are available:
+Approximately half of the GPU nodes are configured with MIG technology. Only 3 GPU instance sizes are available:
 
 * H100-1g.10gb: 1/8th of the computing power with 10GB GPU memory
 * H100-2g.20gb: 2/8th of the computing power with 20GB GPU memory
@@ -79,57 +87,58 @@ To request one and only one GPU instance for your compute job, use the correspon
 The maximum recommended number of CPU cores and system memory per GPU instance is listed in this table.
 
 =Site specifics=
+
 ==Internet access==
-All nodes on Nibi have Internet access, no special firewall permission or proxying is necessary.
+All nodes on Nibi have internet access, no special firewall permission or proxying is necessary.
 
-==Project space==
-User directories are no longer created by default on /project. Users can always create their own directories in the group's /project using mkdir. This allows groups to decide how their /project is organised for sharing data amongst group members.
+==/project and /nearline spaces==
+User directories are no longer created by default in /project or /nearline. Users can always create their own directories in the group's /project or /nearline using mkdir. This allows groups to decide how their /project or /nearline spaces are organized for sharing data amongst group members.
 
-==Scratch quota==
-An 1 TB soft quota on scratch applies to each user. This soft quota can be exceeded for up to 60 days after which no additional files may be written to scratch. Files may be written again once the user has removed or deleted enough files to bring their total scratch use under 1 TB. See the Storage and file management for more information.
+==/scratch quota==
+An 1 TB soft quota on /scratch applies to each user. This soft quota can be exceeded for up to 60 days after which no additional files may be written to /scratch. Files may be written again once the user has removed or deleted enough files to bring their total /scratch use under 1 TB. See Storage and file management for more information.
 
 ==Access through Open OnDemand (OOD)==
-One can now access the Nibi cluster simply through a web browser. Nibi uses Open OnDemand (OOD), a web based platform that simplifies cluster access by providing a web interface to the login nodes and a remote desktop environment. To login to Nibi, go to https://ondemand.sharcnet.ca/, sign in with MFA, you will see a user friendly interface offering options to open a Bash shell terminal or launch a remote desktop session.
+You can now access the Nibi cluster simply through a web browser. Nibi uses Open OnDemand (OOD), a web-based platform that simplifies cluster access by providing a web interface to the login nodes and a remote desktop environment. To log into Nibi, go to https://ondemand.sharcnet.ca/ and sign in with multifactor authentication; you will see a user-friendly interface offering options to open a Bash shell terminal or launch a remote desktop session.
 
 ==Use of JupyterLab via OOD==
 
 You can run JupyterLab interactively via the Nibi Open OnDemand portal.
 
-Option 1: working with a pre-configured environment, same as from   JupyterHub
+Option 1: Working with a pre-configured environment (same as from JupyterHub)
 
-After logging in to the Nibi Open OnDemand portal, click “Compute Node” from the top menu and select “Nibi JupyterLab.” This will open a page with a form where you can request a new Nibi JupyterLab session.
+After logging into the Nibi Open OnDemand portal, click on Compute Node from the top menu and select Nibi JupyterLab. This will open a page with a form where you can request a new Nibi JupyterLab session.
 
-After completing the form with your requirement details, click “Launch” to submit your request. Once the status of the requested Nibi JupyterLab changes to Running, click “Connect to Jupyter” to open JupyterLab in your web browser.
+After completing the form with your requirement details, click on Launch to submit your request. Once the status of the requested Nibi JupyterLab changes to Running, click on Connect to Jupyter to open JupyterLab in your web browser.
 
 More details about the pre-configured JupyterLab are described here.
 
-Option 2: working with a self-built
+Option 2: Working with a self-built
 Python virtual environment
 
-After logging in to the Nibi Open OnDemand portal, click “Compute Node” from the top menu and select “Compute Desktop.” This will open a page with a form where you can request a new Compute Desktop session.
+After logging into the Nibi Open OnDemand portal, click on Compute Node from the top menu and select Compute Desktop. This will open a page with a form where you can request a new Compute Desktop session.
 
-After completing the form with your requirement details, click “Launch” to submit your request. Once the status of the requested Compute desktop changes to Running, click “Launch Compute Desktop” to connect to the desktop. A Linux desktop will appear.
+After completing the form with your requirement details, click on Launch to submit your request. Once the status of the requested Compute Desktop changes to Running, click on Launch Compute Desktop to connect to the desktop. A Linux desktop will appear.
 
-On the Compute desktop, right-click the mouse in any blank area, a shortcut menu appears; select "Open in Terminal" to open a terminal window, where you can create or activate your Python virtual environment that has JupyterLab installed.
+On the Compute Desktop, right-click the mouse in any blank area to display a shortcut menu. Select Open in Terminal to open a terminal window, where you can create or activate your Python virtual environment that has JupyterLab installed.
 
-If you do not have JupyterLab installed in the Python virtual environment, which you would like to work with, you can have it installed with the command:
+If you do not have JupyterLab installed in the Python virtual environment you would like to work with, you can have it installed with the command
 
-Then, you can launch JupyterLab from your Python virtual environment with the command:
+Then, you can launch JupyterLab from your Python virtual environment with the command
 
-You will see JupyterLab is opened in the web browser on the Desktop with your $HOME contents listed in the file browser panel on JupyterLab.
+You will see JupyterLab is opened in the web browser on the desktop with your $HOME contents listed in the file browser panel on JupyterLab.
 
 ==Support for VDI via OOD==
 Nibi no longer offers Virtual Desktop Infrastructure (VDI). Instead, it provides a remote desktop environment through the portal of Open OnDemand (OOD), offering improved hardware performance and software support.
 
 ==AMD MI300A nodes==
 
-At this time, the MI300A should be scheduled as full nodes.  It is the user's responsibility to make sure the processes inside the job run with the correct core and memory bindings.  Here is a representative job script that uses 4 processes.
+At this time, the MI300A should be scheduled as full nodes.  It is your responsibility to make sure the processes inside the job run with the correct core and memory bindings.  Here is a representative job script that uses 4 processes.
 
-NOTE: Your code must be compiled with ROCm to use the MI300A nodes properly.  Code compiled with CUDA will not work, as it will not be able to use the AMD GPUs.
+NOTE: Your code must be compiled with ROCm to use the MI300A nodes properly. Code compiled with CUDA will not work, as it will not be able to use the AMD GPUs.
 
-As of May 2026, work has just started to support the MI300A in our software stack and there are no modules available with ROCm support.  You can install software yourself, building against the ROCm toolkit we installed in the /opt/rocm directory.   Please write to technical support if you run into problems.
+As of May 2026, work has just started to support the MI300A in our software stack and there are no modules available with ROCm support. You can install software yourself, building against the ROCm toolkit we installed in the /opt/rocm directory.   Please write to technical support if you run into problems.
 
 ==Oops, I accidentally deleted my files, what should I do?==
-A backup mechanism on Nibi takes a snapshot of your files on /home and /project every 30 minutes and saves the snapshots for two weeks.  If you accidentally delete a file, you may be able to retrieve it from these snapshots, providing the file was deleted less than two weeks ago.  However, if one makes changes to a file after the most recent snapshot then deletes it, the changes cannot be recovered.
+A backup mechanism on Nibi takes a snapshot of your files on /home and /project every 30 minutes, and saves the snapshots for two weeks.  If you accidentally delete a file, you may be able to retrieve it from these snapshots, providing the file was deleted less than two weeks back.  However, if you make changes to a file after the most recent snapshot and then delete it, the changes cannot be recovered.
 
 To find a deleted file, use the oops command to check the current directory, or give an optional directory name to check there instead. To recover a file, copy it from the path returned by oops using standard tools like cp. Snapshots are read-only; you cannot delete or change files in snapshots, you must copy them first. Do not refer to files in snapshots in your job scripts.

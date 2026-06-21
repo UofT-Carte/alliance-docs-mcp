@@ -2,7 +2,7 @@
 title: "Ansys/en"
 url: "https://docs.alliancecan.ca/wiki/Ansys/en"
 category: "General"
-last_modified: "2026-06-11T14:18:59Z"
+last_modified: "2026-06-17T17:46:51Z"
 page_id: 4948
 display_title: "Ansys"
 ---
@@ -38,7 +38,7 @@ Before a local institutional Ansys license server can be used on our clusters, f
 
 ==== Ready to use ====
 
-To use a local institutional Ansys license server with an Alliance cluster whose network/firewall connections have already been set up, contact your Ansys server administrator and get the following pieces of information for the license server:
+To use a local institutional Ansys license server with an Alliance cluster whose network/firewall connections have already been set up, contact your Ansys server administrator and get the following pieces of information for the license server
  1) the Ansys flex port (FLEXPORT) number, commonly 1055
  2) the fully qualified hostname (LICSERVER)
 Now, configure your ~/.licenses/ansys.lic file by plugging in the values, and you are done.

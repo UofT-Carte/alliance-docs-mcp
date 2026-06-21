@@ -2,7 +2,7 @@
 title: "RAC FAQ/en"
 url: "https://docs.alliancecan.ca/wiki/RAC_FAQ/en"
 category: "General"
-last_modified: "2025-08-25T14:21:43Z"
+last_modified: "2026-06-11T14:19:02Z"
 page_id: 30421
 display_title: "RAC FAQ"
 ---
@@ -77,11 +77,6 @@ Any researcher interested in applying to the RAC must be registered with the CCD
 Yes. A PI can apply as a lead submitter for only one RRG application but can be involved in multiple RRG submissions as a participant. PIs may simultaneously hold lead positions on one or several RPP projects but only one RRG project. Read the competition guide here.
 
 Prior to submitting a proposal, you should review each competition’s criteria to ensure your project aligns with the focus. If you still have questions or concerns after reviewing the competition guide, please contact us at allocations@tech.alliancecan.ca.
-
-=== Is the Canadian Common CV (CCV) required to apply for resources? ===
-Yes. PIs and all Co-PIs of a RAC application are required to submit a CCV. Integrating CCV into the CCDB makes it easier for applicants to upload their CVs and standardize their format. It also helps the Scientific Review Committees evaluate the quality of each project’s research team. For instructions on how to submit a CCV, read the CCV submission guide.
-
-To update a CCV on the CCDB, Co-PIs can do so by clicking on the "Update CCV" button in the Resource Applications page, or by going to My Account → View Reporting.  Once Co-PIs have updated their CCV, the status of the CCV will be automatically updated in the RAC online application form.
 
 === I don’t recognize some of the acronyms or terms used in the RAC documentation . Is there a glossary available? ===
 Yes. A list of key terms used in the competition and application process is available. Please consult the Technical Glossary when preparing your application.

@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-06-14T09:00:37.895991+00:00
+# Generated: 2026-06-21T09:34:24.097898+00:00
 # Total pages: 457
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -329,7 +329,7 @@
 - R-INLA (General): https://docs.alliancecan.ca/wiki/R-INLA/en
 - R/en (General): https://docs.alliancecan.ca/wiki/R/en
 - RAC Annual Reports (General): https://docs.alliancecan.ca/wiki/RAC_Annual_Reports/en
-- RAC FAQ (General): https://docs.alliancecan.ca/wiki/RAC_FAQ/en
+- RAC FAQ/en (General): https://docs.alliancecan.ca/wiki/RAC_FAQ/en
 - RAC Fast Track Application Guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en
 - RAC application guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_application_guide/en
 - RAC available resources (General): https://docs.alliancecan.ca/wiki/RAC_available_resources/en

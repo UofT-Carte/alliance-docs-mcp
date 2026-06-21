@@ -2,7 +2,7 @@
 title: "Getting started/en"
 url: "https://docs.alliancecan.ca/wiki/Getting_started/en"
 category: "Getting Started"
-last_modified: "2026-03-17T15:37:43Z"
+last_modified: "2026-06-11T14:48:01Z"
 page_id: 635
 display_title: "Getting started"
 ---
@@ -42,7 +42,7 @@ Your password to log in to all new national systems is the same one you use to l
 
 ==What systems are available?==
 
-You can request access to any or all of our systems: Arbutus, Fir, Narval, Nibi, Rorqual, and Trillium.
+You must request access to one or more of our systems: Arbutus, Fir, Narval, Nibi, Rorqual, and Trillium.
 
 * Arbutus is a cloud site, which allows users to launch and customize virtual machines. See Cloud for how to obtain access to Arbutus.
 

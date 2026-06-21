@@ -1,9 +1,9 @@
 ---
-title: "Arbutus Migration Guide"
-url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide"
+title: "Arbutus Migration Guide/en"
+url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en"
 category: "User Guide"
-last_modified: "2026-06-04T14:03:27Z"
-page_id: 9230
+last_modified: "2026-06-11T14:18:53Z"
+page_id: 9289
 display_title: "Arbutus Migration Guide"
 ---
 
