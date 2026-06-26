@@ -1,6 +1,7 @@
 import pytest
 
 import alliance_docs_mcp.server as server
+from alliance_docs_mcp.models import PageInfo, PageSummary
 from fastmcp.exceptions import ToolError
 
 
@@ -75,3 +76,26 @@ async def test_get_page_content_missing_raises(stub):
 async def test_get_page_content_hit(stub):
     content = await server.get_page_content("alpha")
     assert "Alpha" in content
+
+
+@pytest.mark.asyncio
+async def test_list_categories_returns_general(stub):
+    categories = await server.list_categories()
+    assert categories == ["General"]
+
+
+@pytest.mark.asyncio
+async def test_list_recent_updates_returns_page_summaries(stub):
+    updates = await server.list_recent_updates()
+    assert len(updates) > 0
+    assert isinstance(updates[0], PageSummary)
+    assert updates[0].slug == "alpha"
+
+
+@pytest.mark.asyncio
+async def test_get_page_info_returns_page_info(stub):
+    info = await server.get_page_info("alpha")
+    assert isinstance(info, PageInfo)
+    assert info.slug == "alpha"
+    assert info.page_id == 1
+    assert info.metadata == {"k": "v"}

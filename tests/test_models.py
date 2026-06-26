@@ -1,3 +1,6 @@
+import pytest
+from pydantic import ValidationError
+
 from alliance_docs_mcp.models import (
     PageInfo,
     PageIndexEntry,
@@ -35,3 +38,8 @@ def test_page_index_entry_requires_slug():
     entry = PageIndexEntry(slug="abc")
     assert entry.slug == "abc"
     assert entry.title is None
+
+
+def test_page_index_entry_missing_slug_raises():
+    with pytest.raises(ValidationError):
+        PageIndexEntry()

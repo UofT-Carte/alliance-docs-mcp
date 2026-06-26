@@ -56,6 +56,23 @@ def test_page_resource_unknown_slug_raises(tmp_path, monkeypatch):
         server.page_resource("does-not-exist")
 
 
+def test_page_resource_missing_file_raises(tmp_path, monkeypatch):
+    missing_path = tmp_path / "never_created.md"
+    pages = [
+        {
+            "slug": "ghost",
+            "title": "Ghost Page",
+            "url": "https://example.com/ghost",
+            "category": "General",
+            "file_path": str(missing_path),
+        }
+    ]
+    monkeypatch.setattr(server, "storage", DummyStorage(pages))
+    monkeypatch.setattr(server, "docs_path", tmp_path)
+    with pytest.raises(ResourceError):
+        server.page_resource("ghost")
+
+
 def test_pages_index_lists_entries(tmp_path, monkeypatch):
     _setup(tmp_path, monkeypatch)
     entries = server.pages_index()
