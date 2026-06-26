@@ -3,11 +3,12 @@
 import gzip
 import logging
 import os
+from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 
 from fastmcp import FastMCP
-from fastmcp.resources import TextResource
+from fastmcp.server.lifespan import lifespan
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 
@@ -17,8 +18,6 @@ from .storage import DocumentationStorage
 
 logger = logging.getLogger(__name__)
 
-# Initialize FastMCP server
-mcp = FastMCP("Alliance Docs")
 
 def _discover_docs_directory() -> Path:
     """Determine the directory that contains mirrored documentation files."""
@@ -48,52 +47,94 @@ def _discover_docs_directory() -> Path:
     )
 
 
-docs_path = _discover_docs_directory()
-storage = DocumentationStorage(str(docs_path))
-search_index = None
+@dataclass
+class ServerState:
+    """Runtime state built once at server startup."""
 
-try:
-    search_index_disabled = os.getenv("DISABLE_SEARCH_INDEX", "").lower() in ("1", "true", "yes")
-    search_index_dir = Path(os.getenv("SEARCH_INDEX_DIR", docs_path / "search_index"))
-    if not search_index_disabled:
-        search_index = SearchIndex(search_index_dir)
-        
-        # Auto-populate search index if empty
-        if search_index and search_index.is_empty():
-            logger.info("Search index is empty, populating from existing documentation...")
-            try:
-                count = search_index.populate_from_storage(storage)
-                if count > 0:
-                    logger.info(f"Populated search index with {count} pages")
-                else:
-                    logger.warning("No pages were indexed - check if documentation files exist")
-            except Exception as exc:
-                logger.warning(f"Failed to populate search index: {exc}")
-    else:
+    docs_path: Path
+    storage: DocumentationStorage | None
+    search_index: SearchIndex | None
+    related_index: RelatedIndex | None
+
+
+# Module-level state, populated by the lifespan. Tools and resources read these.
+docs_path: Path | None = None
+storage: DocumentationStorage | None = None
+search_index: SearchIndex | None = None
+related_index: RelatedIndex | None = None
+
+
+def _env_flag(name: str) -> bool:
+    return os.getenv(name, "").lower() in ("1", "true", "yes")
+
+
+def _build_search_index(resolved_docs_path: Path, doc_storage: DocumentationStorage):
+    if _env_flag("DISABLE_SEARCH_INDEX"):
         logger.info("Search index disabled via DISABLE_SEARCH_INDEX")
-except Exception as exc:  # pragma: no cover - defensive initialization
-    logger.warning("Search index unavailable, falling back to title search: %s", exc)
-    search_index = None
-
-related_index = None
-
-try:
-    related_index_disabled = os.getenv("DISABLE_RELATED_INDEX", "").lower() in ("1", "true", "yes")
-    related_index_dir = Path(os.getenv("RELATED_INDEX_DIR", docs_path / "related_index"))
-    related_model_name = os.getenv("RELATED_MODEL_NAME", "all-MiniLM-L6-v2")
-    related_backend = os.getenv("RELATED_BACKEND", "chroma")
-
-    if not related_index_disabled:
-        related_index = RelatedIndex(
-            related_index_dir,
-            model_name=related_model_name,
-            backend=related_backend,
+        return None
+    try:
+        index_dir = Path(
+            os.getenv("SEARCH_INDEX_DIR", resolved_docs_path / "search_index")
         )
-    else:
+        index = SearchIndex(index_dir)
+        if index.is_empty():
+            logger.info("Search index is empty, populating from documentation...")
+            count = index.populate_from_storage(doc_storage)
+            logger.info("Populated search index with %s pages", count)
+        return index
+    except Exception as exc:  # pragma: no cover - defensive initialization
+        logger.warning("Search index unavailable, using title search: %s", exc)
+        return None
+
+
+def _build_related_index(resolved_docs_path: Path):
+    if _env_flag("DISABLE_RELATED_INDEX"):
         logger.info("Related index disabled via DISABLE_RELATED_INDEX")
-except Exception as exc:  # pragma: no cover - defensive initialization
-    logger.warning("Related index unavailable, using heuristic fallback: %s", exc)
-    related_index = None
+        return None
+    try:
+        index_dir = Path(
+            os.getenv("RELATED_INDEX_DIR", resolved_docs_path / "related_index")
+        )
+        model_name = os.getenv("RELATED_MODEL_NAME", "all-MiniLM-L6-v2")
+        backend = os.getenv("RELATED_BACKEND", "chroma")
+        return RelatedIndex(index_dir, model_name=model_name, backend=backend)
+    except Exception as exc:  # pragma: no cover - defensive initialization
+        logger.warning("Related index unavailable, using heuristic fallback: %s", exc)
+        return None
+
+
+def build_state() -> ServerState:
+    """Discover docs and build indexes. Called once by the lifespan."""
+    resolved = _discover_docs_directory()
+    doc_storage = DocumentationStorage(str(resolved))
+    return ServerState(
+        docs_path=resolved,
+        storage=doc_storage,
+        search_index=_build_search_index(resolved, doc_storage),
+        related_index=_build_related_index(resolved),
+    )
+
+
+def _apply_state(state: ServerState) -> None:
+    global docs_path, storage, search_index, related_index
+    docs_path = state.docs_path
+    storage = state.storage
+    search_index = state.search_index
+    related_index = state.related_index
+
+
+@lifespan
+async def app_lifespan(server):
+    """Build runtime state on startup; nothing to tear down."""
+    _apply_state(build_state())
+    logger.info("Alliance Docs MCP server state initialized")
+    try:
+        yield {}
+    finally:
+        pass
+
+
+mcp = FastMCP("Alliance Docs", lifespan=app_lifespan)
 
 
 def _resolve_page_path(file_path: str) -> Path:
@@ -109,62 +150,6 @@ def _resolve_page_path(file_path: str) -> Path:
 
     candidate = docs_path / path_obj
     return candidate.resolve()
-
-
-def _register_document_resources() -> None:
-    """Register each mirrored document as an MCP resource."""
-    pages = storage.get_all_pages()
-    total = 0
-
-    for page in pages:
-        slug = page.get("slug")
-        file_path = page.get("file_path")
-
-        if not slug or not file_path:
-            continue
-
-        uri = f"alliance-docs://page/{slug}"
-        absolute_path = _resolve_page_path(file_path)
-
-        if not absolute_path.exists():
-            logger.warning("Resource file missing on disk: %s", absolute_path)
-            continue
-
-        try:
-            if absolute_path.suffix == ".gz":
-                with gzip.open(absolute_path, "rt", encoding="utf-8") as handle:
-                    page_text = handle.read()
-            else:
-                page_text = absolute_path.read_text(encoding="utf-8")
-        except Exception as exc:  # pragma: no cover
-            logger.error("Error loading resource %s: %s", absolute_path, exc)
-            continue
-
-        metadata = {
-            "title": page.get("title"),
-            "url": page.get("url"),
-            "category": page.get("category"),
-            "last_modified": page.get("last_modified"),
-            "page_id": page.get("page_id"),
-        }
-
-        resource = TextResource(
-            uri=uri,
-            name=page.get("title") or slug,
-            description=page.get("url"),
-            text=page_text,
-            mime_type="text/markdown",
-            tags=[page.get("category", "General")],
-            meta=metadata,
-        )
-
-        mcp.add_resource(resource)
-        total += 1
-
-    logger.info("Registered %s documentation resources", total)
-
-
-_register_document_resources()
 
 
 async def _search_docs_impl(
@@ -647,30 +632,18 @@ async def root(request: Request) -> PlainTextResponse:
 
 
 def main():
-    """Run the MCP server."""
+    """Run the MCP server over stdio (local development)."""
     import argparse
-    
+
     parser = argparse.ArgumentParser(description="Alliance Docs MCP Server")
-    parser.add_argument("--docs-dir", default="./docs", help="Documentation directory")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose logging")
-    
     args = parser.parse_args()
-    
-    # Update storage path if provided
-    global storage
-    storage = DocumentationStorage(args.docs_dir)
-    
-    # Configure logging
-    log_level = logging.DEBUG if args.verbose else logging.INFO
+
     logging.basicConfig(
-        level=log_level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
-    
     logger.info("Starting Alliance Docs MCP Server")
-    logger.info(f"Documentation directory: {args.docs_dir}")
-    
-    # Run the server as stdio (for MCP protocol)
     mcp.run()
 
 
