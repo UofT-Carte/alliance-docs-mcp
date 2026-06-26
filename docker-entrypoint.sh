@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DOCS_DIR="${DOCS_DIR:-/data/docs}"
+export DOCS_DIR="${DOCS_DIR:-/data/docs}"
 PORT="${PORT:-8080}"
 RUN_SYNC_ON_START="${RUN_SYNC_ON_START:-1}"
 SYNC_MODE="${SYNC_MODE:-incremental}"
@@ -62,13 +62,7 @@ trap 'forward_signal TERM' TERM
 trap 'forward_signal INT' INT
 
 echo "[entrypoint] Starting MCP server on port ${PORT}"
-fastmcp run server_entrypoint.py:mcp \
-  --transport http \
-  --host 0.0.0.0 \
-  --port "${PORT}" \
-  --path /mcp/ \
-  -- \
-  --docs-dir "${DOCS_DIR}" &
+fastmcp run fastmcp.json --port "${PORT}" &
 
 SERVER_PID=$!
 wait "${SERVER_PID}"
