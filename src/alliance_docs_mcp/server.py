@@ -262,18 +262,10 @@ async def search_docs(
     return await _search_docs_impl(query, category, limit, search_content, fuzzy)
 
 
-@mcp.tool()
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
 async def list_categories() -> List[str]:
-    """List all available documentation categories.
-    
-    Returns:
-        List of category names
-    """
-    try:
-        return storage.get_categories()
-    except Exception as e:
-        logger.error(f"Error listing categories: {e}")
-        return []
+    """List all available documentation categories."""
+    return storage.get_categories()
 
 
 def _heuristic_related(page: dict, limit: int) -> List[RelatedPage]:
@@ -307,64 +299,38 @@ def _heuristic_related(page: dict, limit: int) -> List[RelatedPage]:
     ]
 
 
-@mcp.tool()
-async def get_page_by_title(title: str) -> Optional[dict]:
-    """Find a specific page by title.
-    
-    Args:
-        title: Page title to search for
-        
-    Returns:
-        Page metadata or None if not found
-    """
-    try:
-        # Search for exact title match
-        results = storage.search_pages(title)
-        
-        for page in results:
-            if page["title"].lower() == title.lower():
-                return {
-                    "title": page["title"],
-                    "url": page["url"],
-                    "category": page["category"],
-                    "slug": page["slug"],
-                    "last_modified": page["last_modified"]
-                }
-        
-        return None
-        
-    except Exception as e:
-        logger.error(f"Error finding page by title {title}: {e}")
-        return None
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
+async def get_page_by_title(
+    title: Annotated[str, Field(description="Exact page title to look up.")],
+) -> Optional[PageSummary]:
+    """Find a page by exact title. Returns None when no page matches."""
+    for page in storage.search_pages(title):
+        if page["title"].lower() == title.lower():
+            return PageSummary(
+                title=page["title"],
+                url=page["url"],
+                category=page["category"],
+                slug=page["slug"],
+                last_modified=page["last_modified"],
+            )
+    return None
 
 
-@mcp.tool()
-async def list_recent_updates(limit: int = 10) -> List[dict]:
-    """List recently updated pages.
-    
-    Args:
-        limit: Maximum number of pages to return
-        
-    Returns:
-        List of recent pages with metadata
-    """
-    try:
-        recent_pages = storage.get_recent_pages(limit)
-        
-        return [
-            {
-                "title": page["title"],
-                "url": page["url"],
-                "category": page["category"],
-                "slug": page["slug"],
-                "last_modified": page["last_modified"]
-            }
-            for page in recent_pages
-        ]
-        
-    except Exception as e:
-        logger.error(f"Error getting recent updates: {e}")
-        return []
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
+async def list_recent_updates(
+    limit: Annotated[int, Field(description="Maximum number of pages.")] = 10,
+) -> List[PageSummary]:
+    """List recently updated pages."""
+    return [
+        PageSummary(
+            title=page["title"],
+            url=page["url"],
+            category=page["category"],
+            slug=page["slug"],
+            last_modified=page["last_modified"],
+        )
+        for page in storage.get_recent_pages(limit)
+    ]
 
 
 @mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
@@ -400,92 +366,59 @@ async def _find_related_pages_impl(
     return _heuristic_related(page, limit)
 
 
-@mcp.tool()
-async def get_page_info(slug: str) -> Optional[dict]:
-    """Get detailed information about a page.
-    
-    Args:
-        slug: Page slug
-        
-    Returns:
-        Detailed page information or None if not found
-    """
-    try:
-        page_data = storage.get_page_by_slug(slug)
-        if not page_data:
-            return None
-        
-        # Load full content to get metadata
-        page_content = storage.load_page(page_data["file_path"])
-        if not page_content:
-            return None
-        
-        return {
-            "title": page_data["title"],
-            "url": page_data["url"],
-            "category": page_data["category"],
-            "slug": page_data["slug"],
-            "last_modified": page_data["last_modified"],
-            "page_id": page_data["page_id"],
-            "metadata": page_content["metadata"]
-        }
-        
-    except Exception as e:
-        logger.error(f"Error getting page info for {slug}: {e}")
-        return None
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
+async def get_page_info(
+    slug: Annotated[str, Field(description="Slug of the page.")],
+) -> PageInfo:
+    """Get detailed metadata about a page. Raises if the page does not exist."""
+    page_data = storage.get_page_by_slug(slug)
+    if not page_data:
+        raise ToolError(f"Page not found: {slug}")
+
+    page_content = storage.load_page(page_data["file_path"])
+    if not page_content:
+        raise ToolError(f"Could not load page: {slug}")
+
+    return PageInfo(
+        title=page_data["title"],
+        url=page_data["url"],
+        category=page_data["category"],
+        slug=page_data["slug"],
+        last_modified=page_data["last_modified"],
+        page_id=page_data["page_id"],
+        metadata=page_content["metadata"],
+    )
 
 
-@mcp.tool()
-async def list_all_pages() -> List[dict]:
-    """List all available documentation pages.
-    
-    Returns:
-        List of all pages with basic metadata
-    """
-    try:
-        all_pages = storage.get_all_pages()
-        
-        return [
-            {
-                "title": page["title"],
-                "url": page["url"],
-                "category": page["category"],
-                "slug": page["slug"],
-                "last_modified": page["last_modified"]
-            }
-            for page in all_pages
-        ]
-        
-    except Exception as e:
-        logger.error(f"Error listing all pages: {e}")
-        return []
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
+async def list_all_pages() -> List[PageSummary]:
+    """List all available documentation pages."""
+    return [
+        PageSummary(
+            title=page["title"],
+            url=page["url"],
+            category=page["category"],
+            slug=page["slug"],
+            last_modified=page["last_modified"],
+        )
+        for page in storage.get_all_pages()
+    ]
 
 
-@mcp.tool()
-async def get_page_content(slug: str) -> str:
-    """Get the full content of a documentation page.
-    
-    Args:
-        slug: Page slug (filename without extension)
-        
-    Returns:
-        Full markdown content of the page
-    """
-    try:
-        page_data = storage.get_page_by_slug(slug)
-        if not page_data:
-            return f"Page not found: {slug}"
-        
-        # Load the actual content
-        page_content = storage.load_page(page_data["file_path"])
-        if not page_content:
-            return f"Error loading page content: {slug}"
-        
-        return page_content["content"]
-        
-    except Exception as e:
-        logger.error(f"Error getting page content for {slug}: {e}")
-        return f"Error loading page: {e}"
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
+async def get_page_content(
+    slug: Annotated[str, Field(description="Slug of the page (filename stem).")],
+) -> str:
+    """Get the full markdown content of a page. Raises if the page does not exist."""
+    page_data = storage.get_page_by_slug(slug)
+    if not page_data:
+        raise ToolError(f"Page not found: {slug}")
+
+    page_content = storage.load_page(page_data["file_path"])
+    if not page_content:
+        raise ToolError(f"Could not load page: {slug}")
+
+    return page_content["content"]
 
 
 # MCP Prompts
