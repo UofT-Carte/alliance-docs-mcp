@@ -15,11 +15,12 @@ ENV PATH="/app/.venv/bin:${PATH}"
 # Copy the remainder of the application source
 COPY . .
 
-# Pre-populate documentation cache during build for faster cold starts
-ENV DOCS_SEED_DIR=/app/docs_seed
-RUN mkdir -p "${DOCS_SEED_DIR}" && \
-    DOCS_DIR="${DOCS_SEED_DIR}" python scripts/sync_docs.py && \
-    rm -f sync.log
+# Seed the documentation cache from the repo's committed, weekly-refreshed docs.
+# No live MediaWiki sync at build time: that re-downloaded the whole corpus on
+# every build and made deploys hostage to an external, rate-limited API. The
+# entrypoint primes DOCS_DIR from this seed on boot, then runs ONE incremental
+# sync (bounded, in the background) to catch changes since the last weekly sync.
+ENV DOCS_SEED_DIR=/app/docs
 
 # Set defaults for runtime configuration
 ENV DOCS_DIR=/data/docs
