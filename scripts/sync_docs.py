@@ -34,7 +34,6 @@ from alliance_docs_mcp.mirror import (
     fetch_page_contents,
     filter_to_target_language,
 )
-from alliance_docs_mcp.related import RelatedIndex, RelatedIndexUnavailable
 from alliance_docs_mcp.search_index import SearchIndex, SearchIndexUnavailable
 from alliance_docs_mcp.storage import DocumentationStorage
 
@@ -76,42 +75,9 @@ def _prepare_search_index(
         return None
 
 
-def _prepare_related_index(
-    docs_dir: str,
-    related_index_dir: Optional[str],
-    enable_related_index: bool,
-    rebuild_related_index: bool,
-    related_model_name: str,
-    related_backend: str,
-) -> Optional[RelatedIndex]:
-    """Initialize (and optionally rebuild) the embeddings-based related index."""
-    if not enable_related_index:
-        logger.info("Related-page indexing disabled (--no-related-index)")
-        return None
-
-    resolved_index_dir = (
-        Path(related_index_dir) if related_index_dir else Path(docs_dir) / "related_index"
-    )
-
-    if rebuild_related_index and resolved_index_dir.exists():
-        shutil.rmtree(resolved_index_dir)
-        logger.info("Rebuilding related index at %s", resolved_index_dir)
-
-    try:
-        return RelatedIndex(
-            resolved_index_dir,
-            model_name=related_model_name,
-            backend=related_backend,
-        )
-    except RelatedIndexUnavailable as exc:
-        logger.warning("Related index unavailable, continuing without it: %s", exc)
-        return None
-
-
 def _rebuild_all(
     docs_dir: str,
     index_dir: Optional[str],
-    related_index_dir: Optional[str],
 ) -> None:
     """Remove docs content and indexes for a clean rebuild."""
     docs_path = Path(docs_dir)
@@ -122,7 +88,6 @@ def _rebuild_all(
         docs_path / "llms_full.txt",
         docs_path / "llms_full.txt.gz",
         Path(index_dir) if index_dir else docs_path / "search_index",
-        Path(related_index_dir) if related_index_dir else docs_path / "related_index",
     ]
 
     for target in targets:
@@ -154,11 +119,6 @@ async def sync_documentation(
     rebuild_index: bool = False,
     index_dir: Optional[str] = None,
     rebuild_all: bool = False,
-    enable_related_index: bool = True,
-    rebuild_related_index: bool = False,
-    related_index_dir: Optional[str] = None,
-    related_model_name: str = "all-MiniLM-L6-v2",
-    related_backend: str = "chroma",
     strip_html: bool = True,
 ):
     """Main synchronization function."""
@@ -174,22 +134,14 @@ async def sync_documentation(
         f"Docs: {docs_dir}",
         border_style="cyan"
     ))
-    
+
     # Initialize components
     if rebuild_all:
-        _rebuild_all(docs_dir, index_dir, related_index_dir)
+        _rebuild_all(docs_dir, index_dir)
 
     client = MediaWikiClient(api_url, user_agent)
     storage = DocumentationStorage(docs_dir)
     search_index = _prepare_search_index(docs_dir, index_dir, enable_index, rebuild_index)
-    related_index = _prepare_related_index(
-        docs_dir,
-        related_index_dir,
-        enable_related_index,
-        rebuild_related_index,
-        related_model_name,
-        related_backend,
-    )
     converter = WikiTextConverter()
     
     start_time = datetime.now()
@@ -299,14 +251,6 @@ async def sync_documentation(
                             last_modified=saved_page["last_modified"],
                         )
 
-                    if related_index:
-                        try:
-                            related_index.upsert_page(saved_page, markdown_content)
-                        except RelatedIndexUnavailable as exc:
-                            logger.warning("Related index unavailable, skipping: %s", exc)
-                        except Exception as exc:  # pragma: no cover - defensive
-                            logger.warning("Failed to index related page %s: %s", saved_page["slug"], exc)
-                    
                 except Exception as e:
                     error_msg = f"{page_data.get('title', 'Unknown')}: {str(e)}"
                     errors.append(error_msg)
@@ -322,8 +266,6 @@ async def sync_documentation(
             console.print("[green]✓[/green] Index updated")
             if search_index:
                 search_index.optimize()
-            if related_index:
-                related_index.cleanup({page["slug"] for page in saved_pages})
         
         # Cleanup old files
         with console.status("[bold green]Cleaning up old files...", spinner="dots"):
@@ -374,11 +316,6 @@ async def sync_incremental(
     rebuild_index: bool = False,
     index_dir: Optional[str] = None,
     rebuild_all: bool = False,
-    enable_related_index: bool = True,
-    rebuild_related_index: bool = False,
-    related_index_dir: Optional[str] = None,
-    related_model_name: str = "all-MiniLM-L6-v2",
-    related_backend: str = "chroma",
     strip_html: bool = True,
 ):
     """Incremental synchronization - only fetch changed pages."""
@@ -388,22 +325,14 @@ async def sync_incremental(
     user_agent = os.getenv("USER_AGENT", "AllianceDocsMCP/1.0")
     
     logger.info("Starting incremental synchronization")
-    
+
     # Initialize components
     if rebuild_all:
-        _rebuild_all(docs_dir, index_dir, related_index_dir)
+        _rebuild_all(docs_dir, index_dir)
 
     client = MediaWikiClient(api_url, user_agent)
     storage = DocumentationStorage(docs_dir)
     search_index = _prepare_search_index(docs_dir, index_dir, enable_index, rebuild_index)
-    related_index = _prepare_related_index(
-        docs_dir,
-        related_index_dir,
-        enable_related_index,
-        rebuild_related_index,
-        related_model_name,
-        related_backend,
-    )
     converter = WikiTextConverter()
     
     try:
@@ -477,14 +406,6 @@ async def sync_incremental(
                         last_modified=saved_page["last_modified"],
                     )
 
-                if related_index:
-                    try:
-                        related_index.upsert_page(saved_page, markdown_content)
-                    except RelatedIndexUnavailable as exc:
-                        logger.warning("Related index unavailable, skipping: %s", exc)
-                    except Exception as exc:  # pragma: no cover - defensive
-                        logger.warning("Failed to index related page %s: %s", saved_page["slug"], exc)
-                
             except Exception as e:
                 logger.error(f"Error processing page {page_data.get('title', 'Unknown')}: {e}")
                 continue
@@ -499,8 +420,6 @@ async def sync_incremental(
         
         # Update index
         storage.update_index(list(existing_by_id.values()))
-        if related_index:
-            related_index.cleanup({page["slug"] for page in existing_by_id.values()})
         
         # Build llms.txt files
         logger.info("Building llms.txt files...")
@@ -521,10 +440,6 @@ def main():
     """Main entry point."""
     import argparse
     
-    related_model_env = os.getenv("RELATED_MODEL_NAME", "all-MiniLM-L6-v2")
-    related_index_dir_env = os.getenv("RELATED_INDEX_DIR")
-    related_backend_env = os.getenv("RELATED_BACKEND", "chroma")
-    related_disabled_env = os.getenv("DISABLE_RELATED_INDEX", "").lower() in ("1", "true", "yes")
     strip_html_disabled_env = os.getenv("DISABLE_STRIP_HTML", "").lower() in ("1", "true", "yes")
 
     parser = argparse.ArgumentParser(description="Sync Alliance documentation")
@@ -558,37 +473,8 @@ def main():
         default=None,
         help="Optional path for the search index (defaults to DOCS_DIR/search_index)",
     )
-    parser.add_argument(
-        "--no-related-index",
-        action="store_true",
-        help="Skip building/updating the related-page embeddings index",
-    )
-    parser.add_argument(
-        "--rebuild-related-index",
-        action="store_true",
-        help="Rebuild the related-page index before syncing",
-    )
-    parser.add_argument(
-        "--related-index-dir",
-        type=str,
-        default=related_index_dir_env,
-        help="Optional path for the related-page index (defaults to DOCS_DIR/related_index)",
-    )
-    parser.add_argument(
-        "--related-model-name",
-        type=str,
-        default=related_model_env,
-        help="Sentence-transformer model to use for related-page embeddings",
-    )
-    parser.add_argument(
-        "--related-backend",
-        type=str,
-        default=related_backend_env,
-        help="Related index backend (currently only 'chroma' is supported)",
-    )
-    
+
     args = parser.parse_args()
-    disable_related_index = related_disabled_env or args.no_related_index
     strip_html = not (strip_html_disabled_env or args.no_strip_html)
     
     if args.verbose:
@@ -602,11 +488,6 @@ def main():
                     rebuild_index=args.rebuild_index,
                     index_dir=args.index_dir,
                     rebuild_all=args.rebuild_all,
-                    enable_related_index=not disable_related_index,
-                    rebuild_related_index=args.rebuild_related_index,
-                    related_index_dir=args.related_index_dir,
-                    related_model_name=args.related_model_name,
-                    related_backend=args.related_backend,
                     strip_html=strip_html,
                 )
             )
@@ -617,11 +498,6 @@ def main():
                     rebuild_index=args.rebuild_index,
                     index_dir=args.index_dir,
                     rebuild_all=args.rebuild_all,
-                    enable_related_index=not disable_related_index,
-                    rebuild_related_index=args.rebuild_related_index,
-                    related_index_dir=args.related_index_dir,
-                    related_model_name=args.related_model_name,
-                    related_backend=args.related_backend,
                     strip_html=strip_html,
                 )
             )

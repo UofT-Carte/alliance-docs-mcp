@@ -136,6 +136,53 @@ class SearchIndex:
             logger.warning("Search failed: %s", exc)
             raise SearchIndexUnavailable(str(exc))
 
+    def more_like_this(self, slug: str, limit: int = 5) -> List[Dict]:
+        """Return pages whose content is most similar to the given page.
+
+        Uses Whoosh term-similarity ("more like this") over the stored
+        ``content`` field. The query page itself is excluded. Returns an
+        empty list when the slug is not indexed or has no stored content.
+        """
+        if not self.enabled or not self._index:
+            raise SearchIndexUnavailable("Search index disabled or unavailable")
+
+        try:
+            with self._index.searcher() as searcher:
+                docnum = searcher.document_number(slug=slug)
+                if docnum is None:
+                    return []
+
+                stored = searcher.stored_fields(docnum) or {}
+                content = stored.get("content") or ""
+                if not content:
+                    return []
+
+                results = searcher.more_like(
+                    docnum, "content", text=content, top=limit + 1
+                )
+                hits: List[Dict] = []
+                for hit in results:
+                    if hit.get("slug") == slug:
+                        continue
+                    hits.append(
+                        {
+                            "title": hit.get("title"),
+                            "slug": hit.get("slug"),
+                            "url": hit.get("url"),
+                            "category": hit.get("category"),
+                            "score": hit.score,
+                            "last_modified": hit.get("last_modified"),
+                        }
+                    )
+                    if len(hits) >= limit:
+                        break
+                return hits
+        except SearchIndexUnavailable:
+            raise
+        except Exception as exc:
+            logger.warning("more_like_this failed for %s: %s", slug, exc)
+            raise SearchIndexUnavailable(str(exc))
+
     def is_empty(self) -> bool:
         """Check if the index is empty (has no documents)."""
         if not self.enabled or not self._index:

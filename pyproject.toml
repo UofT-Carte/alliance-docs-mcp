@@ -6,15 +6,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "beautifulsoup4>=4.12.0",
-    "chromadb>=0.6.3",
     "fastmcp>=3.0,<4",
     "langdetect>=1.0.9",
-    "numpy>=1.26.0",
     "python-dotenv>=1.1.1",
     "pyyaml>=6.0.3",
     "requests>=2.32.5",
     "rich>=14.2.0",
-    "sentence-transformers>=2.2.0",
     "whoosh>=2.7.4",
     "wikitextparser>=0.56.0",
 ]
