@@ -16,7 +16,6 @@ from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 
 from .models import PageIndexEntry, PageInfo, PageSummary, RelatedPage, SearchHit
-from .related import RelatedIndex, RelatedIndexUnavailable
 from .search_index import SearchIndex, SearchIndexUnavailable
 from .storage import DocumentationStorage
 
@@ -58,14 +57,12 @@ class ServerState:
     docs_path: Path
     storage: DocumentationStorage | None
     search_index: SearchIndex | None
-    related_index: RelatedIndex | None
 
 
 # Module-level state, populated by the lifespan. Tools and resources read these.
 docs_path: Path | None = None
 storage: DocumentationStorage | None = None
 search_index: SearchIndex | None = None
-related_index: RelatedIndex | None = None
 
 
 def _env_flag(name: str) -> bool:
@@ -91,22 +88,6 @@ def _build_search_index(resolved_docs_path: Path, doc_storage: DocumentationStor
         return None
 
 
-def _build_related_index(resolved_docs_path: Path):
-    if _env_flag("DISABLE_RELATED_INDEX"):
-        logger.info("Related index disabled via DISABLE_RELATED_INDEX")
-        return None
-    try:
-        index_dir = Path(
-            os.getenv("RELATED_INDEX_DIR", resolved_docs_path / "related_index")
-        )
-        model_name = os.getenv("RELATED_MODEL_NAME", "all-MiniLM-L6-v2")
-        backend = os.getenv("RELATED_BACKEND", "chroma")
-        return RelatedIndex(index_dir, model_name=model_name, backend=backend)
-    except Exception as exc:  # pragma: no cover - defensive initialization
-        logger.warning("Related index unavailable, using heuristic fallback: %s", exc)
-        return None
-
-
 def build_state() -> ServerState:
     """Discover docs and build indexes. Called once by the lifespan."""
     resolved = _discover_docs_directory()
@@ -115,16 +96,14 @@ def build_state() -> ServerState:
         docs_path=resolved,
         storage=doc_storage,
         search_index=_build_search_index(resolved, doc_storage),
-        related_index=_build_related_index(resolved),
     )
 
 
 def _apply_state(state: ServerState) -> None:
-    global docs_path, storage, search_index, related_index
+    global docs_path, storage, search_index
     docs_path = state.docs_path
     storage = state.storage
     search_index = state.search_index
-    related_index = state.related_index
 
 
 @lifespan
