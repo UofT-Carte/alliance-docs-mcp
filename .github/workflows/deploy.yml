@@ -1,0 +1,33 @@
+name: Deploy to Fly.io
+
+# Ships main to Fly. Triggers:
+#   - push to main (human pushes / merges)
+#   - completion of "Weekly Docs Sync" (its commit is pushed with the default
+#     GITHUB_TOKEN, which does NOT trigger `push` workflows, so we trigger off
+#     the sync workflow finishing instead — this is what keeps live docs fresh)
+#   - manual dispatch
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: ["Weekly Docs Sync"]
+    types: [completed]
+  workflow_dispatch: {}
+
+# Never run two deploys at once; a newer one supersedes an in-flight one.
+concurrency:
+  group: fly-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # For the workflow_run trigger, only deploy when the sync succeeded.
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy
+        run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
