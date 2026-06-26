@@ -8,7 +8,7 @@ A Model Context Protocol (MCP) server that provides programmatic access to the D
 - **MCP Resources**: Page content served lazily via a resource template
   (`alliance-docs://page/{slug}`), plus an `alliance-docs://pages` discovery index
 - **Full-Text Search**: Whoosh-backed content and title search with highlights and scoring
-- **Related Pages**: Embeddings-backed related-page discovery with heuristic fallback
+- **Related Pages**: Whoosh content-similarity ("more like this") related-page discovery with heuristic fallback
 - **Search & Query Tools**: Provides search, categorization, and querying capabilities
 - **Startup Refresh**: Container entrypoint triggers an incremental sync on boot; schedule additional runs as needed
 - **Markdown Storage**: Stores documentation as markdown files with metadata
@@ -131,14 +131,13 @@ List all available documentation pages.
 **Returns:** List of all pages with basic metadata
 
 #### `find_related_pages(slug: str, limit: int = 5)`
-Embeddings-backed related-pages helper (Chroma + sentence-transformers) with automatic fallback to lightweight heuristics.
+Finds related pages via Whoosh content similarity ("more like this"), with automatic fallback to a lightweight title/category heuristic.
 
 **Parameters:**
 - `slug`: Source page slug
 - `limit`: Max related pages to return
-- `min_score`: Optional similarity threshold when embeddings are available
 
-**Returns:** List of related pages with similarity scores (or heuristic scores when falling back)
+**Returns:** List of related pages with relevance scores (or heuristic scores when falling back)
 
 ### MCP Prompts
 
@@ -207,13 +206,7 @@ Index controls:
 uv run python scripts/sync_docs.py --rebuild-index       # Rebuild Whoosh index
 uv run python scripts/sync_docs.py --no-index            # Skip indexing
 uv run python scripts/sync_docs.py --index-dir /tmp/idx  # Custom index location
-uv run python scripts/sync_docs.py --rebuild-related-index     # Rebuild related-page embeddings
-uv run python scripts/sync_docs.py --no-related-index          # Skip related-page embeddings
-uv run python scripts/sync_docs.py --related-index-dir /tmp/rel# Custom related index location
-uv run python scripts/sync_docs.py --related-model-name all-MiniLM-L6-v2
 ```
-
-The related-page index downloads the configured sentence-transformer model (default: `all-MiniLM-L6-v2`, ~90 MB) the first time it runs.
 
 For FastMCP Cloud deployments, run one of the sync commands above locally and commit the updated `docs/` directory before pushing so the hosted server always mirrors the latest content.
 
@@ -256,10 +249,6 @@ Set the following environment variables (via `.env`, shell exports, or your host
 - `USER_AGENT` (default `AllianceDocsMCP/1.0`)
 - `SEARCH_INDEX_DIR` (optional; overrides default `DOCS_DIR/search_index`)
 - `DISABLE_SEARCH_INDEX` (set to `1/true/yes` to force title-only fallback)
-- `RELATED_INDEX_DIR` (optional; overrides default `DOCS_DIR/related_index`)
-- `RELATED_MODEL_NAME` (sentence-transformer model, default `all-MiniLM-L6-v2`)
-- `RELATED_BACKEND` (default `chroma`)
-- `DISABLE_RELATED_INDEX` (set to `1/true/yes` to skip related-page embeddings)
 
 ### Server Configuration
 
