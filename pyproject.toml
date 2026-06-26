@@ -7,7 +7,7 @@ requires-python = ">=3.11"
 dependencies = [
     "beautifulsoup4>=4.12.0",
     "chromadb>=0.6.3",
-    "fastmcp>=2.12.5",
+    "fastmcp>=3.0,<4",
     "langdetect>=1.0.9",
     "numpy>=1.26.0",
     "python-dotenv>=1.1.1",

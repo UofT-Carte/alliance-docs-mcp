@@ -5,12 +5,27 @@ A Model Context Protocol (MCP) server that provides programmatic access to the D
 ## Features
 
 - **Documentation Mirroring**: Syncs documentation from the Alliance MediaWiki site
-- **MCP Resources**: Exposes individual documentation pages as MCP resources
+- **MCP Resources**: Page content served lazily via a resource template
+  (`alliance-docs://page/{slug}`), plus an `alliance-docs://pages` discovery index
 - **Full-Text Search**: Whoosh-backed content and title search with highlights and scoring
 - **Related Pages**: Embeddings-backed related-page discovery with heuristic fallback
 - **Search & Query Tools**: Provides search, categorization, and querying capabilities
 - **Startup Refresh**: Container entrypoint triggers an incremental sync on boot; schedule additional runs as needed
 - **Markdown Storage**: Stores documentation as markdown files with metadata
+
+## MCP interface notes
+
+- **Structured output**: tools return typed results (`SearchHit`, `PageSummary`,
+  `PageInfo`, `RelatedPage`) with JSON output schemas.
+- **Errors**: tools raise `ToolError` on genuine failures (e.g. requesting a page
+  by slug that does not exist, or a search backend error). A successful search
+  with no matches returns an empty list, not an error.
+- **Resources**: individual pages are no longer pre-registered. Read a page at
+  `alliance-docs://page/{slug}`; enumerate available pages via the
+  `alliance-docs://pages` index resource or the `list_all_pages` tool.
+- **Configuration**: set `DOCS_DIR` (and optional `MEDIAWIKI_API_URL`,
+  `USER_AGENT`) via environment variables. The server is run with
+  `fastmcp run fastmcp.json`.
 
 ## Quick Start
 
@@ -248,16 +263,13 @@ Set the following environment variables (via `.env`, shell exports, or your host
 
 ### Server Configuration
 
-The MCP server can be configured with command-line arguments:
+Run the server locally over stdio (the default MCP transport):
 
 ```bash
-uv run python -m alliance_docs_mcp.server --help
+uv run python -m alliance_docs_mcp.server [--verbose]
 ```
 
-Options:
-- `--host`: Host to bind to (default: localhost)
-- `--port`: Port to bind to (default: 8000)
-- `--docs-dir`: Documentation directory (default: ./docs)
+`--verbose` is the only accepted flag. All runtime configuration is done via environment variables — see the [Environment Variables](#environment-variables) section above for the full list. The most commonly needed ones are `DOCS_DIR`, `MEDIAWIKI_API_URL`, and `USER_AGENT`.
 
 ### Docker Deployment
 
@@ -265,7 +277,7 @@ The provided Docker image ships with a pre-synced documentation cache baked into
 
 - `RUN_SYNC_ON_START=0` to skip the background sync (useful when running in read-only environments)
 - `SYNC_MODE=full` to force a full resync instead of the default incremental sync
-- The container starts the server via `fastmcp run server_entrypoint.py:mcp --transport http --path /mcp/ --port 8080`, so any additional FastMCP CLI flags can be injected by overriding `CMD` in your own image if needed.
+- The container starts the server via `fastmcp run fastmcp.json --port 8080`; transport, host, and path are read from `fastmcp.json` rather than passed as CLI flags. Additional FastMCP CLI flags can be injected by overriding `CMD` in your own image if needed.
 - A lightweight `/health` endpoint is exposed for platform probes; point load balancer checks there instead of MCP protocol paths.
 
 ## Project Structure
@@ -308,7 +320,7 @@ uv run ruff check src/
 
 **FastMCP Cloud (managed)**
 - Sign in at [fastmcp.cloud](https://fastmcp.cloud) with your GitHub account and create a project that points at this repository.
-- Use `server_entrypoint.py:mcp` as the entrypoint so the platform runs the exported FastMCP server instance.
+- Use `fastmcp.json` as the server configuration (the platform automatically detects and runs it).
 - Configure environment variables (e.g., `MEDIAWIKI_API_URL`, `DOCS_DIR`, `USER_AGENT`) via the project settings; the service installs dependencies directly from `pyproject.toml`.
 - Push to `main` to trigger deployments; each pull request automatically gets its own preview environment for testing changes.
 
