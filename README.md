@@ -208,7 +208,7 @@ uv run python scripts/sync_docs.py --no-index            # Skip indexing
 uv run python scripts/sync_docs.py --index-dir /tmp/idx  # Custom index location
 ```
 
-For FastMCP Cloud deployments, run one of the sync commands above locally and commit the updated `docs/` directory before pushing so the hosted server always mirrors the latest content.
+The `weekly-sync` GitHub Action runs an incremental sync on a schedule and commits the updated `docs/` to `main`; on the Fly.io deployment that change auto-deploys (see [docs/deploy-fly.md](docs/deploy-fly.md)), so the hosted server mirrors the latest content. You can also run a sync command above locally and commit `docs/` for an out-of-band refresh.
 
 The sync script provides:
 - **Colored output** with rich formatting
@@ -307,11 +307,9 @@ uv run ruff check src/
 
 ### Deployment Options
 
-**FastMCP Cloud (managed)**
-- Sign in at [fastmcp.cloud](https://fastmcp.cloud) with your GitHub account and create a project that points at this repository.
-- Use `fastmcp.json` as the server configuration (the platform automatically detects and runs it).
-- Configure environment variables (e.g., `MEDIAWIKI_API_URL`, `DOCS_DIR`, `USER_AGENT`) via the project settings; the service installs dependencies directly from `pyproject.toml`.
-- Push to `main` to trigger deployments; each pull request automatically gets its own preview environment for testing changes.
+**Fly.io (recommended)**
+- Runs as a single always-on, stateless machine. Configuration is in [`fly.toml`](fly.toml); the full runbook (one-time setup, cutover, operations) is in [docs/deploy-fly.md](docs/deploy-fly.md).
+- `.github/workflows/deploy.yml` ships `main` to Fly on push and on completion of the weekly docs sync, so the live corpus refreshes weekly. Requires a `FLY_API_TOKEN` repo secret.
 
 **Self-managed container/VM**
 - Build the Docker image in this repo and run it anywhere that can expose HTTP on port `8080`.
