@@ -1,4 +1,3 @@
-fastmcp_docs/
 # Python
 __pycache__/
 *.py[cod]
@@ -34,6 +33,7 @@ venv.bak/
 # IDE
 .vscode/
 .idea/
+.cursor/
 *.swp
 *.swo
 
@@ -45,7 +45,6 @@ Thumbs.db
 sync.log
 logs/
 *.log
-fastmcp-docs/
-example_implementation/
+fastmcp_docs/
 docs/search_index/
 docs/related_index/
