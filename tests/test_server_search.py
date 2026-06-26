@@ -32,16 +32,6 @@ class DummyStorage:
         return None
 
 
-class DummyRelatedIndex:
-    def __init__(self, results=None):
-        self.results = results or []
-        self.called = False
-
-    def find_related(self, slug, limit=5, min_score=0.0):
-        self.called = True
-        return self.results
-
-
 @pytest.mark.asyncio
 async def test_search_docs_uses_index(monkeypatch, tmp_path):
     import alliance_docs_mcp.server as server
@@ -82,32 +72,52 @@ async def test_search_docs_falls_back_without_index(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_find_related_pages_uses_related_index(monkeypatch):
+async def test_find_related_pages_uses_more_like_this(monkeypatch, tmp_path):
     import alliance_docs_mcp.server as server
 
-    dummy_storage = DummyStorage()
-    related_result = [
+    # The companion page shares NO title tokens and a DIFFERENT category, so the
+    # title/category heuristic scores it 0 and would never surface it. Only the
+    # content-similarity path (more_like_this) can relate it to the query page.
+    storage = DummyStorage()
+    storage.pages.append(
         {
-            "title": "Related Result",
-            "url": "https://example.com/related",
-            "category": "General",
-            "slug": "related",
-            "score": 0.9,
+            "title": "Provisioning Compute Nodes",
+            "url": "https://example.com/companion",
+            "category": "Technical",
+            "slug": "companion",
+            "last_modified": "2025-01-02T00:00:00Z",
         }
-    ]
+    )
 
-    monkeypatch.setattr(server, "storage", dummy_storage)
-    dummy_related = DummyRelatedIndex(results=related_result)
-    monkeypatch.setattr(server, "related_index", dummy_related)
+    search_index = SearchIndex(tmp_path / "search_index")
+    search_index.index_page(
+        slug="test_page",
+        title="Test Page",
+        content="Slurm scheduling on the cluster with sbatch and partitions.",
+        category="General",
+        url="https://example.com/test",
+        last_modified="2025-01-01T00:00:00Z",
+    )
+    search_index.index_page(
+        slug="companion",
+        title="Provisioning Compute Nodes",
+        content="Slurm scheduling uses sbatch and partitions on the cluster.",
+        category="Technical",
+        url="https://example.com/companion",
+        last_modified="2025-01-02T00:00:00Z",
+    )
+
+    monkeypatch.setattr(server, "storage", storage)
+    monkeypatch.setattr(server, "search_index", search_index)
 
     results = await server._find_related_pages_impl("test_page", limit=3)
-    assert dummy_related.called is True
-    assert results[0].slug == "related"
-    assert results[0].score == 0.9
+    slugs = [r.slug for r in results]
+    assert "test_page" not in slugs
+    assert "companion" in slugs  # surfaced by content similarity, not the heuristic
 
 
 @pytest.mark.asyncio
-async def test_find_related_pages_falls_back(monkeypatch):
+async def test_find_related_pages_falls_back_to_heuristic(monkeypatch):
     import alliance_docs_mcp.server as server
 
     dummy_storage = DummyStorage()
@@ -122,7 +132,7 @@ async def test_find_related_pages_falls_back(monkeypatch):
     )
 
     monkeypatch.setattr(server, "storage", dummy_storage)
-    monkeypatch.setattr(server, "related_index", None)
+    monkeypatch.setattr(server, "search_index", None)
 
     results = await server._find_related_pages_impl("test_page", limit=3)
     assert results

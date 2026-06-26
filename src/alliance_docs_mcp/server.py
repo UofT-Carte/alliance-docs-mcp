@@ -337,31 +337,40 @@ async def list_recent_updates(
 async def find_related_pages(
     slug: Annotated[str, Field(description="Slug of the page to find relations for.")],
     limit: Annotated[int, Field(description="Maximum number of related pages.")] = 5,
-    min_score: Annotated[
-        float, Field(description="Minimum similarity score to include.")
-    ] = 0.0,
 ) -> List[RelatedPage]:
-    """Find related pages using embeddings when available, with heuristic fallback."""
-    return await _find_related_pages_impl(slug, limit, min_score)
+    """Find related pages via content similarity, with heuristic fallback."""
+    return await _find_related_pages_impl(slug, limit)
 
 
-async def _find_related_pages_impl(
-    slug: str, limit: int = 5, min_score: float = 0.0
-) -> List[RelatedPage]:
+async def _find_related_pages_impl(slug: str, limit: int = 5) -> List[RelatedPage]:
     """Core related-pages implementation for tool and tests."""
     page = storage.get_page_by_slug(slug)
     if not page:
         raise ToolError(f"Page not found: {slug}")
 
-    if related_index:
+    if search_index:
         try:
-            results = related_index.find_related(slug, limit=limit, min_score=min_score)
+            results = search_index.more_like_this(slug, limit=limit)
             if results:
-                return [RelatedPage(**hit) for hit in results]
-        except RelatedIndexUnavailable as exc:
-            logger.warning("Related index unavailable for %s: %s", slug, exc)
+                return [
+                    RelatedPage(
+                        title=hit.get("title"),
+                        url=hit.get("url"),
+                        category=hit.get("category"),
+                        slug=hit.get("slug"),
+                        score=hit.get("score"),
+                        last_modified=(
+                            hit["last_modified"].isoformat()
+                            if hit.get("last_modified") is not None
+                            else None
+                        ),
+                    )
+                    for hit in results
+                ]
+        except SearchIndexUnavailable as exc:
+            logger.warning("Search index unavailable for related %s: %s", slug, exc)
         except Exception as exc:
-            logger.error("Related index error for %s: %s", slug, exc, exc_info=True)
+            logger.error("Related lookup error for %s: %s", slug, exc, exc_info=True)
 
     return _heuristic_related(page, limit)
 
