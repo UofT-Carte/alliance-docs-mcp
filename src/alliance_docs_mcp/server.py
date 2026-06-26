@@ -1,6 +1,5 @@
 """FastMCP server for Alliance documentation."""
 
-import gzip
 import logging
 import os
 from dataclasses import dataclass
