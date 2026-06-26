@@ -263,16 +263,13 @@ Set the following environment variables (via `.env`, shell exports, or your host
 
 ### Server Configuration
 
-The MCP server can be configured with command-line arguments:
+Run the server locally over stdio (the default MCP transport):
 
 ```bash
-uv run python -m alliance_docs_mcp.server --help
+uv run python -m alliance_docs_mcp.server [--verbose]
 ```
 
-Options:
-- `--host`: Host to bind to (default: localhost)
-- `--port`: Port to bind to (default: 8000)
-- `--docs-dir`: Documentation directory (default: ./docs)
+`--verbose` is the only accepted flag. All runtime configuration is done via environment variables — see the [Environment Variables](#environment-variables) section above for the full list. The most commonly needed ones are `DOCS_DIR`, `MEDIAWIKI_API_URL`, and `USER_AGENT`.
 
 ### Docker Deployment
 
@@ -280,7 +277,7 @@ The provided Docker image ships with a pre-synced documentation cache baked into
 
 - `RUN_SYNC_ON_START=0` to skip the background sync (useful when running in read-only environments)
 - `SYNC_MODE=full` to force a full resync instead of the default incremental sync
-- The container starts the server via `fastmcp run fastmcp.json --transport http --path /mcp/ --port 8080`, so any additional FastMCP CLI flags can be injected by overriding `CMD` in your own image if needed.
+- The container starts the server via `fastmcp run fastmcp.json --port 8080`; transport, host, and path are read from `fastmcp.json` rather than passed as CLI flags. Additional FastMCP CLI flags can be injected by overriding `CMD` in your own image if needed.
 - A lightweight `/health` endpoint is exposed for platform probes; point load balancer checks there instead of MCP protocol paths.
 
 ## Project Structure
