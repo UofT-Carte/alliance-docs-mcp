@@ -1,5 +1,6 @@
 """FastMCP server for Alliance documentation."""
 
+import gzip
 import logging
 import os
 from dataclasses import dataclass
@@ -7,10 +8,12 @@ from pathlib import Path
 from typing import List, Optional
 
 from fastmcp import FastMCP
+from fastmcp.exceptions import ResourceError
 from fastmcp.server.lifespan import lifespan
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 
+from .models import PageIndexEntry
 from .related import RelatedIndex, RelatedIndexUnavailable
 from .search_index import SearchIndex, SearchIndexUnavailable
 from .storage import DocumentationStorage
@@ -149,6 +152,37 @@ def _resolve_page_path(file_path: str) -> Path:
 
     candidate = docs_path / path_obj
     return candidate.resolve()
+
+
+@mcp.resource("alliance-docs://page/{slug}", mime_type="text/markdown")
+def page_resource(slug: str) -> str:
+    """Return the markdown content of a documentation page, loaded on demand."""
+    page = storage.get_page_by_slug(slug)
+    if not page:
+        raise ResourceError(f"Page not found: {slug}")
+
+    absolute_path = _resolve_page_path(page["file_path"])
+    if not absolute_path.exists():
+        raise ResourceError(f"Page file missing on disk: {slug}")
+
+    if absolute_path.suffix == ".gz":
+        with gzip.open(absolute_path, "rt", encoding="utf-8") as handle:
+            return handle.read()
+    return absolute_path.read_text(encoding="utf-8")
+
+
+@mcp.resource("alliance-docs://pages", mime_type="application/json")
+def pages_index() -> list[dict]:
+    """Discovery index: every page's slug, title, url, and category."""
+    return [
+        PageIndexEntry(
+            slug=page["slug"],
+            title=page.get("title"),
+            url=page.get("url"),
+            category=page.get("category"),
+        ).model_dump()
+        for page in storage.get_all_pages()
+    ]
 
 
 async def _search_docs_impl(
