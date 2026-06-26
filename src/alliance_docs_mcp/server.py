@@ -207,7 +207,7 @@ async def _search_docs_impl(
                     category=hit.get("category"),
                     slug=hit.get("slug"),
                     last_modified=(
-                        str(hit["last_modified"])
+                        hit["last_modified"].isoformat()
                         if hit.get("last_modified") is not None
                         else None
                     ),

@@ -64,6 +64,7 @@ async def test_search_docs_uses_index(monkeypatch, tmp_path):
     assert results[0].slug == "gpu_guide"
     assert results[0].score is not None
     assert results[0].snippet is not None
+    assert results[0].last_modified is not None and "T" in results[0].last_modified
 
 
 @pytest.mark.asyncio
