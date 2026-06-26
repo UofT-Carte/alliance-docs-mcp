@@ -5,15 +5,17 @@ import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Optional
+from typing import Annotated, List, Optional
 
 from fastmcp import FastMCP
-from fastmcp.exceptions import ResourceError
+from fastmcp.exceptions import ResourceError, ToolError
 from fastmcp.server.lifespan import lifespan
+from mcp.types import ToolAnnotations
+from pydantic import Field
 from starlette.requests import Request
 from starlette.responses import PlainTextResponse
 
-from .models import PageIndexEntry
+from .models import PageIndexEntry, PageInfo, PageSummary, RelatedPage, SearchHit
 from .related import RelatedIndex, RelatedIndexUnavailable
 from .search_index import SearchIndex, SearchIndexUnavailable
 from .storage import DocumentationStorage
@@ -191,62 +193,72 @@ async def _search_docs_impl(
     limit: int = 20,
     search_content: bool = True,
     fuzzy: bool = False,
-) -> List[dict]:
+) -> List[SearchHit]:
     """Core search implementation used by the MCP tool and tests."""
+    if search_content and search_index:
+        try:
+            hits = search_index.search(
+                query, category=category, limit=limit, fuzzy=fuzzy
+            )
+            return [
+                SearchHit(
+                    title=hit.get("title"),
+                    url=hit.get("url"),
+                    category=hit.get("category"),
+                    slug=hit.get("slug"),
+                    last_modified=(
+                        str(hit["last_modified"])
+                        if hit.get("last_modified") is not None
+                        else None
+                    ),
+                    score=hit.get("score"),
+                    snippet=hit.get("highlights"),
+                    highlights=hit.get("highlights"),
+                )
+                for hit in hits
+            ]
+        except SearchIndexUnavailable:
+            logger.warning("Search index unavailable, using file-based search")
+        except Exception as exc:
+            logger.error("Full-text search failed: %s", exc, exc_info=True)
+            raise ToolError(f"Search failed: {exc}") from exc
+
     try:
-        logger.debug(f"Searching docs: query='{query}', category={category}, limit={limit}, search_content={search_content}, fuzzy={fuzzy}")
-        
-        if search_content and search_index:
-            try:
-                logger.debug("Attempting full-text search using search index")
-                results = search_index.search(query, category=category, limit=limit, fuzzy=fuzzy)
-                logger.info(f"Full-text search found {len(results)} results for query '{query}'")
-                return [
-                    {
-                        "title": hit.get("title"),
-                        "url": hit.get("url"),
-                        "category": hit.get("category"),
-                        "slug": hit.get("slug"),
-                        "last_modified": hit.get("last_modified"),
-                        "score": hit.get("score"),
-                        "snippet": hit.get("highlights"),
-                        "highlights": hit.get("highlights"),
-                    }
-                    for hit in results
-                ]
-            except SearchIndexUnavailable:
-                logger.warning("Search index unavailable, falling back to file-based search")
-            except Exception as exc:  # pragma: no cover - defensive fallback
-                logger.warning(f"Full-text search failed, falling back to file-based search: {exc}")
+        pages = storage.search_pages(query, category)
+    except Exception as exc:
+        logger.error("File-based search failed: %s", exc, exc_info=True)
+        raise ToolError(f"Search failed: {exc}") from exc
 
-        logger.debug("Using fallback file-based search")
-        results = storage.search_pages(query, category)
-        logger.info(f"File-based search found {len(results)} results for query '{query}'")
-        return [
-            {
-                "title": page["title"],
-                "url": page["url"],
-                "category": page["category"],
-                "slug": page["slug"],
-                "last_modified": page["last_modified"],
-            }
-            for page in results[:limit]
-        ]
-
-    except Exception as e:
-        logger.error(f"Error searching docs: {e}", exc_info=True)
-        return []
+    return [
+        SearchHit(
+            title=page["title"],
+            url=page["url"],
+            category=page["category"],
+            slug=page["slug"],
+            last_modified=page["last_modified"],
+        )
+        for page in pages[:limit]
+    ]
 
 
-@mcp.tool()
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
 async def search_docs(
-    query: str,
-    category: Optional[str] = None,
-    limit: int = 20,
-    search_content: bool = True,
-    fuzzy: bool = False,
-) -> List[dict]:
-    """Search documentation with optional full-text index and relevance ranking."""
+    query: Annotated[str, Field(description="Search terms to look for.")],
+    category: Annotated[
+        Optional[str], Field(description="Restrict results to this category.")
+    ] = None,
+    limit: Annotated[int, Field(description="Maximum number of results.")] = 20,
+    search_content: Annotated[
+        bool, Field(description="Search full page content, not just titles.")
+    ] = True,
+    fuzzy: Annotated[
+        bool, Field(description="Allow approximate (fuzzy) matches.")
+    ] = False,
+) -> List[SearchHit]:
+    """Search documentation with optional full-text index and relevance ranking.
+
+    Returns an empty list when nothing matches; raises on backend failure.
+    """
     return await _search_docs_impl(query, category, limit, search_content, fuzzy)
 
 
