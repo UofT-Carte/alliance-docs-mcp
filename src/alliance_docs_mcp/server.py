@@ -276,7 +276,7 @@ async def list_categories() -> List[str]:
         return []
 
 
-def _heuristic_related(page: dict, limit: int) -> List[dict]:
+def _heuristic_related(page: dict, limit: int) -> List[RelatedPage]:
     """Lightweight heuristic fallback for related pages."""
     base_tokens = set((page.get("title", "") or "").lower().split())
     candidates = []
@@ -288,7 +288,6 @@ def _heuristic_related(page: dict, limit: int) -> List[dict]:
         score = 0
         if candidate.get("category") == page.get("category"):
             score += 2
-
         candidate_tokens = set((candidate.get("title", "") or "").lower().split())
         score += len(base_tokens.intersection(candidate_tokens))
 
@@ -297,13 +296,13 @@ def _heuristic_related(page: dict, limit: int) -> List[dict]:
 
     candidates.sort(key=lambda item: item[0], reverse=True)
     return [
-        {
-            "title": candidate["title"],
-            "url": candidate["url"],
-            "category": candidate["category"],
-            "slug": candidate["slug"],
-            "score": score,
-        }
+        RelatedPage(
+            title=candidate["title"],
+            url=candidate["url"],
+            category=candidate["category"],
+            slug=candidate["slug"],
+            score=float(score),
+        )
         for score, candidate in candidates[:limit]
     ]
 
@@ -368,34 +367,37 @@ async def list_recent_updates(limit: int = 10) -> List[dict]:
         return []
 
 
-@mcp.tool()
-async def find_related_pages(slug: str, limit: int = 5, min_score: float = 0.0) -> List[dict]:
+@mcp.tool(annotations=ToolAnnotations(readOnlyHint=True, idempotentHint=True))
+async def find_related_pages(
+    slug: Annotated[str, Field(description="Slug of the page to find relations for.")],
+    limit: Annotated[int, Field(description="Maximum number of related pages.")] = 5,
+    min_score: Annotated[
+        float, Field(description="Minimum similarity score to include.")
+    ] = 0.0,
+) -> List[RelatedPage]:
     """Find related pages using embeddings when available, with heuristic fallback."""
     return await _find_related_pages_impl(slug, limit, min_score)
 
 
-async def _find_related_pages_impl(slug: str, limit: int = 5, min_score: float = 0.0) -> List[dict]:
+async def _find_related_pages_impl(
+    slug: str, limit: int = 5, min_score: float = 0.0
+) -> List[RelatedPage]:
     """Core related-pages implementation for tool and tests."""
-    try:
-        page = storage.get_page_by_slug(slug)
-        if not page:
-            return []
+    page = storage.get_page_by_slug(slug)
+    if not page:
+        raise ToolError(f"Page not found: {slug}")
 
-        if related_index:
-            try:
-                results = related_index.find_related(slug, limit=limit, min_score=min_score)
-                if results:
-                    return results
-            except RelatedIndexUnavailable as exc:
-                logger.warning("Related index unavailable for %s: %s", slug, exc)
-            except Exception as exc:  # pragma: no cover - defensive fallback
-                logger.warning("Related index error for %s: %s", slug, exc)
+    if related_index:
+        try:
+            results = related_index.find_related(slug, limit=limit, min_score=min_score)
+            if results:
+                return [RelatedPage(**hit) for hit in results]
+        except RelatedIndexUnavailable as exc:
+            logger.warning("Related index unavailable for %s: %s", slug, exc)
+        except Exception as exc:
+            logger.error("Related index error for %s: %s", slug, exc, exc_info=True)
 
-        return _heuristic_related(page, limit)
-
-    except Exception as exc:
-        logger.error("Error finding related pages for %s: %s", slug, exc)
-        return []
+    return _heuristic_related(page, limit)
 
 
 @mcp.tool()

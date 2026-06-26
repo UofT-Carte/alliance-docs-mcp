@@ -102,7 +102,8 @@ async def test_find_related_pages_uses_related_index(monkeypatch):
 
     results = await server._find_related_pages_impl("test_page", limit=3)
     assert dummy_related.called is True
-    assert results == related_result
+    assert results[0].slug == "related"
+    assert results[0].score == 0.9
 
 
 @pytest.mark.asyncio
@@ -125,5 +126,5 @@ async def test_find_related_pages_falls_back(monkeypatch):
 
     results = await server._find_related_pages_impl("test_page", limit=3)
     assert results
-    assert results[0]["slug"] == "test_page_2"
+    assert results[0].slug == "test_page_2"
 
