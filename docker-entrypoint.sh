@@ -62,7 +62,7 @@ trap 'forward_signal TERM' TERM
 trap 'forward_signal INT' INT
 
 echo "[entrypoint] Starting MCP server on port ${PORT}"
-fastmcp run fastmcp.json --port "${PORT}" &
+fastmcp run fastmcp.json --transport http --host 0.0.0.0 --port "${PORT}" &
 
 SERVER_PID=$!
 wait "${SERVER_PID}"
