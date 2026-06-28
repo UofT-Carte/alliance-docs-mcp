@@ -32,11 +32,13 @@ primary_region = "yyz"  # Toronto — closest to the Alliance MediaWiki source
 
   # Liveness probe — Fly restarts the machine if /health stops responding.
   # grace_period covers boot: prime-from-seed + build the search index before
-  # the lifespan finishes and /health starts answering.
+  # the lifespan finishes and /health starts answering. On a fresh machine the
+  # index is built from scratch on a single shared core, which can take a couple
+  # of minutes, so give it real headroom rather than 30s.
   [[http_service.checks]]
     interval = "30s"
     timeout = "5s"
-    grace_period = "30s"
+    grace_period = "120s"
     method = "GET"
     path = "/health"
 
