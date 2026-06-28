@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Timestamped boot logging so deploy logs show exactly where startup time goes
+# (boot -> prime -> server bind). Critical for diagnosing slow-boot deploy
+# timeouts on the small Fly machine.
+ts() { echo "[entrypoint $(date -u +%H:%M:%S)] $*"; }
+
+ts "Entrypoint start"
+
 export DOCS_DIR="${DOCS_DIR:-/data/docs}"
 PORT="${PORT:-8080}"
 RUN_SYNC_ON_START="${RUN_SYNC_ON_START:-1}"
@@ -11,8 +18,9 @@ mkdir -p "${DOCS_DIR}"
 DOCS_SEED_DIR="${DOCS_SEED_DIR:-}"
 if [[ -n "${DOCS_SEED_DIR}" && "${DOCS_SEED_DIR}" != "${DOCS_DIR}" && -d "${DOCS_SEED_DIR}" ]]; then
   if [[ -z "$(ls -A "${DOCS_DIR}" 2>/dev/null)" ]]; then
-    echo "[entrypoint] Priming documentation directory from baked seed at ${DOCS_SEED_DIR}"
+    ts "Priming documentation directory from baked seed at ${DOCS_SEED_DIR}"
     cp -a "${DOCS_SEED_DIR}/." "${DOCS_DIR}/"
+    ts "Priming complete"
   fi
 fi
 
@@ -61,7 +69,7 @@ trap 'forward_signal INT' INT
 # and the server build the same DOCS_DIR/search_index), delaying the port bind
 # by minutes and tripping Fly's deploy health-check timeout. So: bind, become
 # healthy, THEN run the catch-up sync in the background.
-echo "[entrypoint] Starting MCP server on port ${PORT}"
+ts "Launching MCP server on port ${PORT}"
 fastmcp run fastmcp.json --transport http --host 0.0.0.0 --port "${PORT}" &
 SERVER_PID=$!
 
@@ -89,14 +97,14 @@ wait_for_health() {
 
 if [[ "${RUN_SYNC_ON_START}" != "0" ]]; then
   if wait_for_health; then
-    echo "[entrypoint] Server is healthy; starting deferred documentation sync"
+    ts "Server is healthy; starting deferred documentation sync"
     start_sync &
     SYNC_PID=$!
   else
-    echo "[entrypoint] Server did not become healthy in time; skipping startup sync"
+    ts "Server did not become healthy in time; skipping startup sync"
   fi
 else
-  echo "[entrypoint] Skipping startup sync (RUN_SYNC_ON_START=${RUN_SYNC_ON_START})"
+  ts "Skipping startup sync (RUN_SYNC_ON_START=${RUN_SYNC_ON_START})"
 fi
 
 wait "${SERVER_PID}"

@@ -3,6 +3,7 @@
 import gzip
 import logging
 import os
+import threading
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Annotated, List, Optional
@@ -108,9 +109,38 @@ def _apply_state(state: ServerState) -> None:
 
 @lifespan
 async def app_lifespan(server):
-    """Build runtime state on startup; nothing to tear down."""
-    _apply_state(build_state())
-    logger.info("Alliance Docs MCP server state initialized")
+    """Make the server reachable immediately, then build the search index in
+    the background.
+
+    Uvicorn does not open the listening socket until this startup hook returns,
+    so any heavy work done here (notably the full Whoosh index build on a fresh
+    machine) delays the port bind and can outrun the platform's deploy /
+    health-check timeout. Tools and resources already degrade gracefully when
+    ``search_index`` is ``None`` (they fall back to title/file search), so we
+    publish the lightweight state synchronously and let the index populate
+    behind a ready, healthy server.
+    """
+    resolved = _discover_docs_directory()
+    doc_storage = DocumentationStorage(str(resolved))
+    _apply_state(
+        ServerState(docs_path=resolved, storage=doc_storage, search_index=None)
+    )
+    logger.info(
+        "Alliance Docs MCP server reachable; building search index in background"
+    )
+
+    def _build_index_in_background() -> None:
+        global search_index
+        try:
+            search_index = _build_search_index(resolved, doc_storage)
+            logger.info("Search index ready")
+        except Exception as exc:  # never let index build crash the server
+            logger.warning("Background search index build failed: %s", exc)
+
+    threading.Thread(
+        target=_build_index_in_background, name="search-index-build", daemon=True
+    ).start()
+
     try:
         yield {}
     finally:
