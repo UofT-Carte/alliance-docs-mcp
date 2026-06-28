@@ -41,12 +41,6 @@ start_sync() {
 }
 
 SYNC_PID=""
-if [[ "${RUN_SYNC_ON_START}" != "0" ]]; then
-  start_sync &
-  SYNC_PID=$!
-else
-  echo "[entrypoint] Skipping startup sync (RUN_SYNC_ON_START=${RUN_SYNC_ON_START})"
-fi
 
 forward_signal() {
   local signal=$1
@@ -61,10 +55,50 @@ forward_signal() {
 trap 'forward_signal TERM' TERM
 trap 'forward_signal INT' INT
 
+# Start the MCP server FIRST and let it bind before doing anything heavy.
+# Running the docs sync concurrently with startup starves the small machine's
+# single core / 512 MB and contends on the Whoosh writer lock (both the sync
+# and the server build the same DOCS_DIR/search_index), delaying the port bind
+# by minutes and tripping Fly's deploy health-check timeout. So: bind, become
+# healthy, THEN run the catch-up sync in the background.
 echo "[entrypoint] Starting MCP server on port ${PORT}"
 fastmcp run fastmcp.json --transport http --host 0.0.0.0 --port "${PORT}" &
-
 SERVER_PID=$!
+
+server_healthy() {
+  HEALTH_URL="http://127.0.0.1:${PORT}/health" python -c '
+import os, sys, urllib.request
+try:
+    urllib.request.urlopen(os.environ["HEALTH_URL"], timeout=2).read()
+except Exception:
+    sys.exit(1)
+'
+}
+
+wait_for_health() {
+  for _ in $(seq 1 "${HEALTH_WAIT_SECONDS:-180}"); do
+    if server_healthy; then
+      return 0
+    fi
+    # Bail out early if the server process died.
+    kill -0 "${SERVER_PID}" 2>/dev/null || return 1
+    sleep 1
+  done
+  return 1
+}
+
+if [[ "${RUN_SYNC_ON_START}" != "0" ]]; then
+  if wait_for_health; then
+    echo "[entrypoint] Server is healthy; starting deferred documentation sync"
+    start_sync &
+    SYNC_PID=$!
+  else
+    echo "[entrypoint] Server did not become healthy in time; skipping startup sync"
+  fi
+else
+  echo "[entrypoint] Skipping startup sync (RUN_SYNC_ON_START=${RUN_SYNC_ON_START})"
+fi
+
 wait "${SERVER_PID}"
 SERVER_EXIT=$?
 

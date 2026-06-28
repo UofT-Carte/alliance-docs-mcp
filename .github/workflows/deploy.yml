@@ -28,6 +28,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Deploy
-        run: flyctl deploy --remote-only
+        # --wait-timeout: a fresh machine builds its search index on boot, which
+        # can take a couple of minutes on a small machine. Don't let flyctl
+        # abort the release before the machine has a chance to go healthy.
+        run: flyctl deploy --remote-only --wait-timeout 5m
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
