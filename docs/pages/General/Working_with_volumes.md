@@ -2,7 +2,7 @@
 title: "Working with volumes/en"
 url: "https://docs.alliancecan.ca/wiki/Working_with_volumes/en"
 category: "General"
-last_modified: "2026-04-07T23:35:15Z"
+last_modified: "2026-06-18T17:33:41Z"
 page_id: 21268
 display_title: "Working with volumes"
 ---
@@ -54,11 +54,13 @@ Based on the UUID, add a line to /etc/fstab like this:
 
 Where 'anananan-anan-anana-anan-ananananana' is substituted with UUID of the device you wish to auto-mount.
 
-For more details about how to edit this file see this Ubuntu community help page.
+For details on how to edit this file, see this Ubuntu community help page.
 
 =Booting from a volume=
+
 If you want to run a persistent machine, it is safest to boot from a volume. When you boot a VM from an image rather than a volume, the VM is stored on the local disk of the actual machine running the VM. If something goes wrong with that machine or its disk, the VM may be lost. Volume storage has redundancy, which protects the VM from hardware failure. Typically when booting from a volume VM flavors starting with the letter p are used (see Virtual machine flavors).
 
+For details on storage options, see this Cloud storage options.
 There are several ways to boot a VM from a volume. You can
 * boot from an image, creating a new volume, or
 * boot from a pre-existing volume, or

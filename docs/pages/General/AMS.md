@@ -2,7 +2,7 @@
 title: "AMS/en"
 url: "https://docs.alliancecan.ca/wiki/AMS/en"
 category: "General"
-last_modified: "2025-09-23T22:25:24Z"
+last_modified: "2026-06-23T14:16:55Z"
 page_id: 15810
 display_title: "AMS"
 ---
@@ -45,22 +45,22 @@ This is the input file used in the script:
 # The restart file name is ams.rkf instead of the TAPE13 in previous ADF versions
 For more usage information, please check the manuals in SCM Support
 
-==Running AMS-GUI==
-===Nibi===
+==Running AMS-GUI on Nibi==
 
-AMS can be run interactively in graphical mode on a Nibi compute node (8hr time limit) via OnDemand with these steps:
+AMS can be run graphically on Nibi using an OnDemand Compute Node Desktop as follows:
 
-# Log in to ondemand.sharcnet.ca
-# Select Nibi Desktop from Compute on the top
-# Select your options (select 1 core for visualization purpose, don't select Enable VirtualGL) and press Launch
-# Select Launch Nibi Desktop once your job starts
-# Right click on the desktop and pick Open it Terminal
-# Pick MATE Terminal from the System Tools menu under the Applications menu
+# Log into ondemand.sharcnet.ca
+# Select Compute Node then Compute Desktop from the top menu pulldown
+# Specify Computers=1, Cores=1, GPU=None for visualization then press Launch
+# Once the Desktop changes from Queued to Running press Launch Nibi Desktop
+# When your Desktop starts click Applications -> System Tools -> MATE Terminal
 # module unload openmpi
-# module load ams
-# amsinput & (to make AMS input)
-# amsview & (for AMS result visualization)
+# module load ams,  (loads the latest version)
+# export SCM_OPENGL_SOFTWARE=1 (enables software rendering)
+: 9a. amsinput or amsview
 
-If you need to select Enable VirtualGL for some other program that you are using, you will have to disable it for just AMS by starting it with LD_PRELOAD= amsinput.
+If you specified GPU=t4 (15GB) when starting your OnDemand Nibi Desktop then instead do :
 
-OnDemand Nibi Desktop is intended for AMS-GUI applications, such as making input files and visualizing results. Please do not use it to run regular jobs or long interactive jobs. Select a single core and reasonable memory and runtime.
+: 9b. LD_PRELOAD= amsinput or LD_PRELOAD= amsview
+
+☞ To select one or more atoms in the gui press SHIFT then click.

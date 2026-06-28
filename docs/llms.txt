@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-06-21T09:34:24.097898+00:00
+# Generated: 2026-06-28T08:38:40.561148+00:00
 # Total pages: 457
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -9,7 +9,7 @@
 - AI and Machine Learning (General): https://docs.alliancecan.ca/wiki/AI_and_Machine_Learning
 - AI and Machine Learning/en (General): https://docs.alliancecan.ca/wiki/AI_and_Machine_Learning/en
 - AMBER (General): https://docs.alliancecan.ca/wiki/AMBER/en
-- AMS (General): https://docs.alliancecan.ca/wiki/AMS/en
+- AMS/en (General): https://docs.alliancecan.ca/wiki/AMS/en
 - ARM software (General): https://docs.alliancecan.ca/wiki/ARM_software/en
 - Abaqus (General): https://docs.alliancecan.ca/wiki/Abaqus
 - Abaqus/en (General): https://docs.alliancecan.ca/wiki/Abaqus/en
@@ -97,7 +97,7 @@
 - Cloud (General): https://docs.alliancecan.ca/wiki/Cloud/en
 - Cloud Account Lifecycle Management (General): https://docs.alliancecan.ca/wiki/Cloud_Account_Lifecycle_Management
 - Cloud Quick Start/en (General): https://docs.alliancecan.ca/wiki/Cloud_Quick_Start/en
-- Cloud RAS Allocations (General): https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations/en
+- Cloud RAS Allocations/en (General): https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations/en
 - Cloud Technical Glossary (Technical Reference): https://docs.alliancecan.ca/wiki/Cloud_Technical_Glossary/en
 - Cloud resources (General): https://docs.alliancecan.ca/wiki/Cloud_resources/en
 - Cloud resources (General): https://docs.alliancecan.ca/wiki/Cloud_resources

@@ -1,9 +1,9 @@
 ---
-title: "Arbutus Migration Guide/en"
-url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en"
+title: "Arbutus Migration Guide"
+url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide"
 category: "User Guide"
-last_modified: "2026-06-11T14:18:53Z"
-page_id: 9289
+last_modified: "2026-06-19T18:39:02Z"
+page_id: 9230
 display_title: "Arbutus Migration Guide"
 ---
 
@@ -149,7 +149,7 @@ openstack image show
 #  In the legacy cloud session, download the image (replace the  and  with real values).
 openstack image save --file
 #  In the new cloud session on the migration host, upload the image (replace  with the name from the previous step;  can be anything.)
-openstack --os-cloud  image create --private --file
+openstack image create --private --file
 #  You can now create a volume from the uploaded image. In the new cloud web UI, navigate to Compute -> Images. The uploaded image from the previous step should be there. In the drop-down menu for the image, select the option Create Volume and the volume will be created from the image. The created volume can then be attached to instances or used to boot a new instance.
 #  Once you have migrated and validated your instances and volumes, and once all associated DNS records are updated, please delete your old instances and volumes on the legacy cloud.
 
