@@ -2,7 +2,7 @@
 title: "Nibi/en"
 url: "https://docs.alliancecan.ca/wiki/Nibi/en"
 category: "General"
-last_modified: "2026-06-11T14:19:02Z"
+last_modified: "2026-06-25T14:26:20Z"
 page_id: 27510
 display_title: "Nibi"
 ---
@@ -92,7 +92,7 @@ The maximum recommended number of CPU cores and system memory per GPU instance i
 All nodes on Nibi have internet access, no special firewall permission or proxying is necessary.
 
 ==/project and /nearline spaces==
-User directories are no longer created by default in /project or /nearline. Users can always create their own directories in the group's /project or /nearline using mkdir. This allows groups to decide how their /project or /nearline spaces are organized for sharing data amongst group members.
+User directories are no longer created by default in /project or /nearline. Users can always create their own directories in the group's /project or /nearline using mkdir. This allows groups to decide how their /project or /nearline spaces are organized for sharing data amongst group members. Index files and other small files are not archived to tape or backed up on Nibi /nearline.
 
 ==/scratch quota==
 An 1 TB soft quota on /scratch applies to each user. This soft quota can be exceeded for up to 60 days after which no additional files may be written to /scratch. Files may be written again once the user has removed or deleted enough files to bring their total /scratch use under 1 TB. See Storage and file management for more information.

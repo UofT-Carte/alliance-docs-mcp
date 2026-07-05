@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-06-28T08:38:40.561148+00:00
+# Generated: 2026-07-05T08:38:34.617278+00:00
 # Total pages: 457
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -67,7 +67,7 @@
 - Build tools (General): https://docs.alliancecan.ca/wiki/Build_tools/en
 - Building a Software Carpentry style lesson on the wiki (General): https://docs.alliancecan.ca/wiki/Building_a_Software_Carpentry_style_lesson_on_the_wiki/en
 - Building a web portal (General): https://docs.alliancecan.ca/wiki/Building_a_web_portal
-- Béluga (General): https://docs.alliancecan.ca/wiki/B%C3%A9luga/en
+- Béluga/en (General): https://docs.alliancecan.ca/wiki/B%C3%A9luga/en
 - C (General): https://docs.alliancecan.ca/wiki/C/en
 - C++ (General): https://docs.alliancecan.ca/wiki/C%2B%2B/en
 - CASTEP (General): https://docs.alliancecan.ca/wiki/CASTEP/en

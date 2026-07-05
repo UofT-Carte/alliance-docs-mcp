@@ -1,5 +1,5 @@
 # Alliance Documentation - Full Content
-# Generated: 2026-06-28T08:38:40.563795+00:00
+# Generated: 2026-07-05T08:38:34.619263+00:00
 # Total pages: 457
 ================================================================================
 
@@ -8078,13 +8078,13 @@ Meta-Scheduling:
 
 
 ================================================================================
-PAGE: Béluga
+PAGE: Béluga/en
 URL: https://docs.alliancecan.ca/wiki/B%C3%A9luga/en
 Category: General
 ================================================================================
 
 
-Availability: March, 2019
+Availability: March, 2019, to June, 2026
 Login node: beluga.alliancecan.ca
 Globus collection: computecanada#beluga-dtn
 Data Transfer Node (rsync, scp, sftp,...): beluga.alliancecan.ca
@@ -9728,19 +9728,30 @@ We can see that the CephFS network is attached to the first VM.
 
 == VM configuration: install and configure CephFS client ==
 
-=== Required packages for the Red Hat family (RHEL, CentOS, Fedora, Rocky, Alma ) ===
+=== Required packages for the Red Hat Enterprise Linux family (RHEL, CentOS, Fedora, Rocky, Alma ) ===
 Check the available releases at https://download.ceph.com/ and look for recent rpm-* directories.
-As of April 2026, tentacle is the latest stable release.
+As of June 2026, tentacle is the latest stable release.
 The compatible distributions (distros) are listed at https://download.ceph.com/rpm-tentacle/.
-Here we show configuration examples for Enterprise Linux 9 and derivatives. As of April 2026, the CephFS client is not available for Enterprise Linux 10 and derivatives.
 
-; Install relevant repositories for access to ceph client packages:
+==== Add the Ceph software repository ====
+Depending on the version of Enterprise Linux you are running, add the follwowing file:
 
-The epel repo also needs to be in place
+==== Install relevant repositories for access to ceph client packages ====
+
+Install the Extra Packages for Enterprise Linux (EPEL) repository:
  sudo dnf install epel-release
+
+If you are running el10 you need to temporarily disable the default cryptographic policy due to how the Ceph packages are signed:
+ sudo update-crypto-policies --set LEGACY
+
+Import the Ceph project's public key needed to verify the cryptographic signatures on the software packages:
+  sudo rpm --import 'https://download.ceph.com/keys/release.asc'
 
 You can now install the ceph lib, cephfs client and other dependencies:
  sudo dnf install -y libcephfs2 python3-cephfs ceph-common python3-ceph-argparse
+
+If you disabled the default cryptographic policy, you should restore the default cryptographic policy
+  sudo update-crypto-policies --set DEFAULT
 
 === Required packages for the Debian family (Debian, Ubuntu, Mint, etc.) ===
 You can get the repository once you have figured out your distro {codename} with lsb_release -sc
@@ -9890,19 +9901,30 @@ We can see that the CephFS network is attached to the first VM.
 
 == VM configuration: install and configure CephFS client ==
 
-=== Required packages for the Red Hat family (RHEL, CentOS, Fedora, Rocky, Alma ) ===
+=== Required packages for the Red Hat Enterprise Linux family (RHEL, CentOS, Fedora, Rocky, Alma ) ===
 Check the available releases at https://download.ceph.com/ and look for recent rpm-* directories.
-As of April 2026, tentacle is the latest stable release.
+As of June 2026, tentacle is the latest stable release.
 The compatible distributions (distros) are listed at https://download.ceph.com/rpm-tentacle/.
-Here we show configuration examples for Enterprise Linux 9 and derivatives. As of April 2026, the CephFS client is not available for Enterprise Linux 10 and derivatives.
 
-; Install relevant repositories for access to ceph client packages:
+==== Add the Ceph software repository ====
+Depending on the version of Enterprise Linux you are running, add the follwowing file:
 
-The epel repo also needs to be in place
+==== Install relevant repositories for access to ceph client packages ====
+
+Install the Extra Packages for Enterprise Linux (EPEL) repository:
  sudo dnf install epel-release
+
+If you are running el10 you need to temporarily disable the default cryptographic policy due to how the Ceph packages are signed:
+ sudo update-crypto-policies --set LEGACY
+
+Import the Ceph project's public key needed to verify the cryptographic signatures on the software packages:
+  sudo rpm --import 'https://download.ceph.com/keys/release.asc'
 
 You can now install the ceph lib, cephfs client and other dependencies:
  sudo dnf install -y libcephfs2 python3-cephfs ceph-common python3-ceph-argparse
+
+If you disabled the default cryptographic policy, you should restore the default cryptographic policy
+  sudo update-crypto-policies --set DEFAULT
 
 === Required packages for the Debian family (Debian, Ubuntu, Mint, etc.) ===
 You can get the repository once you have figured out your distro {codename} with lsb_release -sc
@@ -31300,7 +31322,7 @@ The maximum recommended number of CPU cores and system memory per GPU instance i
 All nodes on Nibi have internet access, no special firewall permission or proxying is necessary.
 
 ==/project and /nearline spaces==
-User directories are no longer created by default in /project or /nearline. Users can always create their own directories in the group's /project or /nearline using mkdir. This allows groups to decide how their /project or /nearline spaces are organized for sharing data amongst group members.
+User directories are no longer created by default in /project or /nearline. Users can always create their own directories in the group's /project or /nearline using mkdir. This allows groups to decide how their /project or /nearline spaces are organized for sharing data amongst group members. Index files and other small files are not archived to tape or backed up on Nibi /nearline.
 
 ==/scratch quota==
 An 1 TB soft quota on /scratch applies to each user. This soft quota can be exceeded for up to 60 days after which no additional files may be written to /scratch. Files may be written again once the user has removed or deleted enough files to bring their total /scratch use under 1 TB. See Storage and file management for more information.
@@ -40703,17 +40725,17 @@ Filesystem    	Default Quota                                                    
 Home Space    	50 GB and 500K files per userThis quota is fixed and cannot be changed.                                                                                                                                                                                                                                                                               	Yes         	Yes      	No                                                                                  	Yes                 	Yes
 Scratch Space 	20 TB and 1M files per user                                                                                                                                                                                                                                                                                                                           	Yes         	No       	Files older than 60 days are purged.See Scratch purging policy for more information.	Yes                 	Yes
 Project Space 	1 TB and 500K files per groupProject space can be increased to 40 TB per group by a RAS request, subject to the limitations that the minimum project space per quota cannot be less than 1 TB and the sum over all four general-purpose clusters cannot exceed 43 TB. The group's sponsoring PI should write to technical support to make the request.	Yes         	Yes      	No                                                                                  	Yes                 	Yes
-Nearline Space	2 TB and 5000 files per group                                                                                                                                                                                                                                                                                                                         	Yes         	Yes      	No                                                                                  	Yes                 	No
+Nearline Space	2 TB and 5000 files per groupNearline space can be increased to 100 TB per group by a RAS request, summed over all four general-purpose clusters. The group's sponsoring PI should write to technical support to make the request.                                                                                                                    	Yes         	Yes      	No                                                                                  	Yes                 	No
 
 Since April 1, 2024, new Rapid Access Service (RAS) policies allow larger quotas for the project and nearline spaces. For more details, see the "Storage" section at Rapid Access Service.  Quota changes larger than those permitted by RAS will require an application to the annual Resource Allocation Competition.
 
 Filesystem Characteristics
 
-Filesystem    	Default Quota                                                                                                                                                                                                                                                                                                                                                                                       	Lustre-based	Backed up	Purged	Available by Default	Mounted on Compute Nodes
-Home Space    	50 GB and 500K files per userThis quota is fixed and cannot be changed.                                                                                                                                                                                                                                                                                                                             	No          	Yes      	No    	Yes                 	Yes
-Scratch Space 	20 TB hard / 1TB soft and 1M files per userAn 1 TB soft quota on scratch applies to each researcher.  This soft quota can be exceeded for up to 60 days after which no additional files may be written to scratch.  Files may be written again once the researcher has removed or deleted enough files to bring their total scratch use under 1 TB. See Scratch purging policy for more information.	No          	No       	No    	Yes                 	Yes
-Project Space 	1 TB and 500K files per groupProject space can be increased to 40 TB per group by a RAS request, subject to the limitations that the minimum project space per quota cannot be less than 1 TB and the sum over all four general-purpose clusters cannot exceed 43 TB. The group's sponsoring PI should write to technical support to make the request.                                              	No          	Yes      	No    	Yes                 	Yes
-Nearline Space	10 TB and 5000 files per group                                                                                                                                                                                                                                                                                                                                                                      	Yes         	Yes      	No    	Yes                 	No
+Filesystem    	Default Quota                                                                                                                                                                                                                                                                                                                                                                                                               	Lustre-based	Backed up	Purged	Available by Default	Mounted on Compute Nodes
+Home Space    	50 GB and 500K files per userThis quota is fixed and cannot be changed.                                                                                                                                                                                                                                                                                                                                                     	No          	Yes      	No    	Yes                 	Yes
+Scratch Space 	20 TB hard / 1TB soft and 1M files per userA 1 TB soft quota on scratch applies to each user. A "soft quota" means you may temporarily exceed the 1 TB limit for up to 60 days; after this period, no additional files may be written to scratch. Files may be written again once the user has removed or deleted enough files to bring their total scratch use under 1 TB. See Scratch purging policy for more information.	No          	No       	No    	Yes                 	Yes
+Project Space 	1 TB and 500K files per groupProject space can be increased to 40 TB per group by a RAS request, subject to the limitations that the minimum project space per quota cannot be less than 1 TB and the sum over all four general-purpose clusters cannot exceed 43 TB. The group's sponsoring PI should write to technical support to make the request.                                                                      	No          	Yes      	No    	Yes                 	Yes
+Nearline Space	10 TB and 5000 files per groupNearline space can be increased to 100 TB per group by a RAS request, summed over all four general-purpose clusters. The group's sponsoring PI should write to technical support to make the request.                                                                                                                                                                                         	Yes         	Yes      	No    	Yes                 	No
 
 Since April 1, 2024, new Rapid Access Service (RAS) policies allow larger quotas for project and nearline spaces. For more details, see the "Storage" section at Rapid Access Service.  Quota changes larger than those permitted by RAS will require an application to the annual Resource Allocation Competition.
 
@@ -40723,7 +40745,7 @@ Filesystem    	Default Quota                                                    
 Home Space    	50 GB and 500K files per userThis quota is fixed and cannot be changed.                                                                                                                                                                                                                                                                               	Yes         	Yes      	No                                                                                  	Yes                 	Yes
 Scratch Space 	20 TB and 1M files per user                                                                                                                                                                                                                                                                                                                           	Yes         	No       	Files older than 60 days are purged.See Scratch purging policy for more information.	Yes                 	Yes
 Project Space 	1 TB and 500K files per groupProject space can be increased to 40 TB per group by a RAS request, subject to the limitations that the minimum project space per quota cannot be less than 1 TB and the sum over all four general-purpose clusters cannot exceed 43 TB. The group's sponsoring PI should write to technical support to make the request.	Yes         	Yes      	No                                                                                  	Yes                 	Yes
-Nearline Space	1 TB and 5000 files per group                                                                                                                                                                                                                                                                                                                         	Yes         	Yes      	No                                                                                  	Yes                 	No
+Nearline Space	1 TB and 5000 files per groupNearline space can be increased to 100 TB per group by a RAS request, summed over all four general-purpose clusters. The group's sponsoring PI should write to technical support to make the request.                                                                                                                    	Yes         	Yes      	No                                                                                  	Yes                 	No
 
 Since April 1, 2024, new Rapid Access Service (RAS) policies allow larger quotas for project and nearline spaces. For more details, see the "Storage" section at Rapid Access Service.  Quota changes larger than those permitted by RAS will require an application to the annual Resource Allocation Competition.
 
@@ -40792,6 +40814,7 @@ The backup policy on the home and project space is nightly backups which are ret
 
 * Diskusage Explorer
 * Project layout
+* Using nearline storage
 * Sharing data
 * Transferring data
 * Tuning Lustre
@@ -45374,7 +45397,7 @@ Retrieving small files from tape is inefficient, while extremely large files pos
 
 *Files smaller than ~10GB should be combined into archive files (tarballs) using tar or a similar tool.
 *Files larger than 4TB should be split in chunks of 1TB using the split command or a similar tool.
-*DO NOT SEND SMALL FILES TO NEARLINE, except for indexes (see Create an index below).
+*DO NOT SEND SMALL FILES TO NEARLINE, except for indexes (see Create an index below). On Nibi nearline index files and other small files are not archived to tape or backed up. If you need index files on Nibi backed up then move then to other storage such as project.
 
 === Use tar or dar ===
 
@@ -45391,7 +45414,7 @@ When you bundle files, it becomes inconvenient to find individual files. To avoi
 
 If you've just created the archive (again using tar as an example), you can create an index like this:
 
-Index files are an exception to the rule about small files on /nearline: it's okay to store them in /nearline.
+Index files are an exception to the rule about small files on /nearline: it's okay to store them in /nearline. On Nibi nearline small files and index files are not archived to tape or backed up. If you need them to be backed up then please move them elsewhere.
 
 === No access from compute nodes ===
 
@@ -45474,6 +45497,7 @@ If you accidentally (or deliberately) delete a file from ~/nearline, the tape co
 /nearline service similar to that on Fir, except:
 # It may take longer than 24 hours for the first tape copy of the data to be created.
 # The disk copy will not be erased (leaving only the tape copies) until 60 days have passed.
+# Small files including index files are not migrated to tape or backed up.
 
 /nearline service similar to that on Fir, except:
 # Your nearline spaces are in ~/links/nearlines.
@@ -45506,7 +45530,7 @@ Retrieving small files from tape is inefficient, while extremely large files pos
 
 *Files smaller than ~10GB should be combined into archive files (tarballs) using tar or a similar tool.
 *Files larger than 4TB should be split in chunks of 1TB using the split command or a similar tool.
-*DO NOT SEND SMALL FILES TO NEARLINE, except for indexes (see Create an index below).
+*DO NOT SEND SMALL FILES TO NEARLINE, except for indexes (see Create an index below). On Nibi nearline index files and other small files are not archived to tape or backed up. If you need index files on Nibi backed up then move then to other storage such as project.
 
 === Use tar or dar ===
 
@@ -45523,7 +45547,7 @@ When you bundle files, it becomes inconvenient to find individual files. To avoi
 
 If you've just created the archive (again using tar as an example), you can create an index like this:
 
-Index files are an exception to the rule about small files on /nearline: it's okay to store them in /nearline.
+Index files are an exception to the rule about small files on /nearline: it's okay to store them in /nearline. On Nibi nearline small files and index files are not archived to tape or backed up. If you need them to be backed up then please move them elsewhere.
 
 === No access from compute nodes ===
 
@@ -45606,6 +45630,7 @@ If you accidentally (or deliberately) delete a file from ~/nearline, the tape co
 /nearline service similar to that on Fir, except:
 # It may take longer than 24 hours for the first tape copy of the data to be created.
 # The disk copy will not be erased (leaving only the tape copies) until 60 days have passed.
+# Small files including index files are not migrated to tape or backed up.
 
 /nearline service similar to that on Fir, except:
 # Your nearline spaces are in ~/links/nearlines.

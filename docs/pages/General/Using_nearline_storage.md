@@ -1,9 +1,9 @@
 ---
-title: "Using nearline storage"
-url: "https://docs.alliancecan.ca/wiki/Using_nearline_storage"
+title: "Using nearline storage/en"
+url: "https://docs.alliancecan.ca/wiki/Using_nearline_storage/en"
 category: "General"
-last_modified: "2026-05-25T18:14:21Z"
-page_id: 5571
+last_modified: "2026-06-25T14:26:39Z"
+page_id: 9323
 display_title: "Using nearline storage"
 ---
 
@@ -17,7 +17,7 @@ Retrieving small files from tape is inefficient, while extremely large files pos
 
 *Files smaller than ~10GB should be combined into archive files (tarballs) using tar or a similar tool.
 *Files larger than 4TB should be split in chunks of 1TB using the split command or a similar tool.
-*DO NOT SEND SMALL FILES TO NEARLINE, except for indexes (see Create an index below).
+*DO NOT SEND SMALL FILES TO NEARLINE, except for indexes (see Create an index below). On Nibi nearline index files and other small files are not archived to tape or backed up. If you need index files on Nibi backed up then move then to other storage such as project.
 
 === Use tar or dar ===
 
@@ -34,7 +34,7 @@ When you bundle files, it becomes inconvenient to find individual files. To avoi
 
 If you've just created the archive (again using tar as an example), you can create an index like this:
 
-Index files are an exception to the rule about small files on /nearline: it's okay to store them in /nearline.
+Index files are an exception to the rule about small files on /nearline: it's okay to store them in /nearline. On Nibi nearline small files and index files are not archived to tape or backed up. If you need them to be backed up then please move them elsewhere.
 
 === No access from compute nodes ===
 
@@ -117,6 +117,7 @@ If you accidentally (or deliberately) delete a file from ~/nearline, the tape co
 /nearline service similar to that on Fir, except:
 # It may take longer than 24 hours for the first tape copy of the data to be created.
 # The disk copy will not be erased (leaving only the tape copies) until 60 days have passed.
+# Small files including index files are not migrated to tape or backed up.
 
 /nearline service similar to that on Fir, except:
 # Your nearline spaces are in ~/links/nearlines.

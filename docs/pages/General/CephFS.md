@@ -1,9 +1,9 @@
 ---
-title: "CephFS/en"
-url: "https://docs.alliancecan.ca/wiki/CephFS/en"
+title: "CephFS"
+url: "https://docs.alliancecan.ca/wiki/CephFS"
 category: "General"
-last_modified: "2026-04-21T22:39:17Z"
-page_id: 20857
+last_modified: "2026-06-21T13:24:29Z"
+page_id: 16840
 display_title: "CephFS"
 ---
 
@@ -82,19 +82,30 @@ We can see that the CephFS network is attached to the first VM.
 
 == VM configuration: install and configure CephFS client ==
 
-=== Required packages for the Red Hat family (RHEL, CentOS, Fedora, Rocky, Alma ) ===
+=== Required packages for the Red Hat Enterprise Linux family (RHEL, CentOS, Fedora, Rocky, Alma ) ===
 Check the available releases at https://download.ceph.com/ and look for recent rpm-* directories.
-As of April 2026, tentacle is the latest stable release.
+As of June 2026, tentacle is the latest stable release.
 The compatible distributions (distros) are listed at https://download.ceph.com/rpm-tentacle/.
-Here we show configuration examples for Enterprise Linux 9 and derivatives. As of April 2026, the CephFS client is not available for Enterprise Linux 10 and derivatives.
 
-; Install relevant repositories for access to ceph client packages:
+==== Add the Ceph software repository ====
+Depending on the version of Enterprise Linux you are running, add the follwowing file:
 
-The epel repo also needs to be in place
+==== Install relevant repositories for access to ceph client packages ====
+
+Install the Extra Packages for Enterprise Linux (EPEL) repository:
  sudo dnf install epel-release
+
+If you are running el10 you need to temporarily disable the default cryptographic policy due to how the Ceph packages are signed:
+ sudo update-crypto-policies --set LEGACY
+
+Import the Ceph project's public key needed to verify the cryptographic signatures on the software packages:
+  sudo rpm --import 'https://download.ceph.com/keys/release.asc'
 
 You can now install the ceph lib, cephfs client and other dependencies:
  sudo dnf install -y libcephfs2 python3-cephfs ceph-common python3-ceph-argparse
+
+If you disabled the default cryptographic policy, you should restore the default cryptographic policy
+  sudo update-crypto-policies --set DEFAULT
 
 === Required packages for the Debian family (Debian, Ubuntu, Mint, etc.) ===
 You can get the repository once you have figured out your distro {codename} with lsb_release -sc

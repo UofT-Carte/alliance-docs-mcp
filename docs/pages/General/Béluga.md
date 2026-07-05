@@ -2,12 +2,12 @@
 title: "Béluga/en"
 url: "https://docs.alliancecan.ca/wiki/B%C3%A9luga/en"
 category: "General"
-last_modified: "2025-10-20T17:59:56Z"
+last_modified: "2026-07-02T18:44:32Z"
 page_id: 10987
 display_title: "Béluga"
 ---
 
-Availability: March, 2019
+Availability: March, 2019, to June, 2026
 Login node: beluga.alliancecan.ca
 Globus collection: computecanada#beluga-dtn
 Data Transfer Node (rsync, scp, sftp,...): beluga.alliancecan.ca

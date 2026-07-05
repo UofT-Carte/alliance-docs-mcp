@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-28T08:38:40.555043+00:00",
+  "last_updated": "2026-07-05T08:38:34.612421+00:00",
   "total_pages": 457,
   "pages": [
     {
@@ -304,7 +304,7 @@
       "title": "Arbutus Migration Guide/en",
       "url": "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en",
       "category": "User Guide",
-      "last_modified": "2026-06-11T14:18:53Z",
+      "last_modified": "2026-06-23T14:17:29Z",
       "file_path": "docs/pages/User Guide/Arbutus_Migration_Guide.md",
       "slug": "Arbutus_Migration_Guide"
     },
@@ -526,10 +526,10 @@
     },
     {
       "page_id": 10987,
-      "title": "Béluga",
+      "title": "Béluga/en",
       "url": "https://docs.alliancecan.ca/wiki/B%C3%A9luga/en",
       "category": "General",
-      "last_modified": "2025-10-20T17:59:56Z",
+      "last_modified": "2026-07-02T18:44:32Z",
       "file_path": "docs/pages/General/Béluga.md",
       "slug": "Béluga"
     },
@@ -2185,7 +2185,7 @@
       "title": "Nibi/en",
       "url": "https://docs.alliancecan.ca/wiki/Nibi/en",
       "category": "General",
-      "last_modified": "2026-06-11T14:19:02Z",
+      "last_modified": "2026-06-25T14:26:20Z",
       "file_path": "docs/pages/General/Nibi.md",
       "slug": "Nibi"
     },
@@ -3040,7 +3040,7 @@
       "title": "Storage and file management/en",
       "url": "https://docs.alliancecan.ca/wiki/Storage_and_file_management/en",
       "category": "General",
-      "last_modified": "2026-01-29T14:34:55Z",
+      "last_modified": "2026-06-22T15:47:23Z",
       "file_path": "docs/pages/General/Storage_and_file_management.md",
       "slug": "Storage_and_file_management"
     },
@@ -3400,7 +3400,7 @@
       "title": "Using nearline storage/en",
       "url": "https://docs.alliancecan.ca/wiki/Using_nearline_storage/en",
       "category": "General",
-      "last_modified": "2026-04-17T17:55:56Z",
+      "last_modified": "2026-06-25T14:26:39Z",
       "file_path": "docs/pages/General/Using_nearline_storage.md",
       "slug": "Using_nearline_storage"
     },
@@ -3769,7 +3769,7 @@
       "title": "CephFS",
       "url": "https://docs.alliancecan.ca/wiki/CephFS",
       "category": "General",
-      "last_modified": "2026-01-07T14:08:19Z",
+      "last_modified": "2026-06-21T13:24:29Z",
       "file_path": "docs/pages/General/CephFS.md",
       "slug": "CephFS"
     },
