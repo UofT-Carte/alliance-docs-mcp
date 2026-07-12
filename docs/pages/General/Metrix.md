@@ -2,7 +2,7 @@
 title: "Metrix/en"
 url: "https://docs.alliancecan.ca/wiki/Metrix/en"
 category: "General"
-last_modified: "2026-06-05T16:11:06Z"
+last_modified: "2026-06-30T14:17:29Z"
 page_id: 31422
 display_title: "Metrix"
 ---
@@ -12,8 +12,10 @@ display_title: "Metrix"
 The Metrix portal is a website for Alliance users. It collects information on compute nodes and management servers, to interactively generate data so you can track your resource usage (CPUs, GPUs, memory, filesystems) in real time.
 
 Rorqual	https://metrix.rorqual.alliancecan.ca
-Narval 	https://portail.narval.calculquebec.ca
+Narval 	http://metrix.narval.alliancecan.ca
 Nibi   	https://portal.nibi.sharcnet.ca
+tamIA  	https://portail.tamia.ecpia.ca
+Vulcan 	http://metrix.vulcan.alliancecan.ca
 
 Filesystem performance
 

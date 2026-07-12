@@ -1,6 +1,6 @@
 # Alliance Documentation - Full Content
-# Generated: 2026-07-05T08:38:34.619263+00:00
-# Total pages: 457
+# Generated: 2026-07-12T07:57:01.868972+00:00
+# Total pages: 458
 ================================================================================
 
 
@@ -13999,6 +13999,188 @@ To load a double precision module:
 
 
 ================================================================================
+PAGE: Fir
+URL: https://docs.alliancecan.ca/wiki/Fir
+Category: General
+================================================================================
+
+
+Availability date: August 11, 2025
+Login node: fir.alliancecan.ca
+Automation node: robot.fir.alliancecan.ca
+Globus collection: alliancecan#fir-globus
+JupyterHub: jupyterhub.fir.alliancecan.ca
+Data transfer node (rsync, scp, sftp ...): to be determined
+Portal: to be determined
+
+Fir is a versatile, heterogeneous computing cluster built in partnership with Lenovo Canada and Data Direct Networks (DDN) and is designed to support a wide range of scientific computations. It is hosted at Simon Fraser University (SFU) in Burnaby, British Columbia, and is named after the Red Creek Fir—the largest known Douglas fir tree on Earth by volume.
+
+=About Fir=
+
+SFU remains committed to environmentally sustainable high-performance computing. With Fir, the university is transitioning from traditional air cooling to advanced direct-to-chip liquid cooling, significantly improving energy efficiency and reducing power consumption associated with cooling.
+
+The new high-speed InfiniBand network in Fir delivers more than twice the performance of the previous-generation Cedar cluster.
+
+Fir is ranked #78 on the June 2025 TOP500 list of the world’s most powerful supercomputers.
+
+=Access=
+
+Each researcher must request access in CCDB, via Resources--> Access Systems.
+
+Select Fir from the list on the left.
+
+Select I request access.
+
+It can take up to one hour for your access to be enabled.
+
+=Site-specific policies=
+
+Fir's compute nodes have full access to the internet.
+
+The crontab tool is not supported.
+
+Each job should have a duration of at least one hour (at least five minutes for test jobs) and the maximum job duration is 7 days (168 hours).
+
+For transferring data via Globus, use the endpoint specified at the top of this page; for tools like rsync and scp, please use the login node.
+
+Visual Studio Code is blocked on the Fir login nodes.
+
+=Storage=
+
+51PB high-performance DDN Lustre storage (2PB NVME / 49 SAS).
+
+Storage Area	Access Path                    	Quotas                                	Backup                	Notes
+HOME        	Default $HOME                  	Small per-user quota                  	Daily automatic backup	Cannot be increased; use `/project for larger storage
+SCRATCH     	$HOME/scratch                  	Large per-user quota                  	No backup             	For temporary files; old files are purged automatically
+PROJECT     	$HOME/project/${def-project-id}	Large and adjustable per-project quota	Daily backup          	For group data sharing and large datasets
+
+=High-performance interconnect=
+
+* InfiniBand NDR interconnect
+* CPU node island size, is 27:5 blocking factor over 216 nodes of 192 cores
+* GPU nodes are 2:1 blocking factor
+* Storage access is fully non-blocking
+
+=Node characteristics=
+
+nodes	cores	available memory 	CPU                                                 	Storage    	GPU
+864  	192  	750G or 768000M  	2 x AMD EPYC 9655 (Zen 5) @ 2.7 GHz, 384MB cache L3 	7.84TB NVMe
+8    	192  	6000G or 6144000M	2 x AMD EPYC 9654 (Zen 4) @ 2.4 GHz, 384MB cache L3 	7.84TB NVMe
+160  	48   	1125G or 1152000M	1 x AMD EPYC 9454 (Zen 4) @ 2.75 GHz, 256MB cache L3	7.84TB NVMe	4 x NVidia H100 SXM5 (80 GB memory), connected via NVLink
+
+==CPU nodes==
+
+===Architecture===
+Each node features 2 × AMD EPYC 9655 (Zen 5) @ 2.7 GHz processors, totaling 192 physical cores. The system is built on a chiplet-based NUMA architecture, where each chiplet (CCD) operates as a separate NUMA node. The memory and cache hierarchy is non-uniform, and performance is sensitive to data locality.
+
+===Layout===
+
+* 2 sockets, each with:
+** 96 cores
+** 4 NUMA nodes, each with:
+*** 3 CCDs (chiplets), each with:
+**** 8 cores
+**** 32 MiB shared L3 cache
+*** 3 memory channels
+
+Each core with:
+* 1 MiB L2 cache
+* 32+32 KiB L1 instruction/data cache
+* 12 DDR5 memory channels (shared via the I/O die)
+
+Total:
+* 8 NUMA nodes per node (4 per socket × 2)
+* 24 CCDs (chiplets) per node (12 per socket  × 2)
+* 192 cores total
+* 768 MiB L3 cache total
+
+===Performance tuning recommendations===
+
+To make best use of the EPYC 9655's architecture:
+
+1. Align tasks to CCDs
+Each CCD contains 8 tightly-coupled cores with shared L3 cache. Keeping threads within a CCD avoids inter-chiplet communication latency.
+
+Use:#SBATCH --cpus-per-task=8
+
+This ensures that threads of each task stay within a single CCD.
+
+2. Distribute tasks across CCDs
+
+With 24 CCDs per node, launch 24 tasks per node to fully utilize all CCDs without overloading any single one.
+
+Use:#SBATCH --ntasks-per-node=24
+
+Together with --cpus-per-task=8, this fills the full 192-core node cleanly.
+
+==GPU nodes==
+
+===Architecture===
+Each GPU node contains 1 × AMD EPYC 9454 (Zen 4) @ 2.75 GHz processor with 48 physical cores. This processor uses AMD’s chiplet-based NUMA architecture, with memory access times that vary depending on core and memory locality. GPU nodes use the NPS=4 mode (NUMA Per Socket), dividing the socket into four NUMA nodes for better memory locality.
+
+===Layout===
+
+* 1 socket, configured as NPS=4:
+** 4 NUMA nodes, each with
+*** 2 CCDs (Core Complex Dies), each with
+**** 6 cores
+**** 32 MiB of shared L3 cache
+*** 3 memory channels
+
+Each core has:
+* 1 MiB L2 cache
+* 32 KiB L1 instruction cache
+* 32 KiB L1 data cache
+* 12 DDR5 memory channels (shared via the I/O die)
+
+* 2 NVidia H100 80GB accelerators
+** The 4 node accelerators are interconnected by SXM5.
+
+===Performance tuning recommendations===
+
+To fully utilize the architecture of the EPYC 9454 CPU and ensure optimal CPU-GPU data locality:
+
+1. Bind threads to CCDs
+
+Each CCD has 6 closely coupled cores sharing a 32 MiB L3 cache. To keep threads within a CCD: #SBATCH --cpus-per-task=6
+
+This confines threads to one CCD, reducing cross-CCD latency and improving cache usage.
+
+2. Match Tasks to NUMA Nodes
+With 4 NUMA nodes per socket (NPS=4), launch 4 tasks per node (or a multiple thereof) for best performance:
+
+#SBATCH --ntasks-per-node=4
+#SBATCH --cpus-per-task=12
+
+This keeps each task within a NUMA domain and ensures local access to memory and the GPU.
+
+===GPU instances===
+
+To request one or more full H100 GPUs, you need to use one of the following Slurm options:
+
+One H100-80gb : --gpus=h100:1
+
+Multiple H100-80gb per node :
+* --gpus-per-node=h100:2
+* --gpus-per-node=h100:3
+* --gpus-per-node=h100:4
+
+For multiple full H100 GPUs spread anywhere: --gpus=h100:n (replace n with the number of GPUs you want)
+
+Approximately half of the GPU nodes are configured with MIG technology, and only 3 GPU instance sizes are available:
+
+* 1g.10gb: 1/8th of the computing power with 10GB GPU memory
+* 2g.20gb: 2/8th of the computing power with 20GB GPU memory
+* 3g.40gb: 3/8th of the computing power with 40GB GPU memory
+
+To request one and only one GPU instance for your compute job, use the corresponding option:
+
+* 1g.10gb : --gpus=nvidia_h100_80gb_hbm3_1g.10gb:1
+* 2g.20gb : --gpus=nvidia_h100_80gb_hbm3_2g.20gb:1
+* 3g.40gb : --gpus=nvidia_h100_80gb_hbm3_3g.40gb:1
+
+
+================================================================================
 PAGE: Fir/en
 URL: https://docs.alliancecan.ca/wiki/Fir/en
 Category: General
@@ -14042,6 +14224,8 @@ The crontab tool is not supported.
 Each job should have a duration of at least one hour (at least five minutes for test jobs) and the maximum job duration is 7 days (168 hours).
 
 For transferring data via Globus, use the endpoint specified at the top of this page; for tools like rsync and scp, please use the login node.
+
+Visual Studio Code is blocked on the Fir login nodes.
 
 =Storage=
 
@@ -24930,8 +25114,10 @@ Category: General
 The Metrix portal is a website for Alliance users. It collects information on compute nodes and management servers, to interactively generate data so you can track your resource usage (CPUs, GPUs, memory, filesystems) in real time.
 
 Rorqual	https://metrix.rorqual.alliancecan.ca
-Narval 	https://portail.narval.calculquebec.ca
+Narval 	http://metrix.narval.alliancecan.ca
 Nibi   	https://portal.nibi.sharcnet.ca
+tamIA  	https://portail.tamia.ecpia.ca
+Vulcan 	http://metrix.vulcan.alliancecan.ca
 
 Filesystem performance
 
@@ -40394,20 +40580,20 @@ Category: General
 STAR-CCM+ is a multidisciplinary engineering simulation suite to model acoustics, fluid dynamics, heat transfer, rheology, multiphase flows, particle flows, solid mechanics, reacting flows, electrochemistry, and electromagnetics. It is developed by Siemens.
 
 = License limitations =
-We have the authorization to host STAR-CCM+ binaries on our servers, but we don't provide licenses. You will need to have your own license in order to use this software. A remote POD license can be purchased directly from Siemens. Alternatively, a local license hosted at your institution can be used, providing it can be accessed through the firewall from the cluster where jobs are to be run.
+The Alliance is authorized to host STAR-CCM+ binaries on its clusters. Researchers will need to purchase a license from Siemens in order to use the software. There are two options. Most research groups will purchase a Power-on-Demand (PoD) license which simply connects to a remotely hosted license server and requires only a license key to use. The second option is more complex and requires setting up and then managing a locally hosted institutional license server along with the purchase of a Simcenter STAR-CCM+ academic pack.  For this to work the local firewall of your STAR-CCM+ license server will need to be reconfigured.  You will need to ask the administrator of your license server at your institution to open its flex and static vendor ports so they are BOTH reachable from the Network Address Translation (NAT) nodes for each of the Alliance clusters that you will be using.  To get a list of NAT nodes for your administrator submit a ticket including 1) the names of ALL of the Alliance clusters you will be using 2) the hostname (FQDN) or public IP address of your STAR-CCM+ license server along with its flex and static vendor port numbers.
 
 == Configuring your account ==
 To configure your account to use a license server with the Star-CCM+ module, create a license file $HOME/.licenses/starccm.lic with the following layout:
 
-where  and  should be changed to specify the hostname (or ip address) and the static vendor port of the license server respectively.  Note that manually setting CDLMD_LICENSE_FILE equal to @ in your slurm script is not required;  Instead, when a Star-CCM+ module is loaded this variable is automatically set to your $HOME/.licenses/starccm.lic file.
+where  and  should be changed to specify the hostname (or ip address) and the static vendor port of the license server respectively.  Note that manually setting CDLMD_LICENSE_FILE equal to @ in your slurm script is not required since this variable is automatically set whenever a starccm module is loaded.
 
-=== POD license file ===
+=== PoD license file ===
 
-Researchers with a POD license purchased from Siemens must manually set the LM_PROJECT environment variable equal to YOUR CD-ADAPCO PROJECT ID in your slurm script.  Also the ~/.licenses/starccm.lic file should be configured as follows on each cluster:
+To run jobs researchers with a Power-on-Demand (PoD) license must manually set the LM_PROJECT environment variable to your 22digit-PoD-License-Key as shown in the sample slurm scripts below.  The following ~/.licenses/starccm.lic file must also be configured on each cluster where jobs are to be run :
 
 = Cluster batch job submission =
 
-When submitting jobs on a cluster for the first time, you must set up the environment to use your license. If you are using Siemans remote pay-on-usage license server then create a ~/.licenses/starccm.lic file as shown in the Configuring your account- POD license file section above and license checkouts should immediately work.  If however you are using an institutional license server, then after creating your ~/.licenses/starccm.lic file you must also submit a problem ticket to technical support so we can help co-ordinate the necessary one time network firewall changes required to access it (assuming the server has never been setup to be accessed from the Alliance cluster you will be using).   If you still have problems getting the licensing to work then try removing or renaming file ~/.flexlmrc since previous search paths and/or license server settings maybe stored in it.  Note that temporary output files from starccm jobs runs may accumulate in hidden directories named ~/.star-version_number consuming valuable quota space.  These can be removed by periodically running rm -ri ~/.starccm* and replying yes when prompted.
+Before submitting jobs on a cluster, you must set up a ~/.licenses/starccm.lic file on each cluster where you will run jobs.  If you have a PoD license then the required firewall changes have already been done on all of the Alliance clusters.  If however you will be using a local institutional license server then you will need to submit a problem ticket to technical support to request the one time network firewall changes be made between the cluster(s) and your local license server.   If you have problems getting the licensing to work then try removing or renaming file ~/.flexlmrc since previous search paths and/or license server settings maybe stored in it.  Note that temporary output files from starccm jobs runs may accumulate in hidden directories named ~/.star-version_number consuming valuable quota space.  These can be removed by periodically running rm -ri ~/.starccm* and replying yes when prompted.
 
 == Slurm scripts ==
 
@@ -40415,18 +40601,35 @@ When submitting jobs on a cluster for the first time, you must set up the enviro
 port=$(cat $CDLMD_LICENSE_FILE  grep -Eo '[0-9]+$')
 nmap $server -Pn -p $port  grep -v '^$'; echo
 
-export FLEXIBLAS=StarMKL
-echo "FLEXIBLAS=$FLEXIBLAS"
-STAR_MPI="-mpi intel"
-STAR_FABRIC="-fabric tcp"
+CPU_VENDOR=$(lscpu  awk '/Vendor ID/{print $3}')
+echo "CPU_VENDOR= $CPU_VENDOR"
+if [ "$CPU_VENDOR" == GenuineIntel ]; then
+  if [ "${EBVERSIONSTARCCM:0:2}" -lt 20 ]; then
+    STAR_UCX="-xsystemucx"
+    export FLEXIBLAS=StarMKL
+  else
+    STAR_FLEXIBLAS="-flexiblaslib MKL"
+  fi
+  STAR_MPI="-mpi intel"
+  STAR_FABRIC="-fabric tcp"
+elif [ "$CPU_VENDOR" == AuthenticAMD ]; then
+  if [ "${EBVERSIONSTARCCM:0:2}" -lt 20 ]; then
+    STAR_UCX="-xsystemucx"
+    export FLEXIBLAS=StarAOCL
+  else
+    STAR_FLEXIBLAS="-flexiblaslib AOCL"
+    STAR_PRELOAD="-ldpreload /usr/lib64/libdrm_amdgpu.so.1"
+  fi
+  STAR_MPI="-mpi openmpi40"
+fi
 
 if [ -n "$LM_PROJECT" ]; then
    echo "Siemens PoD license server ..."
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_UCX $STAR_FABRIC $STAR_FLEXIBLAS $STAR_PRELOAD
 else
    echo "Institutional license server ..."
    [ $(command -v lmutil) ] && lmutil lmstat -c ~/.licenses/starccm.lic -a  egrep "license1UPuse$USER"; echo
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_UCX $STAR_FABRIC $STAR_FLEXIBLAS $STAR_PRELOAD
 fi
 }}
 
@@ -40445,69 +40648,65 @@ fi
 echo "FLEXIBLAS=$FLEXIBLAS"
 
 if [ "${EBVERSIONSTARCCM:0:2}" -lt 20 ]; then
-  STAR_FABRIC="-fabric ofi"
-else
-  STAR_FABRIC="-fabric ucx"
+  STAR_UCX="-xsystemucx"
 fi
 
 if [ -n "$LM_PROJECT" ]; then
    echo "Siemens PoD license server ..."
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $SIM_FILE $STAR_MPI $STAR_UCX
 else
    echo "Institutional license server ..."
    [ $(command -v lmutil) ] && lmutil lmstat -c ~/.licenses/starccm.lic -a  egrep "license1UPuse$USER"; echo
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $SIM_FILE $STAR_MPI $STAR_UCX
 fi
-}}
-
- sleep 5
-          echo "Attempt number: "$I
-          if [ -n "$LM_PROJECT" ]; then
-          echo "Siemens PoD license server ..."
-          starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI
-        else
-          echo "Institutional license server ..."
-          starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI
-        fi
-        RET=$?
-        i=$((i+1))
-done
-exit $RET
 }}
 
 = Graphical use =
 
-To run starccm+ in graphical mode it is recommended to use an  OnDemand or JupyterLab system to start a remote desktop.  In addition to configuring ~/.licenses/starccm.lic, research groups with a POD license should also run export LM_PROJECT='CD-ADAPCO PROJECT ID' before starting starccm+ as shown below.  Additional command line options such as -power may also need to be appended depending on your license type.  Note that module avail starccm-mixed will display which starccm versions are available within the StdEnv/version that you currently have loaded.  Alternatively running module spider starccm-mixed will show all available starccm module versions available within all StdEnv module versions.
+To run starccm+ in graphical mode it is recommended to use an  OnDemand or JupyterLab system to start a remote desktop.  In addition to configuring ~/.licenses/starccm.lic, research groups with a POD license should also run export LM_PROJECT='22digit-PoD-License-Key' before starting starccm+ as shown below.  Additional command line options such as -power may also need to be appended depending on your license type.  Note that running module avail starccm will display all mixed and R8 versions that are available to load within the StdEnv/version you currently have loaded ie) 2020 or 2023.  Alternatively running module spider starccm will show all mixed and R8 module versions available to load within both StdEnv module versions that could be loaded ie) 2020 and 2023.
 
 == OnDemand ==
-1. Connect to an OnDemand system using one of the following URLs in your laptop browser :
+1. To start an OnDemand desktop session click one of the following OnDemand links :
  NIBI: https://ondemand.sharcnet.ca
- FIR: https://jupyterhub.fir.alliancecan.ca
- NARVAL:  https://portail.narval.calculquebec.ca/
- RORQUAL: https://jupyterhub.rorqual.alliancecan.ca
  TRILLIUM: https://ondemand.scinet.utoronto.ca
 2. Open a new terminal window in your desktop and run one of:
 : STAR-CCM+ 18.04.008 (or newer versions)
 :: module load StdEnv/2023  (default)
-:: module load starccm-mixed/20.04.007 **OR** starccm/20.04.007-R8
-:: starccm+ -rr server
-: STAR-CCM+ 15.04.010 --> 18.02.008 (version range)
-:: module load StdEnv/2020 (unsupported)
-:: module load starccm-mixed/15.04.010 **OR** starccm/15.04.010-R8
-:: starccm+ -mesa
+:: module load starccm-mixed/21.02.008 **OR** starccm/21.02.008-R8
+:: starccm+ -rr server   (Process Options="Serial")
+:: starccm+ -rr server -np 2 -mpi openmpi40   (Process Options="Parallel on Local Host")
+: STAR-CCM+ 15.04.010 → 17.06.008 (version range)
+:: module load StdEnv/2020 (retired)
+:: module load starccm-mixed/17.06.008 **OR** starccm/17.06.008-R8
+:: starccm+    (Process Options="Serial")
+:: starccm+ -np 2   (Process Options="Parallel on Local Host")
+== JupyterLab ==
+1. Start a JupyterHub desktop session by clicking one of the following JupyterHub links :
+ FIR: https://jupyterhub.fir.alliancecan.ca
+ NARVAL:  https://portail.narval.calculquebec.ca/
+ RORQUAL: https://jupyterhub.rorqual.alliancecan.ca
+2. Click the hexagon shaped Software Modules gear icon located at the bottom of the left most vertical icon selector menu
+3. Highlight a starccm module such as starccm-mixed/21.02.008/code> **OR** starccm/21.02.008-R8 and click Load
+4. Click the rectangular StarCCM+ Mixed(VNC) **OR** StarCCM (VNC) icon that appears in desktop
+5. To run StarCCM+ with multiple cores for compute purposes;
+: Click File -> New and a Create a File configurator panel should appear
+: Change the default Serial Process Option by instead ticking the Parallel on Local Host radio button
+: Add -mpi openmpi40 to the end of the Command: string located at the bottom of the panel
+: Finally click the OK button and the starccm+ gui should appear
 
 == VncViewer ==
+These instructions are retained for legacy purposes only :
 
 1. Connect with a VncViewer client to a login or compute node by following TigerVNC
 2. Open a new terminal window in your desktop and run one of:
 : STAR-CCM+ 18.04.008 (or newer versions)
 :: module load StdEnv/2023  (default)
-:: module load starccm-mixed/20.04.007 **OR** starccm/20.04.007-R8
-:: starccm+ -rr server
-: STAR-CCM+ 15.04.010 --> 18.02.008 (version range)
-:: module load StdEnv/2020 (unsupported)
-:: module load starccm-mixed/17.02.007 **OR** starccm/17.02.007-R8
-::  starccm+
+:: module load starccm-mixed/21.02.008/code> **OR** starccm/21.02.008-R8
+:: starccm+ -rr server ** OR ** starccm+ -rr server -np 2 -mpi openmpi40
+: STAR-CCM+ 15.04.010 → 17.06.008 (version range)
+:: module load StdEnv/2020 (retired)
+:: module load starccm-mixed/17.06.008 **OR** starccm/17.06.008-R8
+:: starccm+
 
 
 ================================================================================
@@ -40520,20 +40719,20 @@ Category: General
 STAR-CCM+ is a multidisciplinary engineering simulation suite to model acoustics, fluid dynamics, heat transfer, rheology, multiphase flows, particle flows, solid mechanics, reacting flows, electrochemistry, and electromagnetics. It is developed by Siemens.
 
 = License limitations =
-We have the authorization to host STAR-CCM+ binaries on our servers, but we don't provide licenses. You will need to have your own license in order to use this software. A remote POD license can be purchased directly from Siemens. Alternatively, a local license hosted at your institution can be used, providing it can be accessed through the firewall from the cluster where jobs are to be run.
+The Alliance is authorized to host STAR-CCM+ binaries on its clusters. Researchers will need to purchase a license from Siemens in order to use the software. There are two options. Most research groups will purchase a Power-on-Demand (PoD) license which simply connects to a remotely hosted license server and requires only a license key to use. The second option is more complex and requires setting up and then managing a locally hosted institutional license server along with the purchase of a Simcenter STAR-CCM+ academic pack.  For this to work the local firewall of your STAR-CCM+ license server will need to be reconfigured.  You will need to ask the administrator of your license server at your institution to open its flex and static vendor ports so they are BOTH reachable from the Network Address Translation (NAT) nodes for each of the Alliance clusters that you will be using.  To get a list of NAT nodes for your administrator submit a ticket including 1) the names of ALL of the Alliance clusters you will be using 2) the hostname (FQDN) or public IP address of your STAR-CCM+ license server along with its flex and static vendor port numbers.
 
 == Configuring your account ==
 To configure your account to use a license server with the Star-CCM+ module, create a license file $HOME/.licenses/starccm.lic with the following layout:
 
-where  and  should be changed to specify the hostname (or ip address) and the static vendor port of the license server respectively.  Note that manually setting CDLMD_LICENSE_FILE equal to @ in your slurm script is not required;  Instead, when a Star-CCM+ module is loaded this variable is automatically set to your $HOME/.licenses/starccm.lic file.
+where  and  should be changed to specify the hostname (or ip address) and the static vendor port of the license server respectively.  Note that manually setting CDLMD_LICENSE_FILE equal to @ in your slurm script is not required since this variable is automatically set whenever a starccm module is loaded.
 
-=== POD license file ===
+=== PoD license file ===
 
-Researchers with a POD license purchased from Siemens must manually set the LM_PROJECT environment variable equal to YOUR CD-ADAPCO PROJECT ID in your slurm script.  Also the ~/.licenses/starccm.lic file should be configured as follows on each cluster:
+To run jobs researchers with a Power-on-Demand (PoD) license must manually set the LM_PROJECT environment variable to your 22digit-PoD-License-Key as shown in the sample slurm scripts below.  The following ~/.licenses/starccm.lic file must also be configured on each cluster where jobs are to be run :
 
 = Cluster batch job submission =
 
-When submitting jobs on a cluster for the first time, you must set up the environment to use your license. If you are using Siemans remote pay-on-usage license server then create a ~/.licenses/starccm.lic file as shown in the Configuring your account- POD license file section above and license checkouts should immediately work.  If however you are using an institutional license server, then after creating your ~/.licenses/starccm.lic file you must also submit a problem ticket to technical support so we can help co-ordinate the necessary one time network firewall changes required to access it (assuming the server has never been setup to be accessed from the Alliance cluster you will be using).   If you still have problems getting the licensing to work then try removing or renaming file ~/.flexlmrc since previous search paths and/or license server settings maybe stored in it.  Note that temporary output files from starccm jobs runs may accumulate in hidden directories named ~/.star-version_number consuming valuable quota space.  These can be removed by periodically running rm -ri ~/.starccm* and replying yes when prompted.
+Before submitting jobs on a cluster, you must set up a ~/.licenses/starccm.lic file on each cluster where you will run jobs.  If you have a PoD license then the required firewall changes have already been done on all of the Alliance clusters.  If however you will be using a local institutional license server then you will need to submit a problem ticket to technical support to request the one time network firewall changes be made between the cluster(s) and your local license server.   If you have problems getting the licensing to work then try removing or renaming file ~/.flexlmrc since previous search paths and/or license server settings maybe stored in it.  Note that temporary output files from starccm jobs runs may accumulate in hidden directories named ~/.star-version_number consuming valuable quota space.  These can be removed by periodically running rm -ri ~/.starccm* and replying yes when prompted.
 
 == Slurm scripts ==
 
@@ -40541,18 +40740,35 @@ When submitting jobs on a cluster for the first time, you must set up the enviro
 port=$(cat $CDLMD_LICENSE_FILE  grep -Eo '[0-9]+$')
 nmap $server -Pn -p $port  grep -v '^$'; echo
 
-export FLEXIBLAS=StarMKL
-echo "FLEXIBLAS=$FLEXIBLAS"
-STAR_MPI="-mpi intel"
-STAR_FABRIC="-fabric tcp"
+CPU_VENDOR=$(lscpu  awk '/Vendor ID/{print $3}')
+echo "CPU_VENDOR= $CPU_VENDOR"
+if [ "$CPU_VENDOR" == GenuineIntel ]; then
+  if [ "${EBVERSIONSTARCCM:0:2}" -lt 20 ]; then
+    STAR_UCX="-xsystemucx"
+    export FLEXIBLAS=StarMKL
+  else
+    STAR_FLEXIBLAS="-flexiblaslib MKL"
+  fi
+  STAR_MPI="-mpi intel"
+  STAR_FABRIC="-fabric tcp"
+elif [ "$CPU_VENDOR" == AuthenticAMD ]; then
+  if [ "${EBVERSIONSTARCCM:0:2}" -lt 20 ]; then
+    STAR_UCX="-xsystemucx"
+    export FLEXIBLAS=StarAOCL
+  else
+    STAR_FLEXIBLAS="-flexiblaslib AOCL"
+    STAR_PRELOAD="-ldpreload /usr/lib64/libdrm_amdgpu.so.1"
+  fi
+  STAR_MPI="-mpi openmpi40"
+fi
 
 if [ -n "$LM_PROJECT" ]; then
    echo "Siemens PoD license server ..."
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_UCX $STAR_FABRIC $STAR_FLEXIBLAS $STAR_PRELOAD
 else
    echo "Institutional license server ..."
    [ $(command -v lmutil) ] && lmutil lmstat -c ~/.licenses/starccm.lic -a  egrep "license1UPuse$USER"; echo
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_UCX $STAR_FABRIC $STAR_FLEXIBLAS $STAR_PRELOAD
 fi
 }}
 
@@ -40571,69 +40787,65 @@ fi
 echo "FLEXIBLAS=$FLEXIBLAS"
 
 if [ "${EBVERSIONSTARCCM:0:2}" -lt 20 ]; then
-  STAR_FABRIC="-fabric ofi"
-else
-  STAR_FABRIC="-fabric ucx"
+  STAR_UCX="-xsystemucx"
 fi
 
 if [ -n "$LM_PROJECT" ]; then
    echo "Siemens PoD license server ..."
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $SIM_FILE $STAR_MPI $STAR_UCX
 else
    echo "Institutional license server ..."
    [ $(command -v lmutil) ] && lmutil lmstat -c ~/.licenses/starccm.lic -a  egrep "license1UPuse$USER"; echo
-   starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI $STAR_FABRIC
+   starccm+ -jvmargs "-Xmx4G -Djava.io.tmpdir=$SLURM_TMPDIR" -batch $BATCH_CMD -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $SIM_FILE $STAR_MPI $STAR_UCX
 fi
-}}
-
- sleep 5
-          echo "Attempt number: "$I
-          if [ -n "$LM_PROJECT" ]; then
-          echo "Siemens PoD license server ..."
-          starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -power -podkey $LM_PROJECT -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI
-        else
-          echo "Institutional license server ..."
-          starccm+ -jvmargs -Xmx4G -jvmargs -Djava.io.tmpdir=$SLURM_TMPDIR -batch -np $NCORE -nbuserdir $SLURM_TMPDIR -machinefile $SLURM_TMPDIR/machinefile $JAVA_FILE $SIM_FILE $STAR_MPI
-        fi
-        RET=$?
-        i=$((i+1))
-done
-exit $RET
 }}
 
 = Graphical use =
 
-To run starccm+ in graphical mode it is recommended to use an  OnDemand or JupyterLab system to start a remote desktop.  In addition to configuring ~/.licenses/starccm.lic, research groups with a POD license should also run export LM_PROJECT='CD-ADAPCO PROJECT ID' before starting starccm+ as shown below.  Additional command line options such as -power may also need to be appended depending on your license type.  Note that module avail starccm-mixed will display which starccm versions are available within the StdEnv/version that you currently have loaded.  Alternatively running module spider starccm-mixed will show all available starccm module versions available within all StdEnv module versions.
+To run starccm+ in graphical mode it is recommended to use an  OnDemand or JupyterLab system to start a remote desktop.  In addition to configuring ~/.licenses/starccm.lic, research groups with a POD license should also run export LM_PROJECT='22digit-PoD-License-Key' before starting starccm+ as shown below.  Additional command line options such as -power may also need to be appended depending on your license type.  Note that running module avail starccm will display all mixed and R8 versions that are available to load within the StdEnv/version you currently have loaded ie) 2020 or 2023.  Alternatively running module spider starccm will show all mixed and R8 module versions available to load within both StdEnv module versions that could be loaded ie) 2020 and 2023.
 
 == OnDemand ==
-1. Connect to an OnDemand system using one of the following URLs in your laptop browser :
+1. To start an OnDemand desktop session click one of the following OnDemand links :
  NIBI: https://ondemand.sharcnet.ca
- FIR: https://jupyterhub.fir.alliancecan.ca
- NARVAL:  https://portail.narval.calculquebec.ca/
- RORQUAL: https://jupyterhub.rorqual.alliancecan.ca
  TRILLIUM: https://ondemand.scinet.utoronto.ca
 2. Open a new terminal window in your desktop and run one of:
 : STAR-CCM+ 18.04.008 (or newer versions)
 :: module load StdEnv/2023  (default)
-:: module load starccm-mixed/20.04.007 **OR** starccm/20.04.007-R8
-:: starccm+ -rr server
-: STAR-CCM+ 15.04.010 --> 18.02.008 (version range)
-:: module load StdEnv/2020 (unsupported)
-:: module load starccm-mixed/15.04.010 **OR** starccm/15.04.010-R8
-:: starccm+ -mesa
+:: module load starccm-mixed/21.02.008 **OR** starccm/21.02.008-R8
+:: starccm+ -rr server   (Process Options="Serial")
+:: starccm+ -rr server -np 2 -mpi openmpi40   (Process Options="Parallel on Local Host")
+: STAR-CCM+ 15.04.010 → 17.06.008 (version range)
+:: module load StdEnv/2020 (retired)
+:: module load starccm-mixed/17.06.008 **OR** starccm/17.06.008-R8
+:: starccm+    (Process Options="Serial")
+:: starccm+ -np 2   (Process Options="Parallel on Local Host")
+== JupyterLab ==
+1. Start a JupyterHub desktop session by clicking one of the following JupyterHub links :
+ FIR: https://jupyterhub.fir.alliancecan.ca
+ NARVAL:  https://portail.narval.calculquebec.ca/
+ RORQUAL: https://jupyterhub.rorqual.alliancecan.ca
+2. Click the hexagon shaped Software Modules gear icon located at the bottom of the left most vertical icon selector menu
+3. Highlight a starccm module such as starccm-mixed/21.02.008/code> **OR** starccm/21.02.008-R8 and click Load
+4. Click the rectangular StarCCM+ Mixed(VNC) **OR** StarCCM (VNC) icon that appears in desktop
+5. To run StarCCM+ with multiple cores for compute purposes;
+: Click File -> New and a Create a File configurator panel should appear
+: Change the default Serial Process Option by instead ticking the Parallel on Local Host radio button
+: Add -mpi openmpi40 to the end of the Command: string located at the bottom of the panel
+: Finally click the OK button and the starccm+ gui should appear
 
 == VncViewer ==
+These instructions are retained for legacy purposes only :
 
 1. Connect with a VncViewer client to a login or compute node by following TigerVNC
 2. Open a new terminal window in your desktop and run one of:
 : STAR-CCM+ 18.04.008 (or newer versions)
 :: module load StdEnv/2023  (default)
-:: module load starccm-mixed/20.04.007 **OR** starccm/20.04.007-R8
-:: starccm+ -rr server
-: STAR-CCM+ 15.04.010 --> 18.02.008 (version range)
-:: module load StdEnv/2020 (unsupported)
-:: module load starccm-mixed/17.02.007 **OR** starccm/17.02.007-R8
-::  starccm+
+:: module load starccm-mixed/21.02.008/code> **OR** starccm/21.02.008-R8
+:: starccm+ -rr server ** OR ** starccm+ -rr server -np 2 -mpi openmpi40
+: STAR-CCM+ 15.04.010 → 17.06.008 (version range)
+:: module load StdEnv/2020 (retired)
+:: module load starccm-mixed/17.06.008 **OR** starccm/17.06.008-R8
+:: starccm+
 
 
 ================================================================================
@@ -41034,7 +41246,7 @@ Portal : https://portail.tamia.ecpia.ca/
 
 tamIA is a cluster dedicated to artificial intelligence for the Canadian scientific community. Located at Université Laval, tamIA is co-managed with Mila and Calcul Québec. The cluster is named for the eastern chipmunk, a common species found in eastern North America.
 
-tamIA is part of PAICE, the Pan-Canadian AI Compute Environment.
+tamIA is part of , the Pan-Canadian AI Compute Environment].
 
 ==Site-specific policies==
 
@@ -41043,10 +41255,11 @@ tamIA is part of PAICE, the Pan-Canadian AI Compute Environment.
 * Please note that the VSCode IDE is forbidden on the login nodes due to its heavy footprint. It is still authorized on the compute nodes.
 * Each job should be at least one hour long (at least five minutes for test jobs) and you can't have more than 1000 jobs (running and pending) at the same time.
 * The maximum duration of a job is one day (24 hours).
-* Each job must use all 4 GPUs on all nodes it is allocated. Jobs are allocated whole nodes.
+* Each job must use all 4 GPUs of the servers allocated, i.e. 4 with H100 and 8 with H200.
 
 ==Access==
-To access the cluster, each researcher must complete an access request in the CCDB. Access to the cluster may take up to one hour after completing the access request is sent.
+To access the cluster, each researcher must complete an access request in the CCDB portal under Resources-->Artificial Intelligence-->tamIA. Access to the cluster may take up to one hour after the access request is sent.
+You must then submit the General Access to PAICE Systems declaration form.
 
 Eligible principal investigators are members of an AIP-type RAP (prefix aip-).
 
@@ -41065,12 +41278,12 @@ HOME  Lustre file system
 * Location of home directories, each of which has a small fixed quota.
 * You should use the project space for larger storage needs.
 * Small per user quota.
-* There is currently no backup of the home directories. (ETA Summer 2025)
+* There is currently no backup of the home directories. (ETA Spring 2026)
 SCRATCH  Lustre file system
 
-* Large space for storing temporary files during computations.
-* No backup system in place.
-* Large quota per user.
+* Large space for storing temporary files during computations
+* No backup system in place
+* Large quota per user
 * There is an automated purge of older files in this space.
 PROJECT  Lustre file system
 
@@ -41081,27 +41294,28 @@ PROJECT  Lustre file system
 For transferring data via Globus, you should use the endpoint specified at the top of this page, while for tools like rsync and scp you can use a login node.
 
 ==High-performance interconnect==
-The InfiniBand NVIDIA NDR network links together all of the nodes of the cluster. Each H100 GPU is connected to a single NDR200 port through an NVIDIA ConnectX-7 HCA. Eeach GPU server has 4 NDR200 ports connected to the InfiniBand fabric.
+The InfiniBand NVIDIA NDR network links together all of the nodes of the cluster. Each GPU is connected to a single NDR200 port through an NVIDIA ConnectX-7 HCA. Eeach GPU server has 4 or 8 NDR200 ports connected to the InfiniBand fabric.
 
-The InfiniBand network is non-blocking for compute servers and is composed of two levels of switches in a fat-tree topology. Storage and management nodes are connected via four 400Gb/s connections to the network core.
+The InfiniBand network is non-blocking for compute servers and is composed of two levels of switches in a fat-tree topology. Storage and compute nodes are connected via 4 or 8 400Gb/s connections to the network core.
 
 ==Node characteristics==
 
-nodes	cores	available memory	CPU                                    	storage          	GPU
-42   	48   	512GB           	2 x Intel Xeon Gold 6442Y 2,6 GHz, 24C 	1 x SSD de 7.68TB	4 x NVIDIA HGX H100 SXM 80GB HBM3 700W, connected via NVLink
-4    	64   	512GB           	2 x Intel Xeon Gold 6438M 2.2G, 32C/64T	1 x SSD de 7.68TB	none
+nodes	cores	available memory	CPU                                    	storage       	GPU
+12   	64   	1024GB          	2 x Intel Xeon Gold 6448Y 2,1 GHz, 32C 	1 x 7.68TB SSD	8 x NVIDIA HGX H200 SXM 141GB HBM3 700W, connected via NVLink
+53   	48   	512GB           	2 x Intel Xeon Gold 6442Y 2,6 GHz, 24C 	1 x 7.68TB SSD	4 x NVIDIA HGX H100 SXM 80GB HBM3 700W, connected via NVLink
+8    	64   	512GB           	2 x Intel Xeon Gold 6438M 2.2G, 32C/64T	1 x 7.68TB SSD	none
 
 ===Software environments===
 StdEnv/2023 is the standard environment on tamIA.
 
-=== Tâches GPU ===
-Les tâches sont assignées sur les nœuds complets. Utilisez une des options Slurm suivantes :
+=== GPU jobs ===
+Jobs are assigned on whole nodes with one of the following options:
 
-Pour une tâche sur un nœud avec GPU H100 : --gpus=h100:4
+For jobs on a node with an H100 GPU: --gpus=h100:4
 
-Pour une tâche sur un nœud avec GPU H200 : --gpus=h200:8
+For jobs on a node with an H200 GPU: --gpus=h200:8
 
-Pour les tâches avec plusieurs nœuds, utiliser --gpus-per-nodes=h100:4 ou --gpus-per-nodes=h200:8.
+For jobs using several GPUs, options are --gpus-per-nodes=h100:4 or --gpus-per-nodes=h200:8.
 
 ==Monitoring jobs==
 

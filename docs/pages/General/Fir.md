@@ -1,9 +1,9 @@
 ---
-title: "Fir/en"
-url: "https://docs.alliancecan.ca/wiki/Fir/en"
+title: "Fir"
+url: "https://docs.alliancecan.ca/wiki/Fir"
 category: "General"
-last_modified: "2026-01-14T13:03:03Z"
-page_id: 26936
+last_modified: "2026-07-03T12:45:22Z"
+page_id: 26935
 display_title: "Fir"
 ---
 
@@ -44,6 +44,8 @@ The crontab tool is not supported.
 Each job should have a duration of at least one hour (at least five minutes for test jobs) and the maximum job duration is 7 days (168 hours).
 
 For transferring data via Globus, use the endpoint specified at the top of this page; for tools like rsync and scp, please use the login node.
+
+Visual Studio Code is blocked on the Fir login nodes.
 
 =Storage=
 
