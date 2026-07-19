@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-07-12T07:57:01.866505+00:00
+# Generated: 2026-07-19T07:56:10.967690+00:00
 # Total pages: 458
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -388,7 +388,7 @@
 - Tar (General): https://docs.alliancecan.ca/wiki/Tar/en
 - Technical documentation (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_documentation/en
 - Technical glossary for the resource allocation competitions (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_glossary_for_the_resource_allocation_competitions/en
-- Technical support (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_support/en
+- Technical support/en (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_support/en
 - TensorFlow (General): https://docs.alliancecan.ca/wiki/TensorFlow/en
 - Tensorboard (General): https://docs.alliancecan.ca/wiki/Tensorboard
 - Terminology (General): https://docs.alliancecan.ca/wiki/Terminology

@@ -2,7 +2,7 @@
 title: "Technical support/en"
 url: "https://docs.alliancecan.ca/wiki/Technical_support/en"
 category: "Technical Reference"
-last_modified: "2025-08-29T12:33:30Z"
+last_modified: "2026-07-10T19:30:02Z"
 page_id: 531
 display_title: "Technical support"
 ---
@@ -14,6 +14,7 @@ display_title: "Technical support"
 * An email titled "Something is wrong" or "Nothing works" will take a long time to resolve, because we will have to ask you to provide missing information (see  Information required below).
 * In the subject line of the email, include the system/cluster name and a few words of what may be wrong. For example, "Job 123456 fails to run on the Rorqual cluster". A good subject line really helps to identify issues at a glance.
 * Please do not request help on a different topic as a follow-up to an old email thread. Instead, start a brand new one to avoid re-opening an old ticket.
+* Avoid copying and pasting text from an artificial intelligence tool (eg Claude or ChatGPT). Rephrase it in your own words.
 
 ===Email addresses===
 Please choose the address that corresponds best to your question or issue:

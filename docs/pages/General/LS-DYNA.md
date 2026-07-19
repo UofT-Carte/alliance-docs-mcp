@@ -2,7 +2,7 @@
 title: "LS-DYNA"
 url: "https://docs.alliancecan.ca/wiki/LS-DYNA"
 category: "General"
-last_modified: "2025-12-15T16:30:52Z"
+last_modified: "2026-07-09T00:15:38Z"
 page_id: 13871
 display_title: "LS-DYNA"
 ---
@@ -11,20 +11,24 @@ display_title: "LS-DYNA"
 LS-DYNA is available on all our clusters.  It is used for many applications to solve problems in multiphysics, solid mechanics, heat transfer and fluid dynamics.  Analyses are performed as separate phenomena or coupled physics simulations such as thermal stress or fluid structure interaction.  LSTC was recently purchased by Ansys, so the LS-DYNA software may eventually be exclusively provided as part of the Ansys module. For now, we recommend using the LS-DYNA software traditionally provided by LSTC as documented in this wiki page.
 
 = Licensing =
-The Alliance is a hosting provider for LS-DYNA. This means that we have LS-DYNA software installed on our clusters.  The Alliance does NOT however provide a generic license accessible to everyone or provide license hosting services.  Instead, many institutions, faculties, and departments already have licenses that can be used on our clusters.  So that such licenses can be reached from a cluster's compute nodes, some cluster-specific network changes will generally need to be done.  In cases where a license has already been used on a particular cluster, these changes may already be done.  Users unable to locate or arrange for a license on campus may contact CMC Microsystems.  Licenses purchased from CMC do not require the overhead of hosting a local license server since they are hosted on a remote server system that CMC manages with the added benefit of being usable anywhere.  If you have your own server and need a quote for a locally managed license, consider contacting Simutech or contact Ansys directly.  SHARCNET does not provide any free LS-DYNA licenses or license hosting services at this time.
+The Alliance is a hosting provider for LS-DYNA which means LS-DYNA software is installed as modules on the clusters.  The Alliance does NOT however provide a free LS-DYNA license or provide LS-DYNA license hosting services.  Instead, many institutions, faculties, and departments already have licenses that can be used on our clusters.  If a local license is not available then SHARCNET provides a limited number of free licenses on a first come first serve basis to any researcher as described below.
 
 === Initial setup and testing ===
 
-If your (existing or new) license server has never been used on the cluster where you plan to run jobs, firewall changes will first need to be done on both the cluster side and server side.  This will typically require involvement from both our technical team and the technical people managing your license software.  To arrange this, send an email containing the service port and IP address of your floating license server to technical support. To check if your license file is working run the following commands
+If a license server has never been used on a cluster, firewall changes will first need to be done on both the cluster side and server side.  This will typically require involvement from both our technical team and the technical people managing your license software.  To arrange this, send an email containing the service port and IP address of your floating license server to technical support. To check if your license file is working run the following commands setting the exports for legacy LSTC server of ANSYS server as described below.
 
-module load ls-dyna
- ls-dyna_s or ls-dyna_d
+touch ~/.licenses/ls-dyna.lic
+ module load ls-dyna
+ export LSTC_LICENSE=network|ansys
+ export LSTC_LICENSE_SERVER=@, or
+ export ANSYSLMD_LICENSE_FILE=@
+ ls-dyna_s, or ls-dyna_d
 
-You don't need to specify any input file or arguments to run this test.  The output header should contain a (non-empty) value for Licensed to: with the exception of CMC license servers.  Press ^C to quit the program and return to the command line.
+You don't need to specify any input file or arguments to run this test.  The output header should contain a (non-empty) value for Licensed to:.  Press ^C to quit the program and return to the command line.
 
 == Configuring your license ==
 
-In 2019 Ansys, purchased the Livermore Software Technology Corporation (LSTC), developer of LS-DYNA.  LS-DYNA licenses issued by Ansys since that time use Ansys license servers.  Licenses issued by LSTC may still use an LSTC license server.  You can also obtain an LS-DYNA license through CMC Microsystems.  This section explains how to configure your account or job script for each of these cases.
+In 2019 Ansys, purchased the Livermore Software Technology Corporation (LSTC), developer of LS-DYNA.  LS-DYNA licenses issued by Ansys since that time use Ansys license servers.  Legacy LSTC licenses that run on LSTC license servers are now available from ANSYS. This section explains how to configure your job script for each of these cases.
 
 === LSTC license ===
 
@@ -39,30 +43,18 @@ Option 2) Specify your license server by setting the following two environment v
  export LSTC_LICENSE_SERVER=@
 where  is an integer number and  is the hostname or IP address of your LSTC license server.   These variables will take priority over any values specified in your ~/.licenses/ls-dyna.lic file which must exist (even if it's empty) for any ls-dyna or ls-dyna-mpi module to successfully load.  To ensure it exists, run touch ~/.licenses/ls-dyna.lic once on the command line on each cluster where you will submit jobs.  For further details, see the official documentation.
 
-=== Ansys license ===
+=== ANSYS license ===
 
 If your LS-DYNA license is hosted on an Ansys license server, set the following two environment variables in your slurm scripts:
  export LSTC_LICENSE=ansys
  export ANSYSLMD_LICENSE_FILE=@
 where  is an integer number and  is the hostname or IP address of your Ansys license server.  These variables cannot be defined in your ~/.licenses/ls-dyna.lic file.  The file however must exist (even if it's empty) for any ls-dyna module to load.  To ensure this, run touch ~/.licenses/ls-dyna.lic once from the command line (or each time in your slurm scripts).  Note that only module versions >= 12.2.1 will work with Ansys license servers.
 
-==== SHARCNET ====
+SHARCNET
 
-The SHARCNET Ansys license supports running SMP and MPP LS-DYNA jobs.  It can be used for free by anyone (on a core and job limited basis) on Nibi cluster by adding the following lines to your slurm script:
+The SHARCNET Ansys license supports running single node SMP or MPP LS-DYNA jobs with many cores using the included dysmp license feature. The SHARCNET Ansys license however does NOT support running multi-node distributed memory MPP LS-DYNA jobs since it lacks the required mppdyna feature.  Any researcher from the Alliance can freely use the SHARCNET license to run upto 5 simultaneous lsdyna jobs with 288 cores without any internal software limits such as those present in the student or teaching licenses.  These limits maybe changed depending on the license load to optimize reliable availability and will be updated here at such time.  For example a researcher can currently submit and run a 192 core single full node job and a 96 core half node job using an unlimited mesh size.  The SHARCNET license may only be used for the purpose of Academic research and associated publications.  To utilize the SHARCNET license on the cluster to run LS-DYNA jobs include the following lines to your slurm script:
  export LSTC_LICENSE=ansys
  export ANSYSLMD_LICENSE_FILE=1055@license1.computecanada.ca
-
-=== CMC license ===
-
-If your LS-DYNA license was purchased from CMC, set the following two environment variables according to the cluster you are using:
- export LSTC_LICENSE=ansys
- Fir:      export ANSYSLMD_LICENSE_FILE=6624@172.26.0.101
- Nibi:     export ANSYSLMD_LICENSE_FILE=6624@10.25.1.56
- Narval:   export ANSYSLMD_LICENSE_FILE=6624@10.100.64.10
- Rorqual:  export ANSYSLMD_LICENSE_FILE=6624@10.100.64.10
- Trillium: export ANSYSLMD_LICENSE_FILE=6624@scinet-cmc
-
-where the IP address corresponds to the respective CADpass servers.  No firewall changes are required to use a CMC license on any cluster since these have already been done.  Since the remote CMC server that hosts LS=DYNA licenses is Ansys-based, these variables cannot be defined in your ~/.licenses/ls-dyna.lic file.  The file however must exist (even if it's empty) for any ls-dyna module to load.  To ensure this is the case, run touch ~/.licenses/ls-dyna.lic once from the command line (or each time in your slurm scripts).  Note that only module versions >= 13.1.1 will work with Ansys license servers.
 
 = Cluster job submission =
 

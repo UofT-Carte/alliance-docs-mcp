@@ -1,9 +1,9 @@
 ---
-title: "Trillium Open OnDemand Quickstart/en"
-url: "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart/en"
+title: "Trillium Open OnDemand Quickstart"
+url: "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart"
 category: "General"
-last_modified: "2026-06-19T13:48:18Z"
-page_id: 32168
+last_modified: "2026-07-08T15:17:40Z"
+page_id: 32098
 display_title: "Trillium Open OnDemand Quickstart"
 ---
 
@@ -56,7 +56,7 @@ When you have chosen your job parameters click on the Launch button to submit yo
 
 If you would like terminal access to the node where the application is running, to monitor the performance for example you can click on the button beside Host starting with >_. This will open a terminal window in your browser where you can run commands on the node directly.
 
-If for whatever reason you would like to kill the job, you can do so by clicking on the red Delete button in the job panel in the My Interactive Sessions page.
+If for whatever reason you would like to kill the job, you can do so by clicking on the red Cancel button in the job panel in the My Interactive Sessions page.
 
 * Interactive Apps Video Tutorial
 
@@ -107,7 +107,7 @@ When you start a JupyterLab session, you should now see your virtual environment
 
 =Running an application GUI=
 
-If you would like to run software that has a graphical user interface (GUI) and is not yet installed as an interactive application, such as Octave or Blender, you can do so using the Trillium Desktop application. This app provides a remote desktop environment that you can access through your web browser. In the following example, we will run Octave's GUI:
+If you would like to run software that has a graphical user interface (GUI) and is not yet installed as an interactive application, such as Octave, you can do so using the Trillium Desktop application. This app provides a remote desktop environment that you can access through your web browser. In the following example, we will run Octave's GUI:
 
 # Navigate to the Interactive Apps tab and select Trillium Desktop from the drop-down.
 # You will be taken to the job submission page. Choose how many cores and amount of memory you would like to allocate for your session in addition to your job length in hours. Then click on the Launch button to submit your job to the queue.

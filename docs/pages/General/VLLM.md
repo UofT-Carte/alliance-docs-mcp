@@ -2,7 +2,7 @@
 title: "VLLM"
 url: "https://docs.alliancecan.ca/wiki/VLLM"
 category: "General"
-last_modified: "2025-05-29T13:54:55Z"
+last_modified: "2026-07-08T14:30:43Z"
 page_id: 28589
 display_title: "VLLM"
 ---
@@ -17,6 +17,7 @@ To see the latest version of vLLM that we have built:
 For more information, see Available wheels.
 
 ==Installing our wheel==
+
 The preferred option is to install it using the Python wheel as follows:
 :1. Load dependencies, load a Python and OpenCV modules,
 
@@ -42,7 +43,7 @@ Models loaded for inference on vLLM will typically come from the Hugging Face Hu
 
 The following is an example of how to use the command line tool from the Hugging face to download a model. Note that models must be downloaded on a login node to avoid idle compute while waiting for resources to download. Also note that models will be cached at by default at $HOME/.cache/huggingface/hub. For more information on how to change the default cache location, as well as other means of downloading models, please see our article on the Hugging Face ecosystem.
 
- module load python/3.12
+ module load python/3.13
  virtualenv --no-download temp_env && source temp_env/bin/activate
  pip install --no-index huggingface_hub
  huggingface-cli download facebook/opt-125m

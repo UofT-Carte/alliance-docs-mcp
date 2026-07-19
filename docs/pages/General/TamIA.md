@@ -2,7 +2,7 @@
 title: "TamIA/en"
 url: "https://docs.alliancecan.ca/wiki/TamIA/en"
 category: "General"
-last_modified: "2026-07-06T15:25:53Z"
+last_modified: "2026-07-13T20:36:33Z"
 page_id: 28130
 display_title: "TamIA"
 ---
