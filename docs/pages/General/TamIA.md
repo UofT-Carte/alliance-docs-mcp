@@ -2,7 +2,7 @@
 title: "TamIA/en"
 url: "https://docs.alliancecan.ca/wiki/TamIA/en"
 category: "General"
-last_modified: "2026-07-13T20:36:33Z"
+last_modified: "2026-07-23T13:19:01Z"
 page_id: 28130
 display_title: "TamIA"
 ---
@@ -16,7 +16,7 @@ Portal : https://portail.tamia.ecpia.ca/
 
 tamIA is a cluster dedicated to artificial intelligence for the Canadian scientific community. Located at Université Laval, tamIA is co-managed with Mila and Calcul Québec. The cluster is named for the eastern chipmunk, a common species found in eastern North America.
 
-tamIA is part of , the Pan-Canadian AI Compute Environment].
+tamIA is part of the Pan-Canadian AI Compute Environment (PAICE).
 
 ==Site-specific policies==
 
@@ -28,10 +28,10 @@ tamIA is part of , the Pan-Canadian AI Compute Environment].
 * Each job must use all 4 GPUs of the servers allocated, i.e. 4 with H100 and 8 with H200.
 
 ==Access==
-To access the cluster, each researcher must complete an access request in the CCDB portal under Resources-->Artificial Intelligence-->tamIA. Access to the cluster may take up to one hour after the access request is sent.
+1. To access the cluster, each researcher must complete an access request in the CCDB portal under Resources-->Artificial Intelligence-->tamIA. Access to the cluster may take up to one hour after the access request is sent.
 You must then submit the General Access to PAICE Systems declaration form.
 
-Eligible principal investigators are members of an AIP-type RAP (prefix aip-).
+2. To submit compute jobs, you must be a member of an RAP (Resource Allocation Project), which has the prefix aip-. If you are a  principal investigator and do not have a RAP yet, please request access in CCDB.
 
 The procedure for sponsoring other researchers is as follows:
 * On the CCDB home page, go to the Resource Allocation Projects table

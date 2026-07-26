@@ -2,12 +2,12 @@
 title: "Graham/en"
 url: "https://docs.alliancecan.ca/wiki/Graham/en"
 category: "General"
-last_modified: "2025-09-23T22:00:56Z"
+last_modified: "2026-07-16T14:46:35Z"
 page_id: 1194
 display_title: "Graham"
 ---
 
-Availability: In production since June 2017
+Availability: In production June 2017 until late 2025.  SERVICE NOW ENDED.
 Login node: graham.alliancecan.ca
 Globus collection: computecanada#graham-globus
 Data transfer node (rsync, scp, sftp, etc.): use robot or login nodes

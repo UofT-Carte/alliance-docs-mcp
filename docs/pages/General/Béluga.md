@@ -2,7 +2,7 @@
 title: "Béluga/en"
 url: "https://docs.alliancecan.ca/wiki/B%C3%A9luga/en"
 category: "General"
-last_modified: "2026-07-02T18:44:32Z"
+last_modified: "2026-07-15T21:22:01Z"
 page_id: 10987
 display_title: "Béluga"
 ---
@@ -55,7 +55,6 @@ A Mellanox Infiniband EDR (100 Gb/s) network connects together all the nodes of 
 
 ==Node characteristics==
 Note: As of July 31 2025, all the nodes listed here are closed.
-Turbo mode is activated on all compute nodes of Béluga.
 
 nodes	cores	available memory	CPU                                  	storage          	GPU
 160  	40   	92G or  95000M  	2 x Intel Gold 6148 Skylake @ 2.4 GHz	1 x SSD 480G     	-
@@ -68,9 +67,9 @@ nodes	cores	available memory	CPU                                  	storage      
 * To get a larger $SLURM_TMPDIR space, a job can be submitted with --tmp=xG, where x is a value between 350 and 2490.
 
 ==Monitoring jobs==
-To maximize the use of resources and reduce your waiting times in the queue, you can monitor your CPU and GPU past or current compute tasks in real time in the portal.
+To maximize the use of resources and reduce your waiting times in the queue, you can monitor your CPU and GPU past or current compute tasks in real time in the Metrix portal.
 
-For each job you can monitor
+For each job you could monitor
 * the use of compute cores,
 * the use of memory,
 * the use of GPUs.
