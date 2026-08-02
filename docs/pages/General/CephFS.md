@@ -1,9 +1,9 @@
 ---
-title: "CephFS"
-url: "https://docs.alliancecan.ca/wiki/CephFS"
+title: "CephFS/en"
+url: "https://docs.alliancecan.ca/wiki/CephFS/en"
 category: "General"
-last_modified: "2026-06-21T13:24:29Z"
-page_id: 16840
+last_modified: "2026-07-20T15:06:14Z"
+page_id: 20857
 display_title: "CephFS"
 ---
 
@@ -91,7 +91,6 @@ The compatible distributions (distros) are listed at https://download.ceph.com/r
 Depending on the version of Enterprise Linux you are running, add the follwowing file:
 
 ==== Install relevant repositories for access to ceph client packages ====
-
 Install the Extra Packages for Enterprise Linux (EPEL) repository:
  sudo dnf install epel-release
 

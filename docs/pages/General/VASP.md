@@ -2,7 +2,7 @@
 title: "VASP/en"
 url: "https://docs.alliancecan.ca/wiki/VASP/en"
 category: "General"
-last_modified: "2026-04-21T22:39:12Z"
+last_modified: "2026-07-23T13:51:42Z"
 page_id: 4649
 display_title: "VASP"
 ---
@@ -65,7 +65,7 @@ For vasp/6.4.2
 For general usage of Trillium, please see the Trillium Quickstart page.
 
 === Pseudopotential files ===
-All pseudopotentials have been downloaded from the official VASP website and untarred. They are all located in  $EBROOTVASP/pseudopotentials/ on Cedar and Graham and can be accessed once the VASP module is loaded.
+All pseudopotentials have been downloaded from the official VASP website and untarred. They are all located in  $EBROOTVASP/pseudopotentials/ on Fir and Nibi and can be accessed once the VASP module is loaded.
 
 === Executable programs ===
 

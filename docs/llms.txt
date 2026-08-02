@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-07-26T08:05:44.407857+00:00
+# Generated: 2026-08-02T08:02:43.516253+00:00
 # Total pages: 458
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -209,8 +209,8 @@
 - Keras (General): https://docs.alliancecan.ca/wiki/Keras/en
 - Killarney/en (General): https://docs.alliancecan.ca/wiki/Killarney/en
 - LAMMPS (General): https://docs.alliancecan.ca/wiki/LAMMPS/en
-- LS-DYNA (General): https://docs.alliancecan.ca/wiki/LS-DYNA/en
 - LS-DYNA (General): https://docs.alliancecan.ca/wiki/LS-DYNA
+- LS-DYNA/en (General): https://docs.alliancecan.ca/wiki/LS-DYNA/en
 - Large Language Models (LLMs) (General): https://docs.alliancecan.ca/wiki/Large_Language_Models_(LLMs)
 - Large Scale Machine Learning (Big Data) (General): https://docs.alliancecan.ca/wiki/Large_Scale_Machine_Learning_(Big_Data)/en
 - Linux introduction (General): https://docs.alliancecan.ca/wiki/Linux_introduction/en

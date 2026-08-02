@@ -1,9 +1,9 @@
 ---
-title: "LS-DYNA"
-url: "https://docs.alliancecan.ca/wiki/LS-DYNA"
+title: "LS-DYNA/en"
+url: "https://docs.alliancecan.ca/wiki/LS-DYNA/en"
 category: "General"
-last_modified: "2026-07-23T13:51:17Z"
-page_id: 13871
+last_modified: "2026-07-23T13:51:25Z"
+page_id: 14902
 display_title: "LS-DYNA"
 ---
 
@@ -17,7 +17,7 @@ The Alliance is a hosting provider for LS-DYNA which means LS-DYNA software is i
 
 If a license server has never been used on a cluster, firewall changes will first need to be done on both the cluster side and server side.  This will typically require involvement from both our technical team and the technical people managing your license software.  To arrange this, send an email containing the service port and IP address of your floating license server to technical support. To check if your license file is working with a legacy LSTC server or ANSYS server you may run the following commands:
 
-touch ~/.licenses/ls-dyna.lic
+ touch ~/.licenses/ls-dyna.lic
  module load ls-dyna
  export LSTC_LICENSE=network|ansys
  export LSTC_LICENSE_SERVER=@, or

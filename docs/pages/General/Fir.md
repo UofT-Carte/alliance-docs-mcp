@@ -1,16 +1,16 @@
 ---
-title: "Fir"
-url: "https://docs.alliancecan.ca/wiki/Fir"
+title: "Fir/en"
+url: "https://docs.alliancecan.ca/wiki/Fir/en"
 category: "General"
-last_modified: "2026-07-03T12:45:22Z"
-page_id: 26935
+last_modified: "2026-07-21T19:25:46Z"
+page_id: 26936
 display_title: "Fir"
 ---
 
 Availability date: August 11, 2025
 Login node: fir.alliancecan.ca
 Automation node: robot.fir.alliancecan.ca
-Globus collection: alliancecan#fir-globus
+Globus collection: computecanada#cedar-globus & alliancecan#fir-globus
 JupyterHub: jupyterhub.fir.alliancecan.ca
 Data transfer node (rsync, scp, sftp ...): to be determined
 Portal: to be determined
