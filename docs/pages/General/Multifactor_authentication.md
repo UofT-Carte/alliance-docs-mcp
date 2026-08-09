@@ -2,7 +2,7 @@
 title: "Multifactor authentication/en"
 url: "https://docs.alliancecan.ca/wiki/Multifactor_authentication/en"
 category: "General"
-last_modified: "2026-05-13T14:50:01Z"
+last_modified: "2026-07-28T14:15:52Z"
 page_id: 22441
 display_title: "Multifactor authentication"
 ---
@@ -190,7 +190,11 @@ By default, Cyberduck opens a new connection for every file transfer, prompting 
 
 Then, ensure that the box beside Segmented downloads with multiple connections per file is not checked. It should look like the picture below.
 
+== Bitvise ==
+When using Bitvise SSH client, select "Password" for initial method, then "keyboard-interactive" for method, and enter "pam" for Submethods.
+
 = Frequently asked questions =
+
 == Can I use Authy/Google authenticator/Microsoft Authenticator ? ==
 No. Only Duo Mobile will work.
 

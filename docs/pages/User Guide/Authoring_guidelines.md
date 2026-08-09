@@ -2,7 +2,7 @@
 title: "Authoring guidelines/en"
 url: "https://docs.alliancecan.ca/wiki/Authoring_guidelines/en"
 category: "User Guide"
-last_modified: "2026-05-29T21:24:02Z"
+last_modified: "2026-08-05T15:03:02Z"
 page_id: 108
 display_title: "Authoring guidelines"
 ---
@@ -35,6 +35,7 @@ at the top of the source.
 The purpose of a style guide is to support writers in preparing technical documentation that makes learning easier. Carefully crafted documentation appeals to the user and delivers a positive image of the writer.
 There are several style guides in circulation that set standards for computer documentation. Pioneers in this area are the Apple Style Guide and the Microsoft Manual of Style.
 There are no official writing guidelines for this wiki, but here are some simple and common practices we can readily adopt:
+* Leave an empty line after each section title. This prevents potential issues with the translation tags.
 * Design each paragraph around one idea.
 * Present the most important information first.
 * Address the reader directly.
@@ -94,6 +95,11 @@ Translation tags are what identify a unit of translation. They look like . They 
 * do NOT duplicate translation tags
 The only safe thing to do with translation tags is to DELETE them, and let the extension tag the page again when you mark it for translation.
 
+If you start editing a section and you see a lonely translation tag at the end of the wikicode, stop there!, go back to the page and click to edit the whole page instead.
+* The system gives an error if you try to submit a change for a section with a translation tag at the end of the wikicode (even if this problem is coming from the wiki, in the first place -- this is a known issue).
+* Do NOT delete that translation tag at the end of the section, because this would invalidate an actual translation in production. Instead, copy and paste any edit you made in a local text editor, cancel your changes in the wikicode editor and start editing the wikicode of the whole page.
+* Do NOT add new content after the translation tag at the end of the wikicode of a section.
+
 ===Mark changes to a page for translation===
 First, try to mark a page for translation only once it is stable.
 Second, if you do have to make a change to a page that has been translated, make sure you do NOT change the tags of the form . You must never manually edit those tags or copy them. Those are automatically generated.
@@ -137,4 +143,4 @@ To add an item that is to be translated in the sidebar, use the following steps:
 
 Tables on the Available software page are automatically generated from module files in CVMFS. In order to add a link to a new page from the "Documentation" column of those tables, add an entry to https://github.com/ComputeCanada/wiki_module_bot/blob/main/module_wiki_page.json. Please add this change to the definitive copy of the file.
 
-Changes may take six hours to propagate.
+Changes may take six hours to propagate to the wiki page.

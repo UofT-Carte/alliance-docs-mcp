@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-02T08:02:43.510086+00:00",
+  "last_updated": "2026-08-09T06:36:04.122843+00:00",
   "total_pages": 458,
   "pages": [
     {
@@ -367,7 +367,7 @@
       "title": "Authoring guidelines/en",
       "url": "https://docs.alliancecan.ca/wiki/Authoring_guidelines/en",
       "category": "User Guide",
-      "last_modified": "2026-05-29T21:24:02Z",
+      "last_modified": "2026-08-05T15:03:02Z",
       "file_path": "docs/pages/User Guide/Authoring_guidelines.md",
       "slug": "Authoring_guidelines"
     },
@@ -2086,7 +2086,7 @@
       "title": "Multifactor authentication/en",
       "url": "https://docs.alliancecan.ca/wiki/Multifactor_authentication/en",
       "category": "General",
-      "last_modified": "2026-05-13T14:50:01Z",
+      "last_modified": "2026-07-28T14:15:52Z",
       "file_path": "docs/pages/General/Multifactor_authentication.md",
       "slug": "Multifactor_authentication"
     },
