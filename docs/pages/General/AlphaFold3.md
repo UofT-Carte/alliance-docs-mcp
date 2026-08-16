@@ -2,7 +2,7 @@
 title: "AlphaFold3/en"
 url: "https://docs.alliancecan.ca/wiki/AlphaFold3/en"
 category: "General"
-last_modified: "2026-05-07T20:27:38Z"
+last_modified: "2026-08-06T18:49:45Z"
 page_id: 27116
 display_title: "AlphaFold3"
 ---
@@ -21,6 +21,8 @@ AlphaFold2 is still available.  Documentation is here.
 
 1. Load AlphaFold3 dependencies.
 
+Different versions of AlphaFold3 require different versions of RDKit. If you encounter an error message while installing the alphafold3 Python package (see below), reload the rdkit module with the version mentioned in the error message.
+
 2. Download run script.
 
 3. Create and activate a Python virtual environment.
@@ -28,7 +30,7 @@ AlphaFold2 is still available.  Documentation is here.
 4. Install a specific version of AlphaFold3 and its Python dependencies.
 X.Y.Z
 }}
-where X.Y.Z is the exact desired version, for instance 3.0.0.
+where X.Y.Z is the exact desired version, for instance 3.0.4.
 You can omit to specify the version in order to install the latest one available from the wheelhouse.
 
 5. Build data.
@@ -46,17 +48,20 @@ This will create data files inside your virtual environment.
 The virtual environment will be created in your job instead.
 
 == Model ==
-You can obtain the model by requesting it from Google. They aim to respond to requests within 2-3 business days.
-Please see Obtaining Model Parameters.
+AlphaFold3 uses model parameters for inference. Before downloading the model, you must accept these terms of use.
+
+Important: Model parameters must be stored in your $SCRATCH directory.
+
+Download the model with:
 
 == Databases ==
-Note that AlphaFold3 requires a set of databases.
+AlphaFold3 uses a set of databases for its data pipeline.
 
-Important: The databases must live in the $SCRATCH directory.
+Important: The databases must be stored in your $SCRATCH directory.
 
-1. Download the fetch script
+1. Download the fetch script:
 
-2. Download the databases
+2. Download the databases:
 
 == Running AlphaFold3 in stages ==
 Alphafold3 must be run in stages, that is:
@@ -68,13 +73,23 @@ For reference on Alphafold3:
 * see outputs
 * see performance
 
-=== 1. Data pipeline (CPU) ===
-Edit the following submission script according to your needs.
+The following example shows how to fold a 70 kDa homodimer protein (PDB ID 2PV7). This is the same example provided in the AlphaFold3 documentation, but adapted for our clusters and split in two stages.
 
-=== 2. Model inference ===
-Edit the following submission script according to your needs.
+=== Input file ===
 
-=== 3. Job submission ===
+Create a directory for the input file.
+
+Add the following input file to the new directory.
+
+=== Data pipeline (CPU) ===
+Edit the following job script according to your needs.
+
+The data pipeline writes to a subdirectory in $OUTPUT_DIR, named according to the name tag in the input file, here 2PV7.
+
+=== Model inference (GPU) ===
+Edit the following job script according to your needs.
+
+=== Job submission ===
 
 Then, submit the jobs to the scheduler.
 

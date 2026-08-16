@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-08-09T06:36:04.122843+00:00",
-  "total_pages": 458,
+  "last_updated": "2026-08-16T06:20:51.561653+00:00",
+  "total_pages": 459,
   "pages": [
     {
       "page_id": 10049,
@@ -223,7 +223,7 @@
       "title": "AlphaFold3/en",
       "url": "https://docs.alliancecan.ca/wiki/AlphaFold3/en",
       "category": "General",
-      "last_modified": "2026-05-07T20:27:38Z",
+      "last_modified": "2026-08-06T18:49:45Z",
       "file_path": "docs/pages/General/AlphaFold3.md",
       "slug": "AlphaFold3"
     },
@@ -1003,10 +1003,10 @@
     },
     {
       "page_id": 11634,
-      "title": "Debugging and profiling",
+      "title": "Debugging and profiling/en",
       "url": "https://docs.alliancecan.ca/wiki/Debugging_and_profiling/en",
       "category": "General",
-      "last_modified": "2023-06-05T17:40:21Z",
+      "last_modified": "2026-08-05T18:48:01Z",
       "file_path": "docs/pages/General/Debugging_and_profiling.md",
       "slug": "Debugging_and_profiling"
     },
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-06-18T20:04:40Z",
+      "last_modified": "2026-08-07T02:39:00Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-07-07T17:34:34Z",
+      "last_modified": "2026-08-07T02:38:50Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
@@ -4123,6 +4123,15 @@
       "last_modified": "2026-07-03T12:45:22Z",
       "file_path": "docs/pages/General/Fir.md",
       "slug": "Fir"
+    },
+    {
+      "page_id": 33896,
+      "title": "Graphical use of Ansys",
+      "url": "https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys",
+      "category": "General",
+      "last_modified": "2026-08-14T18:16:43Z",
+      "file_path": "docs/pages/General/Graphical_use_of_Ansys.md",
+      "slug": "Graphical_use_of_Ansys"
     }
   ]
 }
