@@ -2,7 +2,7 @@
 title: "Authoring guidelines/en"
 url: "https://docs.alliancecan.ca/wiki/Authoring_guidelines/en"
 category: "User Guide"
-last_modified: "2026-08-05T15:03:02Z"
+last_modified: "2026-08-14T14:14:22Z"
 page_id: 108
 display_title: "Authoring guidelines"
 ---

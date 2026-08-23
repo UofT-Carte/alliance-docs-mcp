@@ -1,19 +1,19 @@
 ---
-title: "Graphical use of Ansys"
-url: "https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys"
+title: "Graphical use of Ansys/en"
+url: "https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys/en"
 category: "General"
-last_modified: "2026-08-14T18:16:43Z"
-page_id: 33896
+last_modified: "2026-08-17T13:58:41Z"
+page_id: 34278
 display_title: "Graphical use of Ansys"
 ---
 
 To run Ansys programs in graphical mode using an OnDemand or JupyterHub desktop, click on one of the following links:
 
- NIBI: https://ondemand.sharcnet.ca
- FIR: https://jupyterhub.fir.alliancecan.ca
- RORQUAL: https://jupyterhub.rorqual.alliancecan.ca
+ Nibi: https://ondemand.sharcnet.ca
+ Fir: https://jupyterhub.fir.alliancecan.ca
+ Rorqual: https://jupyterhub.rorqual.alliancecan.ca
  Narval:  https://jupyterhub.narval.alliancecan.ca/
- TRILLIUM: https://ondemand.scinet.utoronto.ca
+ Trillium: https://ondemand.scinet.utoronto.ca
 
 A job submission web page should appear in your browser.  Configure the resources required for your interactive desktop session and click on Launch or Start.  If either accelerated graphics or computations will be conducted from within your desktop session, be sure to specify a GPU resource.  Load an Ansys module on the desktop.  If you started a JupyterLab-powered desktop, this can be done by clicking in the menu on the left; however, if you started an OnDemand desktop manually, type module load ansys/version on the command line.  To start one of the common Ansys programs such as Fluent, CFX, Workbench, and so forth, refer to the following sections which provide advice for setting environment variables and arguments required by VirtualGL or Mesa-based graphical environments, depending on whether a node with a GPU resource was specified or not.
 

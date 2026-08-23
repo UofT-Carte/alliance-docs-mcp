@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-08-16T06:20:51.561653+00:00",
-  "total_pages": 459,
+  "last_updated": "2026-08-23T06:21:13.973886+00:00",
+  "total_pages": 462,
   "pages": [
     {
       "page_id": 10049,
@@ -187,7 +187,7 @@
       "title": "AiiDA",
       "url": "https://docs.alliancecan.ca/wiki/AiiDA",
       "category": "General",
-      "last_modified": "2025-02-18T18:45:42Z",
+      "last_modified": "2026-08-14T15:39:55Z",
       "file_path": "docs/pages/General/AiiDA.md",
       "slug": "AiiDA"
     },
@@ -367,7 +367,7 @@
       "title": "Authoring guidelines/en",
       "url": "https://docs.alliancecan.ca/wiki/Authoring_guidelines/en",
       "category": "User Guide",
-      "last_modified": "2026-08-05T15:03:02Z",
+      "last_modified": "2026-08-14T14:14:22Z",
       "file_path": "docs/pages/User Guide/Authoring_guidelines.md",
       "slug": "Authoring_guidelines"
     },
@@ -4130,6 +4130,33 @@
       "url": "https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys",
       "category": "General",
       "last_modified": "2026-08-14T18:16:43Z",
+      "file_path": "docs/pages/General/Graphical_use_of_Ansys.md",
+      "slug": "Graphical_use_of_Ansys"
+    },
+    {
+      "page_id": 34444,
+      "title": "Ansys/en",
+      "url": "https://docs.alliancecan.ca/wiki/Ansys/en",
+      "category": "General",
+      "last_modified": "2026-08-14T18:30:01Z",
+      "file_path": "docs/pages/General/Ansys.md",
+      "slug": "Ansys"
+    },
+    {
+      "page_id": 34366,
+      "title": "Cluster batch job submission with Ansys/en",
+      "url": "https://docs.alliancecan.ca/wiki/Cluster_batch_job_submission_with_Ansys/en",
+      "category": "General",
+      "last_modified": "2026-08-14T18:24:46Z",
+      "file_path": "docs/pages/General/Cluster_batch_job_submission_with_Ansys.md",
+      "slug": "Cluster_batch_job_submission_with_Ansys"
+    },
+    {
+      "page_id": 34278,
+      "title": "Graphical use of Ansys/en",
+      "url": "https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys/en",
+      "category": "General",
+      "last_modified": "2026-08-17T13:58:41Z",
       "file_path": "docs/pages/General/Graphical_use_of_Ansys.md",
       "slug": "Graphical_use_of_Ansys"
     }

@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-08-16T06:20:51.567766+00:00
-# Total pages: 459
+# Generated: 2026-08-23T06:21:13.980036+00:00
+# Total pages: 462
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -33,6 +33,7 @@
 - Altair FEKO (General): https://docs.alliancecan.ca/wiki/Altair_FEKO/en
 - Anaconda (General): https://docs.alliancecan.ca/wiki/Anaconda/en
 - Ansys (General): https://docs.alliancecan.ca/wiki/Ansys
+- Ansys/en (General): https://docs.alliancecan.ca/wiki/Ansys/en
 - Ansys/en (General): https://docs.alliancecan.ca/wiki/Ansys/en
 - AnsysEDT (General): https://docs.alliancecan.ca/wiki/AnsysEDT
 - AnsysEDT/en (General): https://docs.alliancecan.ca/wiki/AnsysEDT/en
@@ -104,6 +105,7 @@
 - Cloud shared security responsibility model (General): https://docs.alliancecan.ca/wiki/Cloud_shared_security_responsibility_model/en
 - Cloud storage options (General): https://docs.alliancecan.ca/wiki/Cloud_storage_options/en
 - Cloud troubleshooting guide/en (User Guide): https://docs.alliancecan.ca/wiki/Cloud_troubleshooting_guide/en
+- Cluster batch job submission with Ansys/en (General): https://docs.alliancecan.ca/wiki/Cluster_batch_job_submission_with_Ansys/en
 - Clusterstats (General): https://docs.alliancecan.ca/wiki/Clusterstats
 - Comet.ml (General): https://docs.alliancecan.ca/wiki/Comet.ml/en
 - Computational chemistry (General): https://docs.alliancecan.ca/wiki/Computational_chemistry/en
@@ -175,6 +177,7 @@
 - Gprof (General): https://docs.alliancecan.ca/wiki/Gprof/en
 - Graham/en (General): https://docs.alliancecan.ca/wiki/Graham/en
 - Graphical use of Ansys (General): https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys
+- Graphical use of Ansys/en (General): https://docs.alliancecan.ca/wiki/Graphical_use_of_Ansys/en
 - Gurobi (General): https://docs.alliancecan.ca/wiki/Gurobi
 - Gurobi/en (General): https://docs.alliancecan.ca/wiki/Gurobi/en
 - HDF5 (General): https://docs.alliancecan.ca/wiki/HDF5/en

@@ -2,7 +2,7 @@
 title: "AiiDA"
 url: "https://docs.alliancecan.ca/wiki/AiiDA"
 category: "General"
-last_modified: "2025-02-18T18:45:42Z"
+last_modified: "2026-08-14T15:39:55Z"
 page_id: 25587
 display_title: "AiiDA"
 ---
@@ -17,11 +17,23 @@ To do this, AiiDA must be able to make many SSH connections to the clusters auto
 
 = Automation in the context of multifactor authentication =
 
-To allow AiiDA and other similar software to connect to Alliance clusters, we have set up so-called automation nodes on each cluster.  These allow SSH connections without MFA, subject to restrictions.
+To allow AiiDA and other similar software to connect to Alliance clusters without MFA, you have two options:
+
+# Use the ControlMaster mechanism of ssh. This only requires you log into an Alliance cluster on the command line using SSH just once, with MFA.  Subsequent SSH commands will then reuse the existing connection.  This works well from Linux and MacOS computers, and is supported starting from version 2.7.0 of AiiDA.   This is the recommended method, since it is both simpler and more secure than the next method.
+# If you have to connect from a Microsoft Windows computer, or if your workflow is tied to an older version of AiiDA than version 2.7.0, we have set up so-called automation nodes on each cluster.  These allow SSH connections without MFA, subject to restrictions, as explained below.
+
+= Instructions on using AiiDA with Alliance clusters through Control Master =
+These instructions assume the reader is already familiar with how AiiDA works.
+
+On Linux and MacOS, you need to setup ControlMaster for the Alliance cluster to which you want to connect. You also need to make sure to setup the "Computer" in AiiDA using the "core.ssh_async" transport option ("Computer" is AiiDA's way of referring to the cluster).
+
+Once this is set up, you must first connect with SSH to the cluster on the command line in a terminal to setup the connection. You should keep that SSH session open to make sure the connection does not get broken.  You can then start AiiDA, which will reuse the SSH connection.
+
+Important: the 2FA mechanism from the AiiDA documentation that uses short lived SSH keys, is not applicable on the Alliance clusters.
 
 = Instructions on using AiiDA with Alliance clusters automation nodes =
 
-These instructions assume the reader is already familiar with how AiiDA works.
+These instructions assume the reader is already familiar with how AiiDA works. They should only be used if the Control Master mechanism above is not possible.
 
 == Obtain access to automation nodes ==
 
