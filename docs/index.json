@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-08-23T06:21:13.973886+00:00",
-  "total_pages": 462,
+  "last_updated": "2026-08-30T10:52:19.718345+00:00",
+  "total_pages": 467,
   "pages": [
     {
       "page_id": 10049,
@@ -2014,7 +2014,7 @@
       "title": "Monitoring jobs/en",
       "url": "https://docs.alliancecan.ca/wiki/Monitoring_jobs/en",
       "category": "General",
-      "last_modified": "2026-03-19T19:00:14Z",
+      "last_modified": "2026-08-17T17:48:28Z",
       "file_path": "docs/pages/General/Monitoring_jobs.md",
       "slug": "Monitoring_jobs"
     },
@@ -2365,7 +2365,7 @@
       "title": "Open OnDemand",
       "url": "https://docs.alliancecan.ca/wiki/Open_OnDemand",
       "category": "General",
-      "last_modified": "2025-09-16T19:42:16Z",
+      "last_modified": "2026-08-20T17:59:09Z",
       "file_path": "docs/pages/General/Open_OnDemand.md",
       "slug": "Open_OnDemand"
     },
@@ -2965,10 +2965,10 @@
     },
     {
       "page_id": 2555,
-      "title": "Sharing data",
+      "title": "Sharing data/en",
       "url": "https://docs.alliancecan.ca/wiki/Sharing_data/en",
       "category": "General",
-      "last_modified": "2025-08-29T12:47:04Z",
+      "last_modified": "2026-08-19T13:48:02Z",
       "file_path": "docs/pages/General/Sharing_data.md",
       "slug": "Sharing_data"
     },
@@ -3814,7 +3814,7 @@
       "title": "Infrastructure renewal",
       "url": "https://docs.alliancecan.ca/wiki/Infrastructure_renewal",
       "category": "General",
-      "last_modified": "2026-01-11T11:54:26Z",
+      "last_modified": "2026-08-24T15:46:56Z",
       "file_path": "docs/pages/General/Infrastructure_renewal.md",
       "slug": "Infrastructure_renewal"
     },
@@ -4159,6 +4159,51 @@
       "last_modified": "2026-08-17T13:58:41Z",
       "file_path": "docs/pages/General/Graphical_use_of_Ansys.md",
       "slug": "Graphical_use_of_Ansys"
+    },
+    {
+      "page_id": 34614,
+      "title": "Firedrake/en",
+      "url": "https://docs.alliancecan.ca/wiki/Firedrake/en",
+      "category": "General",
+      "last_modified": "2026-08-24T16:29:19Z",
+      "file_path": "docs/pages/General/Firedrake.md",
+      "slug": "Firedrake"
+    },
+    {
+      "page_id": 29481,
+      "title": "RAC available resources",
+      "url": "https://docs.alliancecan.ca/wiki/RAC_available_resources",
+      "category": "General",
+      "last_modified": "2026-08-26T12:52:58Z",
+      "file_path": "docs/pages/General/RAC_available_resources.md",
+      "slug": "RAC_available_resources"
+    },
+    {
+      "page_id": 29477,
+      "title": "Resource Allocation Competition",
+      "url": "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition",
+      "category": "General",
+      "last_modified": "2026-08-28T15:29:07Z",
+      "file_path": "docs/pages/General/Resource_Allocation_Competition.md",
+      "slug": "Resource_Allocation_Competition"
+    },
+    {
+      "page_id": 11068,
+      "title": "Accessing CVMFS",
+      "url": "https://docs.alliancecan.ca/wiki/Accessing_CVMFS",
+      "category": "General",
+      "last_modified": "2026-08-28T22:42:30Z",
+      "file_path": "docs/pages/General/Accessing_CVMFS.md",
+      "slug": "Accessing_CVMFS"
+    },
+    {
+      "page_id": 9026,
+      "title": "Cloud RAS Allocations",
+      "url": "https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations",
+      "category": "General",
+      "last_modified": "2026-08-24T16:20:04Z",
+      "file_path": "docs/pages/General/Cloud_RAS_Allocations.md",
+      "slug": "Cloud_RAS_Allocations"
     }
   ]
 }

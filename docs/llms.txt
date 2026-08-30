@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-08-23T06:21:13.980036+00:00
-# Total pages: 462
+# Generated: 2026-08-30T10:52:19.724497+00:00
+# Total pages: 467
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -15,6 +15,7 @@
 - Abaqus/en (General): https://docs.alliancecan.ca/wiki/Abaqus/en
 - Access to files of users leaving a project (User Guide): https://docs.alliancecan.ca/wiki/Access_to_files_of_users_leaving_a_project/en
 - Accessing CVMFS (General): https://docs.alliancecan.ca/wiki/Accessing_CVMFS/en
+- Accessing CVMFS (General): https://docs.alliancecan.ca/wiki/Accessing_CVMFS
 - Accessing object storage with WinSCP (General): https://docs.alliancecan.ca/wiki/Accessing_object_storage_with_WinSCP/en
 - Accessing object storage with s3cmd (General): https://docs.alliancecan.ca/wiki/Accessing_object_storage_with_s3cmd/en
 - Accessing the Arbutus object storage with AWS CLI (General): https://docs.alliancecan.ca/wiki/Accessing_the_Arbutus_object_storage_with_AWS_CLI/en
@@ -98,6 +99,7 @@
 - Cloud (General): https://docs.alliancecan.ca/wiki/Cloud/en
 - Cloud Account Lifecycle Management (General): https://docs.alliancecan.ca/wiki/Cloud_Account_Lifecycle_Management
 - Cloud Quick Start/en (General): https://docs.alliancecan.ca/wiki/Cloud_Quick_Start/en
+- Cloud RAS Allocations (General): https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations
 - Cloud RAS Allocations/en (General): https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations/en
 - Cloud Technical Glossary (Technical Reference): https://docs.alliancecan.ca/wiki/Cloud_Technical_Glossary/en
 - Cloud resources (General): https://docs.alliancecan.ca/wiki/Cloud_resources/en
@@ -146,6 +148,7 @@
 - Fir (General): https://docs.alliancecan.ca/wiki/Fir
 - Fir/en (General): https://docs.alliancecan.ca/wiki/Fir/en
 - Firedrake (General): https://docs.alliancecan.ca/wiki/Firedrake
+- Firedrake/en (General): https://docs.alliancecan.ca/wiki/Firedrake/en
 - Flax (General): https://docs.alliancecan.ca/wiki/Flax
 - Formation (General): https://docs.alliancecan.ca/wiki/Formation
 - Fortran (General): https://docs.alliancecan.ca/wiki/Fortran/en
@@ -338,6 +341,7 @@
 - RAC Fast Track Application Guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en
 - RAC application guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_application_guide/en
 - RAC available resources (General): https://docs.alliancecan.ca/wiki/RAC_available_resources/en
+- RAC available resources (General): https://docs.alliancecan.ca/wiki/RAC_available_resources
 - RAC transition FAQ (General): https://docs.alliancecan.ca/wiki/RAC_transition_FAQ/en
 - RAPIDS (Technical Reference): https://docs.alliancecan.ca/wiki/RAPIDS/en
 - RDKit (General): https://docs.alliancecan.ca/wiki/RDKit/en
@@ -349,6 +353,7 @@
 - Recovering data from a compromised VM (General): https://docs.alliancecan.ca/wiki/Recovering_data_from_a_compromised_VM/en
 - Research Data Management (General): https://docs.alliancecan.ca/wiki/Research_Data_Management/en
 - Resource Allocation Competition (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en
+- Resource Allocation Competition (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition
 - Rorqual/en (General): https://docs.alliancecan.ca/wiki/Rorqual/en
 - Running jobs (General): https://docs.alliancecan.ca/wiki/Running_jobs
 - Running jobs/en (General): https://docs.alliancecan.ca/wiki/Running_jobs/en
@@ -373,7 +378,7 @@
 - Self-paced courses (General): https://docs.alliancecan.ca/wiki/Self-paced_courses/en
 - Services d'informatique quantique (General): https://docs.alliancecan.ca/wiki/Services_d%27informatique_quantique/en
 - Setting up GUI Desktop on a VM (General): https://docs.alliancecan.ca/wiki/Setting_up_GUI_Desktop_on_a_VM/en
-- Sharing data (General): https://docs.alliancecan.ca/wiki/Sharing_data/en
+- Sharing data/en (General): https://docs.alliancecan.ca/wiki/Sharing_data/en
 - Siku (General): https://docs.alliancecan.ca/wiki/Siku
 - Slicer (General): https://docs.alliancecan.ca/wiki/Slicer/en
 - Snowflurry (General): https://docs.alliancecan.ca/wiki/Snowflurry/en

@@ -2,12 +2,16 @@
 title: "Monitoring jobs/en"
 url: "https://docs.alliancecan.ca/wiki/Monitoring_jobs/en"
 category: "General"
-last_modified: "2026-03-19T19:00:14Z"
+last_modified: "2026-08-17T17:48:28Z"
 page_id: 28553
 display_title: "Monitoring jobs"
 ---
 
-Ensuring that your jobs make efficient use of the resources that are assigned to them is an important part of being a responsible user. This is particularly true when you are using a new program or have made some other substantial change in the work being done by your job. This page describes a variety of different methods for evaluating the efficiency of jobs, both currently running jobs and those which have finished.
+Ensuring that your jobs make efficient use of the resources that are assigned to them is an important part of being a responsible user. This is particularly true when you are using a new program or have made some other substantial change in the work being done by your job.
+
+The best tool for examining job performance is the Metrix web service or "portal" for each cluster.  Please see Metrix for a description of the tool and a list of URLs.
+
+The remainder of this page describes other methods for evaluating the efficiency of jobs.
 
 === Current jobs ===
 

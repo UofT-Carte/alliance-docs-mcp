@@ -1,13 +1,13 @@
 ---
-title: "RAC available resources/en"
-url: "https://docs.alliancecan.ca/wiki/RAC_available_resources/en"
+title: "RAC available resources"
+url: "https://docs.alliancecan.ca/wiki/RAC_available_resources"
 category: "General"
-last_modified: "2025-09-11T18:45:39Z"
-page_id: 29764
+last_modified: "2026-08-26T12:52:58Z"
+page_id: 29481
 display_title: "RAC available resources"
 ---
 
-Below is the list of resources available for the Resource Allocation Competition 2026.
+Below is the list of resources available for the Resource Allocation Competition 2027.
 
 Resources in the clusters and in the cloud are organized by subsystems. Each subsystem will only show the resources that it has available. For example, the trillium-storage subsystem will only show /project storage as /nearline storage is available in the hpss-storage subsystem; trillium-compute will only show CPU (and memory), etc.
 
@@ -20,8 +20,6 @@ Arbutus cloud   	arbutus-dcache               	dCache storage                   
 Rorqual cluster 	rorqual-compute              	CPU                                                                                                                                             	No
 Rorqual cluster 	rorqual-gpu                  	GPU                                                                                                                                             	No
 Rorqual cluster 	rorqual-storage              	Project storage, Nearline storage                                                                                                               	Yes
-Béluga cloud    	beluga-compute-cloud         	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage                                                  	No
-Béluga cloud    	beluga-persistent-cloud      	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage                                                  	No
 Fir cluster     	fir-compute                  	CPU                                                                                                                                             	No
 Fir cluster     	fir-gpu                      	GPU                                                                                                                                             	No
 Fir cluster     	fir-storage                  	Project storage, Nearline storage, dCache storage                                                                                               	Yes

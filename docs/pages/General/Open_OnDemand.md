@@ -1,9 +1,9 @@
 ---
-title: "Open OnDemand/en"
-url: "https://docs.alliancecan.ca/wiki/Open_OnDemand/en"
+title: "Open OnDemand"
+url: "https://docs.alliancecan.ca/wiki/Open_OnDemand"
 category: "General"
-last_modified: "2026-03-27T18:19:01Z"
-page_id: 32248
+last_modified: "2026-08-20T17:59:09Z"
+page_id: 31510
 display_title: "Open OnDemand"
 ---
 

@@ -2,7 +2,7 @@
 title: "Sharing data/en"
 url: "https://docs.alliancecan.ca/wiki/Sharing_data/en"
 category: "General"
-last_modified: "2025-08-29T12:47:04Z"
+last_modified: "2026-08-19T13:48:02Z"
 page_id: 2555
 display_title: "Sharing data"
 ---
@@ -161,22 +161,22 @@ $ setfacl -m u:smithj:rx my_script.py
 
 To allow read and write access to a single user in a whole subdirectory, including new files created in it, you can run the following commands:
 
-$ setfacl -d -m u:smithj:rwX /home//projects/def-/shared_data
-$ setfacl -R -m u:smithj:rwX /home//projects/def-/shared_data
+$ setfacl -d -m u:smithj:rwX /project/def-/shared_data
+$ setfacl -R -m u:smithj:rwX /project/def-/shared_data
 
 ; Note: The X attribute above (compared to x) sets the execute permission only when the item is already executable (either a directory or a file with the execute permission). A directory needs the execute permission to allow it to be browsed.
 
-The first command sets default access rules to directory /home//projects/def-/shared_data, so any file or directory created within it will inherit the same ACL rule. It is required for new data. The second command sets ACL rules to directory /home//projects/def-/shared_data and all its content currently in it. So it is applicable only to existing data.
+The first command sets default access rules to directory /project/def-/shared_data, so any file or directory created within it will inherit the same ACL rule. It is required for new data. The second command sets ACL rules to directory /project/def-/shared_data and all its content currently in it. So it is applicable only to existing data.
 
 In order for this method to work the following things need to be in place:
-* The directory, /home/smithj/projects/def-smithj/shared_data in our example, must be owned by you.
-* Parent directories (and parents of parents, etc.) of the one you are trying to share must allow execute permission to the user you are trying to share with. This can be supplied with setfacl -m u:smithj:X ... in this example, or it can be supplied by allowing everyone entry, i.e. chmod o+x .... They do not need to have public read permission. In particular you will need to grant execute permission on the project directory (/projects/def-) either for everyone, or one-by-one to all the people you are trying to share your data with.
+* The directory, /project/def-smithj/shared_data in our example, must be owned by you.
+* Parent directories (and parents of parents, etc.) of the one you are trying to share must allow execute permission to the user you are trying to share with. This can be supplied with setfacl -m u:smithj:X ... in this example, or it can be supplied by allowing everyone entry, i.e. chmod o+x .... They do not need to have public read permission. In particular you will need to grant execute permission on the project directory (/project/def-) either for everyone, or one-by-one to all the people you are trying to share your data with.
 * When sharing a directory in the project filesystem, you must provide your collaborators with a path that starts with /project, not with /home//projects. The latter contains symbolic links (symlinks, or shortcuts) to the physical directories in /project, and these symlinks will not be reachable by your collaborators unless they also have access to your home directory. You can get the physical path a symlink points to using the realpath command. For example, realpath /home/smithj/projects/def-smithj/shared_data could return /project/9041430/shared_data. The physical path to a project directory is not the same on all clusters. If you wish to share a project directory on more than one cluster, check its physical path with realpath on each cluster.
 
 ==== Removing ACL ====
 To remove all extended ACL attributes from a directory recursively, use:
 
-setfacl -bR /home//projects/def-/shared_data
+setfacl -bR /project/def-/shared_data
 
 === Data sharing groups ===
 
@@ -207,8 +207,8 @@ $ setfacl -m g:wg_datasharing:X /project/def-/
 
 Finally, you can add your group to the ACL for the directory you are trying to share. The commands parallel those needed to share with an individual:
 
-$ setfacl -d -m g:wg-datasharing:rwx /home//projects/def-/shared_data
-$ setfacl -R -m g:wg-datasharing:rwx /home//projects/def-/shared_data
+$ setfacl -d -m g:wg-datasharing:rwx /project/def-/shared_data
+$ setfacl -R -m g:wg-datasharing:rwx /project/def-/shared_data
 
 ==Troubleshooting==
 

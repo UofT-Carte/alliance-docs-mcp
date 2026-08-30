@@ -1,9 +1,9 @@
 ---
-title: "Accessing CVMFS/en"
-url: "https://docs.alliancecan.ca/wiki/Accessing_CVMFS/en"
+title: "Accessing CVMFS"
+url: "https://docs.alliancecan.ca/wiki/Accessing_CVMFS"
 category: "General"
-last_modified: "2025-08-29T13:25:19Z"
-page_id: 12126
+last_modified: "2026-08-28T22:42:30Z"
+page_id: 11068
 display_title: "Accessing CVMFS"
 ---
 
@@ -72,7 +72,7 @@ The soft.computecanada.ca repository is provided by the default configuration, s
 == Testing ==
 
 * First ensure that the repositories you want to test are listed in CVMFS_REPOSITORIES.
-* Validate the configuration:
+* Validate the configuration and test proxy-server connections:
 
 * Make sure to address any warnings or errors that are reported.
 * Check that the repositories are OK:

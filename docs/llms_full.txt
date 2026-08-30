@@ -1,6 +1,6 @@
 # Alliance Documentation - Full Content
-# Generated: 2026-08-23T06:21:13.982644+00:00
-# Total pages: 462
+# Generated: 2026-08-30T10:52:19.726987+00:00
+# Total pages: 467
 ================================================================================
 
 
@@ -2357,7 +2357,192 @@ The soft.computecanada.ca repository is provided by the default configuration, s
 == Testing ==
 
 * First ensure that the repositories you want to test are listed in CVMFS_REPOSITORIES.
-* Validate the configuration:
+* Validate the configuration and test proxy-server connections:
+
+* Make sure to address any warnings or errors that are reported.
+* Check that the repositories are OK:
+
+If you encounter problems, this debugging guide may help.
+
+= Enabling our environment in your session =
+Once you have mounted the CVMFS repository, enabling our environment in your sessions is as simple as running the bash script /cvmfs/soft.computecanada.ca/config/profile/bash.sh.
+This will load some default modules. If you want to mimic a specific cluster exactly, simply define the environment variable CC_CLUSTER to one of fir, nibi or rorqual before using the script, for example:
+rorqual}}
+
+The above command will not run anything if your user ID is below 1000. This is a safeguard, because you should not rely on our software environment for privileged operation. If you nevertheless want to enable our environment, you can first define the environment variable FORCE_CC_CVMFS=1, with the command
+1}}
+or you can create a file $HOME/.force_cc_cvmfs in your home folder if you want it to always be active, with
+
+If, on the contrary, you want to avoid enabling our environment, you can define SKIP_CC_CVMFS=1 or create the file $HOME/.skip_cc_cvmfs to ensure that the environment is never enabled in a given account.
+
+== Customizing your environment ==
+By default, enabling our environment will automatically detect a number of features of your system, and load default modules. You can control the default behaviour by defining specific environment variables prior to enabling the environment. These are described below.
+
+=== Environment variables ===
+==== CC_CLUSTER ====
+This variable is used to identify a cluster. It is used to send some information to the system logs, as well as define behaviour relative to licensed software. By default, its value is computecanada. You may want to set the value of this variable if you want to have system logs tailored to the name of your system.
+
+==== RSNT_ARCH ====
+This environment variable is used to identify the set of CPU instructions supported by the system. By default, it will be automatically detected based on /proc/cpuinfo. However if you want to force a specific one to be used, you can define it before enabling the environment. The supported instruction sets for our software environment are:
+* sse3
+* avx
+* avx2
+* avx512
+
+==== RSNT_INTERCONNECT ====
+This environment variable is used to identify the type of interconnect supported by the system. By default, it will be automatically detected based on the presence of /sys/module/opa_vnic (for Intel OmniPath) or /sys/module/ib_core (for InfiniBand). The fall-back value is ethernet. The supported values are
+* omnipath
+* infiniband
+* ethernet
+
+The value of this variable will trigger different options of transport protocol to be used in OpenMPI.
+
+==== RSNT_CUDA_DRIVER_VERSION ====
+This environment variable is used to hide or show some versions of our CUDA modules, according to the required version of NVidia drivers, as documented [here]. If not defined, this is detected based on the files founds under /usr/lib64/nvidia.
+
+For backward compatibility reasons, if no library is found under /usr/lib64/nvidia, we assume that the driver versions are enough for CUDA 10.2. This is because this feature was introduced just as CUDA 11.0 was released.
+
+Defining RSNT_CUDA_DRIVER_VERSION=0.0 will hide all versions of CUDA.
+
+==== RSNT_LOCAL_MODULEPATHS ====
+
+if you want your module tree to have higher priority than ours, or
+
+if you want your module tree to have lower priority than ours.
+}}
+This environment variable allows to define locations for local module trees, which will be automatically mesh into our central tree. To use it, define
+/opt/software/easybuild/modules}}
+and then install your EasyBuild recipe using
+
+This will use our module naming scheme to install your recipe locally, and it will be picked up by the module hierarchy. For example, if this recipe was using the iompi,2018.3 toolchain, the module will become available after loading the intel/2018.3 and the openmpi/3.1.2 modules.
+
+==== LMOD_SYSTEM_DEFAULT_MODULES ====
+This environment variable defines which modules are loaded by default. If it is left undefined, our environment will define it to load the StdEnv module, which will load by default a version of the Intel compiler, and a version of OpenMPI.
+
+==== MODULERCFILE ====
+This is an environment variable used by Lmod to define the default version of modules and aliases. You can define your own modulerc file and add it to the environment variable MODULERCFILE. This will take precedence over what is defined in our environment.
+
+=== System paths ===
+While our software environment strives to be as independent from the host operating system as possible, there are a number of system paths that are taken into account by our environment to facilitate interaction with tools installed on the host operating system. Below are some of these paths.
+
+==== /opt/software/modulefiles ====
+If this path exists, it will automatically be added to the default MODULEPATH. This allows the use of our software environment while also maintaining locally installed modules.
+
+==== $HOME/modulefiles ====
+If this path exists, it will automatically be added to the default MODULEPATH. This allows the use of our software environment while also allowing installation of modules inside of home directories.
+
+==== /opt/software/slurm/bin, /opt/software/bin, /opt/slurm/bin ====
+These paths are all automatically added to the default PATH. This allows your own executable to be added in the search path.
+
+== Installing software locally ==
+Since June 2020, we support installing additional modules locally and have it discovered by our central hierarchy. This was discussed and implemented in this issue.
+
+To do so, first identify a path where you want to install local software. For example /opt/software/easybuild. Make sure that folder exists. Then, export the environment variable RSNT_LOCAL_MODULEPATHS:
+/opt/software/easybuild/modules}}
+
+If you want this branch of the software hierarchy to be found by your users, we recommend you define this environment variable in the cluster's common profile. Then, install the software packages you want using EasyBuild:
+
+This will install the piece of software locally, using the hierarchical layout driven by our module naming scheme. It will also be automatically found when users load our compiler, MPI and Cuda modules.
+
+= Caveats =
+== Use of software environment by system administrators ==
+If you perform privileged system operations, or operations related to CVMFS, ensure that your session does not depend on our software environment when performing any such operations. For example, if you attempt to update CVMFS using YUM while your session uses a Python module loaded from CVMFS, YUM may run using that module and lose access to it during the update, and the update may become deadlocked. Similarly, if your environment depends on CVMFS and you reconfigure CVMFS in a way that temporarily interrupts access to CVMFS, your session may interfere with CVMFS operations, or hang. (When these precautions are taken, in most cases CVMFS can be updated and reconfigured without interrupting access to CVMFS for users, because the update or reconfiguration itself will complete successfully without encountering a circular dependency.)
+
+== Software packages that are not available ==
+On our systems, a number of commercial software packages are made available to authorized users according to the terms of the license owners, but they are not available externally, and following the instructions on this page will not grant you access to them. This includes for example the Intel and Portland Group compilers. While the modules for the Intel and PGI compilers are available, you will only have access to the redistributable parts of these packages, usually the shared objects. These are sufficient to run software packages compiled with these compilers, but not to compile new software.
+
+== CUDA location ==
+For CUDA-enabled software packages, our software environment relies on having driver libraries installed in the path /usr/lib64/nvidia. However on some platforms, recent NVidia drivers will install libraries in /usr/lib64 instead. Because it is not possible to add /usr/lib64 to the LD_LIBRARY_PATH without also pulling in all system libraries (which may have incompatibilities with our software environment), we recommend that you create symbolic links in /usr/lib64/nvidia pointing to the installed NVidia libraries. The script below will install the drivers and create the symbolic links that are needed (adjust the driver version that you want)
+
+for file in $(rpm -ql ${nv_pkg[@]}); do
+  [ "${file%/*}" = '/usr/lib64' ] && [ ! -d "${file}" ] && \
+  ln -snf "$file" "${file%/*}/nvidia/${file##*/}"
+done
+}}
+
+== LD_LIBRARY_PATH ==
+Our software environment is designed to use RUNPATH. Defining LD_LIBRARY_PATH is not recommended and can lead to the environment not working.
+
+== Missing libraries ==
+Because we do not define LD_LIBRARY_PATH, and because our libraries are not installed in default Linux locations, binary packages, such as Anaconda, will often not find libraries that they would usually expect. Please see our documentation on Installing binary packages.
+
+== dbus ==
+For some applications, dbus needs to be installed. This needs to be installed locally, on the host operating system.
+
+
+================================================================================
+PAGE: Accessing CVMFS
+URL: https://docs.alliancecan.ca/wiki/Accessing_CVMFS
+Category: General
+================================================================================
+
+
+= Introduction =
+We provide repositories of software and data via a file system called the CERN Virtual Machine File System (CVMFS). On our systems, CVMFS is already set up for you, so the repositories are automatically available for your use. For more information on using our software environment, please refer to wiki pages Available software, Using modules, Python, R and Installing software in your home directory.
+
+The purpose of this page is to describe how you can install and configure CVMFS on your computer or cluster, so that you can access the same repositories (and software environment) on your system that are available on ours.
+
+The software environment described on this page has been presented at Practices and Experience in Advanced Research Computing 2019 (PEARC 2019).
+
+= Before you start =
+
+== Subscribe to announcements ==
+Occasionally, changes will be made regarding CVMFS or the software or other content provided by our CVMFS repositories, which may affect users or require administrators to take action in order to ensure uninterrupted access to our CVMFS repositories. Subscribe to the cvmfs-announce@gw.alliancecan.ca mailing list in order to receive important but infrequent notifications about these changes, by emailing cvmfs-announce+subscribe@gw.alliancecan.ca and then replying to the confirmation email you subsequently receive. (Our staff can alternatively subscribe here.)
+
+== Terms of use and support ==
+The CVMFS client software is provided by CERN. Our CVMFS repositories are provided without any warranty. We reserve the right to limit or block your access to the CVMFS repositories and software environment if you violate applicable terms of use or at our discretion.
+
+== CVMFS requirements ==
+=== For a single system ===
+To install CVMFS on an individual system, such as your laptop or desktop, you will need:
+* A supported operating system (see Minimal requirements below).
+* Support for FUSE.
+* Approximately 50 GB of available local storage, for the cache. (It will only be filled based on usage, and a larger or smaller cache may be suitable in different situations. For light use on a personal computer, just ~ 5-10 GB may suffice. See cache settings for more details.)
+* Outbound HTTP access to the internet.
+** Or at least outbound HTTP access to one or more local proxy servers.
+
+If your system lacks FUSE support or local storage, or has limited network connectivity or other restrictions, you may be able to use some other option.
+
+=== For multiple systems ===
+If multiple CVMFS clients are deployed, for example on a cluster, in a laboratory, campus or other site, each system must meet the above requirements, and the following considerations apply as well:
+* We recommend that you deploy forward caching HTTP proxy servers at your site to improve performance and bandwidth usage, especially if you have a large number of clients. Refer to Setting up a Local Squid Proxy.
+** Note that if you have only one such proxy server it will be a single point of failure for your site. Generally, you should have at least two local proxies at your site, and potentially additional nearby or regional proxies as backups.
+* It is recommended to synchronize the identity of the cvmfs service account across all client nodes (e.g. using LDAP or other means).
+** This facilitates use of an alien cache and should be done before CVMFS is installed. Even if you do not anticipate using an alien cache at this time, it is easier to synchronize the accounts initially than to try to potentially change them later.
+
+== Software environment requirements ==
+=== Minimal requirements ===
+*Supported operating systems:
+** Linux: with a Kernel 2.6.32 or newer for our 2016 and 2018 environments, and 3.2 or newer for the 2020 environment.
+** Windows: with Windows Subsystem for Linux version 2, with a distribution of Linux that matches the requirement above.
+** Mac OS: only through a virtual machine.
+* CPU: x86 CPU supporting at least one of SSE3, AVX, AVX2 or AVX512 instruction sets.
+
+=== Optimal requirements ===
+* Scheduler: Slurm or Torque, for tight integration with OpenMPI applications.
+* Network interconnect: Ethernet, InfiniBand or OmniPath, for parallel applications.
+* GPU: NVidia GPU with CUDA drivers (7.5 or newer) installed, for CUDA-enabled applications. (See below for caveats about CUDA.)
+* As few Linux packages installed as possible (fewer packages reduce the odds of conflicts).
+
+= Installing CVMFS =
+If you wish to use Ansible, a CVMFS client role is provided as-is, for basic configuration of a CVMFS client on an RPM-based system.
+Also, some scripts may be used to facilitate installing CVMFS on cloud instances.
+Otherwise, use the following instructions.
+
+== Pre-installation ==
+It is recommended that the local CVMFS cache (located at /var/lib/cvmfs by default, configurable via the CVMFS_CACHE_BASE setting) be on a dedicated file system so that the storage usage of CVMFS is not shared with that of other applications. Accordingly, you should provision that file system before installing CVMFS.
+
+== Installation and configuration ==
+For installation instructions, refer to Getting the Software.
+
+For standard client configuration, see Setting up the Software and Client parameters.
+
+The soft.computecanada.ca repository is provided by the default configuration, so no additional steps are required to access it (though you may wish to include it in CVMFS_REPOSITORIES in your client configuration).
+
+== Testing ==
+
+* First ensure that the repositories you want to test are listed in CVMFS_REPOSITORIES.
+* Validate the configuration and test proxy-server connections:
 
 * Make sure to address any warnings or errors that are reported.
 * Check that the repositories are OK:
@@ -10440,6 +10625,45 @@ ssh.com format without a passphrase
 
 
 ================================================================================
+PAGE: Cloud RAS Allocations
+URL: https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations
+Category: General
+================================================================================
+
+
+Parent page: Cloud
+
+Any Digital Research Alliance of Canada user can access modest quantities of resources as soon as they have an Alliance account. The Rapid Access Service (RAS) allows users to experiment and to start working right away. Many research groups can meet their needs with the Rapid Access Service only. Users requiring larger resource quantities can apply to our annual Resource Allocation Competition (RAC). Primary Investigators (PIs) with a current RAC allocation are also able to request resources via RAS.
+
+Using cloud resources, researchers can create cloud instances (also known as virtual machines or VMs). There are two options available for cloud resources:
+* Compute instances: These are instances that have a limited life-time (wall-time) and typically have constant high CPU requirements. They are sometimes referred to as batch instances. Users may need a large number of compute instances for production activities. Maximum wall-time for compute instances is one month. Upon reaching their life-time limit these instances will be scheduled for deactivation and their owners will be notified in order to ensure they clean up their instances and download any required data. Any grace period is subject to resources availability at that time.
+* Persistent instances: These are instances that are meant to run indefinitely and would include Web servers, database servers, etc. In general, these instances provide a persistent service and use less CPU power than compute instances.
+* vGPU: Arbutus currently offers H100 GPUs in a single flavor for RAS use (g1-12gb-c3-35gb-125). This flavor has 12GB GPU memory, 3 vCPUs, 35GB of memory, and 125GB of ephemeral storage. Alternative GPU flavors are available for RAC recipients; researcher feedback on useful resource combinations for those new flavors is welcomed. For more information on setting up your VM to use vGPUs, see Using cloud vGPUs.
+
+== Cloud RAS resources limits ==
+
+Attributes                                                                                                                      	Compute instancesUsers may request both a compute and persistent allocation to share a single project. Storage is shared between the two allocations and is limited to 10TB/PI per storage type. PIs may request a 1-year renewal of their cloud RAS allocations an unlimited number of times; however, allocations will be given based on available resources and are not guaranteed. Requests made after January 1 will expire March of the following year and therefore may be longer than 1 year. Allocation requests made between May-December will be less than 1 year. Renewals will take effect in April.	Persistent instances
+May be requested by                                                                                                             	PIs only                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         	PIs only
+vCPUs (see VM flavours)                                                                                                         	80                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	25
+vGPU (RGU-years)                                                                                                                	1.8                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              	1.8
+InstancesThis is a metadata quota and not a hard limit, users can request an increase beyond these values without a RAC request.	20                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	10
+Volumes                                                                                                                         	2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                	10
+Volume snapshots                                                                                                                	2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                	10
+RAM (GB)                                                                                                                        	300                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              	50
+Floating IP                                                                                                                     	2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                	2
+Persistent storage (TB)                                                                                                         	10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	10
+Object storage (TB)Currently only available at Arbutus and only available subject to RAC project requirements.                  	10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	10
+Shared filesystem storage (TB)                                                                                                  	10                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               	10
+Default duration                                                                                                                	1  yearThis is to align with the RAC allocation period of April-March., with 1 month wall-time                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   	1 year (renewable)
+Default renewal                                                                                                                 	April                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            	April
+
+== Requesting RAS ==
+To request RAS, please  fill out this form.
+
+==Notes==
+
+
+================================================================================
 PAGE: Cloud RAS Allocations/en
 URL: https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations/en
 Category: General
@@ -14215,22 +14439,25 @@ Category: General
 
 Firedrake is an automated system for the solution of partial differential equations using the finite element method (FEM).
 
-Please note that every release of Firedrake requires a specific version of PETSc and several other modules or Python wheels.
+Please note that every release of Firedrake requires a specific version of PETSc, several other modules and Python wheels.
 
 = Installation =
 
 Please note that all modules must be loaded before creating and/or activating the Python virtualenv.
 
-== Firedrake 2025.4.2 ==
+3.11.0  pytools2026.1.1  immutabledict
+|pip install --no-index  firedrake[check]2026.4.1
+}}
+The above has been tested with python/3.14, python/3.13, python/3.12 and python/3.11.
 
 2025.2.2  immutabledict
 |pip install --no-index  firedrake[check]2025.4.2
 }}
-
 The above has been tested with both python/3.13 as well as python/3.12.
 
 = Running jobs =
-== Firedrake 2025.4.2 ==
+
+The above has been tested with python/3.14, python/3.13, python/3.12 and python/3.11.
 
 The above has been tested with both python/3.13 as well as python/3.12.
 
@@ -14238,10 +14465,51 @@ The above has been tested with both python/3.13 as well as python/3.12.
 Firedrake has a number of optional dependencies that can be installed into the virtualenv:
 
 * SLEPc and slepc4py are part of the petsc module and always available.
-* netgen: we provide precompiled wheels for ngsPETSc and netgen_mesher.
-* PyTorch: since we provide precompiled precompiled wheels for torch.
-* Jax: since we provide precompiled precompiled wheels for jax.
-* VTK: currently we don't have a module for VTK that supports recent enough versions of Python for Firedrake (Python 3.12 and newer).As a temporary workaround VTK can be installed into the virtualenv with: pip install --no-index --find-links ~stuekero/wheels/vtk vtk==9.4.2 until we install a new VTK module.
+* netgen: We provide precompiled wheels for ngsPETSc and netgen_mesher.
+* PyTorch: We provide precompiled wheels for torch.
+* Jax: We provide precompiled wheels for jax.
+* VTK: The module vtk/9.4.2 is compatible with python/3.14, python/3.13, python/3.12 and python/3.11.
+
+
+================================================================================
+PAGE: Firedrake/en
+URL: https://docs.alliancecan.ca/wiki/Firedrake/en
+Category: General
+================================================================================
+
+
+Firedrake is an automated system for the solution of partial differential equations using the finite element method (FEM).
+
+Please note that every release of Firedrake requires a specific version of PETSc, several other modules and Python wheels.
+
+= Installation =
+
+Please note that all modules must be loaded before creating and/or activating the Python virtualenv.
+
+3.11.0  pytools2026.1.1  immutabledict
+|pip install --no-index  firedrake[check]2026.4.1
+}}
+The above has been tested with python/3.14, python/3.13, python/3.12 and python/3.11.
+
+2025.2.2  immutabledict
+|pip install --no-index  firedrake[check]2025.4.2
+}}
+The above has been tested with both python/3.13 as well as python/3.12.
+
+= Running jobs =
+
+The above has been tested with python/3.14, python/3.13, python/3.12 and python/3.11.
+
+The above has been tested with both python/3.13 as well as python/3.12.
+
+= Optional dependencies =
+Firedrake has a number of optional dependencies that can be installed into the virtualenv:
+
+* SLEPc and slepc4py are part of the petsc module and always available.
+* netgen: We provide precompiled wheels for ngsPETSc and netgen_mesher.
+* PyTorch: We provide precompiled wheels for torch.
+* Jax: We provide precompiled wheels for jax.
+* VTK: The module vtk/9.4.2 is compatible with python/3.14, python/3.13, python/3.12 and python/3.11.
 
 
 ================================================================================
@@ -19852,27 +20120,46 @@ Category: General
 
 =Major upgrade of our Advanced Research Computing infrastructure=
 
-Our Advanced Research Computing infrastructure is undergoing major changes starting in winter 2024-2025, most new systems are now expected to be available to users during summer 2025. These changes will improve High Performance Computing (HPC) and Cloud services for Canadian researchers. This page will be regularly updated to keep you informed of the activities concerning the transition to the new equipment.
+The Advanced Research Computing infrastructure renewal began in winter 2024–2025 and new systems were made available to users throughout 2025 and early 2026. These changes have improved High Performance Computing (HPC) and Cloud services for Canadian researchers. Migration and decommissioning activities remain ongoing for some systems. This page will continue to be updated with information related to the transition.
 
-The infrastructure renewal will replace the nearly 80% of our current equipment that is approaching end-of-life. The new equipment will offer faster processing speeds, greater storage capacity, and improved reliability.
+The infrastructure renewal has replaced nearly 80% of the equipment that had been approaching end-of-life. The new systems provide faster processing speeds, greater storage capacity, and improved reliability.
 
-=New system details=
+=System details=
 
-New System	Old System to be Replaced                                                     	Documentation
-Arbutus   	Cloud (as a virtual infrastructure there is no change to the cloud interface.)	see this page
-Rorqual   	Béluga                                                                        	see this page
-Fir       	Cedar                                                                         	see this page
-Trillium  	Niagara & Mist                                                                	see this page
-Nibi      	Graham                                                                        	see this page
+Documentation	Old System to be Replaced
+Arbutus      	Cloud (as a virtual infrastructure there is no change to the cloud interface.)
+Rorqual      	Béluga
+Fir          	Cedar
+Trillium     	Niagara & Mist
+Nibi         	Graham
 
 =System capacity, reductions and outages =
-During the installation and the transition to the new systems, outages and reductions will be unavoidable due to constraints on space and electrical power.
+During the installation and the transition to the new infrastructure, outages and reductions will be unavoidable due to constraints on space and electrical power.
 We recommend that you consider the possibility of outages when you plan research programs, graduate examinations, etc.
 
 For a list of completed events, please see Infrastructure renewal completed events.
 
-Start Time   	End Time     	Status     	System 	Type           	Description
-January 2026 	June 20, 2026	In Progress	Béluga 	Decommissioning
+Start Time   	End Time       	Status           	System 	Type               	Description
+April 7, 2026	August 31, 2026	Upgrade Completed	Arbutus	Upgrade / Migration
+
+The upgraded Arbutus Cloud is now in production and available to RAC 2026–2027 recipients.
+
+Actions Required
+* Both RAC recipients and RAS users with a 2025–2026 allocation on legacy Arbutus are responsible for migrating existing resources before August 31, 2026.
+* Migration may begin as soon as access to the new Arbutus Cloud is available.
+* 2025–2026 RAC allocations will remain active on legacy Arbutus during the migration period.
+* Projects with existing Arbutus RAS Cloud allocations must submit a request to cloud@tech.alliancecan.ca to be added to the provisioning queue. Provisioning is performed in bulk and delays may occur before access is available.
+
+What’s Different
+* The new Arbutus Cloud introduces single sign-on (SSO) authentication with multi-factor authentication (MFA).
+* Users must select “Authenticate using Digital Research Alliance of Canada” when logging in.
+
+Documentation
+* Arbutus Migration Guide
+* Multifactor Authentication
+
+For access: Arbutus Cloud
+January 2026 	June 20, 2026  	Completed        	Béluga 	End of Service
 The Béluga compute service, which was stopped with the deployment of Rorqual, will not return to service. No restoration or reactivation is planned.
 
 Storage shutdown
@@ -19886,22 +20173,22 @@ will be reduced to allow data deletion or archiving only. This provides a six-mo
 
 Note
 *Béluga Cloud (`beluga-cloud`) is a separate infrastructure and is not impacted by the decommissioning of the Béluga compute cluster.
-Sept 30, 2025	Ongoing      	In Progress	Niagara	End of Service
+Sept 30, 2025	Sept 30, 2025  	Completed        	Niagara	End of Service
 On September 30, 2025, the Niagara compute cluster was retired.
 
 For migration guidance, see: Transition from Niagara to Trillium.
-Sept 16, 2025	Ongoing      	In Progress	Mist   	End of Service
+Sept 16, 2025	Sept 30, 2025  	Completed        	Mist   	End of Service
 On September 16, 2025, the Mist compute cluster was retired.
 
 Please transition new work to Trillium. See: Trillium Quickstart.
-Sept 12, 2025	Ongoing      	In Progress	Cedar  	End of Service
+Sept 12, 2025	Sept 12, 2025  	Completed        	Cedar  	End of Service
 On September 12, 2025, the Cedar compute cluster was retired.
 
 Data Access
 *Files stored on Cedar are already available on Fir because the two clusters share the same file systems. No action is required regarding your stored files.
 
 Starting September 12, please submit your jobs to another cluster on our new national infrastructure, including Fir.
-Sept 1, 2025 	Ongoing      	In Progress	Graham 	End of Service
+Sept 1, 2025 	Sept 2, 2025   	Completed        	Graham 	End of Service
 On September 1, 2025, the Graham compute cluster was retired.
 
 Data Access
@@ -19974,27 +20261,46 @@ Category: General
 
 =Major upgrade of our Advanced Research Computing infrastructure=
 
-Our Advanced Research Computing infrastructure is undergoing major changes starting in winter 2024-2025, most new systems are now expected to be available to users during summer 2025. These changes will improve High Performance Computing (HPC) and Cloud services for Canadian researchers. This page will be regularly updated to keep you informed of the activities concerning the transition to the new equipment.
+The Advanced Research Computing infrastructure renewal began in winter 2024–2025 and new systems were made available to users throughout 2025 and early 2026. These changes have improved High Performance Computing (HPC) and Cloud services for Canadian researchers. Migration and decommissioning activities remain ongoing for some systems. This page will continue to be updated with information related to the transition.
 
-The infrastructure renewal will replace the nearly 80% of our current equipment that is approaching end-of-life. The new equipment will offer faster processing speeds, greater storage capacity, and improved reliability.
+The infrastructure renewal has replaced nearly 80% of the equipment that had been approaching end-of-life. The new systems provide faster processing speeds, greater storage capacity, and improved reliability.
 
-=New system details=
+=System details=
 
-New System	Old System to be Replaced                                                     	Documentation
-Arbutus   	Cloud (as a virtual infrastructure there is no change to the cloud interface.)	see this page
-Rorqual   	Béluga                                                                        	see this page
-Fir       	Cedar                                                                         	see this page
-Trillium  	Niagara & Mist                                                                	see this page
-Nibi      	Graham                                                                        	see this page
+Documentation	Old System to be Replaced
+Arbutus      	Cloud (as a virtual infrastructure there is no change to the cloud interface.)
+Rorqual      	Béluga
+Fir          	Cedar
+Trillium     	Niagara & Mist
+Nibi         	Graham
 
 =System capacity, reductions and outages =
-During the installation and the transition to the new systems, outages and reductions will be unavoidable due to constraints on space and electrical power.
+During the installation and the transition to the new infrastructure, outages and reductions will be unavoidable due to constraints on space and electrical power.
 We recommend that you consider the possibility of outages when you plan research programs, graduate examinations, etc.
 
 For a list of completed events, please see Infrastructure renewal completed events.
 
-Start Time   	End Time     	Status     	System 	Type           	Description
-January 2026 	June 20, 2026	In Progress	Béluga 	Decommissioning
+Start Time   	End Time       	Status           	System 	Type               	Description
+April 7, 2026	August 31, 2026	Upgrade Completed	Arbutus	Upgrade / Migration
+
+The upgraded Arbutus Cloud is now in production and available to RAC 2026–2027 recipients.
+
+Actions Required
+* Both RAC recipients and RAS users with a 2025–2026 allocation on legacy Arbutus are responsible for migrating existing resources before August 31, 2026.
+* Migration may begin as soon as access to the new Arbutus Cloud is available.
+* 2025–2026 RAC allocations will remain active on legacy Arbutus during the migration period.
+* Projects with existing Arbutus RAS Cloud allocations must submit a request to cloud@tech.alliancecan.ca to be added to the provisioning queue. Provisioning is performed in bulk and delays may occur before access is available.
+
+What’s Different
+* The new Arbutus Cloud introduces single sign-on (SSO) authentication with multi-factor authentication (MFA).
+* Users must select “Authenticate using Digital Research Alliance of Canada” when logging in.
+
+Documentation
+* Arbutus Migration Guide
+* Multifactor Authentication
+
+For access: Arbutus Cloud
+January 2026 	June 20, 2026  	Completed        	Béluga 	End of Service
 The Béluga compute service, which was stopped with the deployment of Rorqual, will not return to service. No restoration or reactivation is planned.
 
 Storage shutdown
@@ -20008,22 +20314,22 @@ will be reduced to allow data deletion or archiving only. This provides a six-mo
 
 Note
 *Béluga Cloud (`beluga-cloud`) is a separate infrastructure and is not impacted by the decommissioning of the Béluga compute cluster.
-Sept 30, 2025	Ongoing      	In Progress	Niagara	End of Service
+Sept 30, 2025	Sept 30, 2025  	Completed        	Niagara	End of Service
 On September 30, 2025, the Niagara compute cluster was retired.
 
 For migration guidance, see: Transition from Niagara to Trillium.
-Sept 16, 2025	Ongoing      	In Progress	Mist   	End of Service
+Sept 16, 2025	Sept 30, 2025  	Completed        	Mist   	End of Service
 On September 16, 2025, the Mist compute cluster was retired.
 
 Please transition new work to Trillium. See: Trillium Quickstart.
-Sept 12, 2025	Ongoing      	In Progress	Cedar  	End of Service
+Sept 12, 2025	Sept 12, 2025  	Completed        	Cedar  	End of Service
 On September 12, 2025, the Cedar compute cluster was retired.
 
 Data Access
 *Files stored on Cedar are already available on Fir because the two clusters share the same file systems. No action is required regarding your stored files.
 
 Starting September 12, please submit your jobs to another cluster on our new national infrastructure, including Fir.
-Sept 1, 2025 	Ongoing      	In Progress	Graham 	End of Service
+Sept 1, 2025 	Sept 2, 2025   	Completed        	Graham 	End of Service
 On September 1, 2025, the Graham compute cluster was retired.
 
 Data Access
@@ -28880,7 +29186,11 @@ Category: General
 ================================================================================
 
 
-Ensuring that your jobs make efficient use of the resources that are assigned to them is an important part of being a responsible user. This is particularly true when you are using a new program or have made some other substantial change in the work being done by your job. This page describes a variety of different methods for evaluating the efficiency of jobs, both currently running jobs and those which have finished.
+Ensuring that your jobs make efficient use of the resources that are assigned to them is an important part of being a responsible user. This is particularly true when you are using a new program or have made some other substantial change in the work being done by your job.
+
+The best tool for examining job performance is the Metrix web service or "portal" for each cluster.  Please see Metrix for a description of the tool and a list of URLs.
+
+The remainder of this page describes other methods for evaluating the efficiency of jobs.
 
 === Current jobs ===
 
@@ -37483,7 +37793,7 @@ Category: General
 ================================================================================
 
 
-Below is the list of resources available for the Resource Allocation Competition 2026.
+Below is the list of resources available for the Resource Allocation Competition 2027.
 
 Resources in the clusters and in the cloud are organized by subsystems. Each subsystem will only show the resources that it has available. For example, the trillium-storage subsystem will only show /project storage as /nearline storage is available in the hpss-storage subsystem; trillium-compute will only show CPU (and memory), etc.
 
@@ -37496,8 +37806,65 @@ Arbutus cloud   	arbutus-dcache               	dCache storage                   
 Rorqual cluster 	rorqual-compute              	CPU                                                                                                                                             	No
 Rorqual cluster 	rorqual-gpu                  	GPU                                                                                                                                             	No
 Rorqual cluster 	rorqual-storage              	Project storage, Nearline storage                                                                                                               	Yes
-Béluga cloud    	beluga-compute-cloud         	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage                                                  	No
-Béluga cloud    	beluga-persistent-cloud      	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage                                                  	No
+Fir cluster     	fir-compute                  	CPU                                                                                                                                             	No
+Fir cluster     	fir-gpu                      	GPU                                                                                                                                             	No
+Fir cluster     	fir-storage                  	Project storage, Nearline storage, dCache storage                                                                                               	Yes
+Fir cloud       	fir-persistent-cloud         	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage, object storage                                  	No
+Fir cloud       	fir-compute-cloud            	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage, object storage                                  	No
+Nibi cluster    	nibi-compute                 	CPU                                                                                                                                             	No
+Nibi cluster    	nibi-gpu                     	GPU                                                                                                                                             	No
+Nibi cluster    	nibi-storage                 	Project storage, Nearline storage, dCache storage                                                                                               	Yes
+Nibi cloud      	nibi-persistent-cloud        	VCPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage                                                  	No
+Narval cluster  	narval-compute               	CPU                                                                                                                                             	No
+Narval cluster  	narval-gpu                   	GPU                                                                                                                                             	No
+Narval cluster  	narval-storage               	Project storage                                                                                                                                 	Yes
+Trillium cluster	trillium-compute             	CPU                                                                                                                                             	No
+Trillium cluster	trillium-gpu                 	GPU                                                                                                                                             	No
+Trillium cluster	trillium-storage             	Project storage                                                                                                                                 	Yes
+HPSS            	hpss-storage                 	Nearline storage                                                                                                                                	No
+
+* The shared filesystem storage is backed up.
+
+== How to request resources in the online RAC application form ==
+On the CCDB portal, go to the Resource Request section of the corresponding Resources for Research Groups (RRG) or Research Platforms and Portals (RPP) online application form.
+
+The dropdown menu under New resource request will show the list of all systems and subsystems with the corresponding resources available for allocation. To indicate that your request can be allocated in any resource and that you do not have a preference for a particular one, please check the option "I have to select a system but I don’t mind receiving an allocation on any other suitable one" in the Reason for selecting system section.
+
+1. Requesting HPC resources: compute and storage resources are shown as different subsystems on CCDB following this convention:
+
+* system-compute (e.g. rorqual-compute): select these to request CPU resources. Please pay special attention to your memory requirements as this will be taken into account for final allocations.
+* system-gpu (e.g. rorqual-gpu): select these to request GPU resources.
+* system-storage (e.g. rorqual-storage): select these to request storage resources on a particular system. Each subsystem will only show the storage resources (/project, /nearline, etc.) available for that particular subsystem.
+
+For example, if you want to request both CPU resources and /project storage resources on the Rorqual cluster, you will have to fill in two separate requests: one with the rorqual-compute subsystem for core years and memory, and another one with the rorqual-storage subsystem for /project storage (in TB).
+
+2. Requesting Cloud resources: If you need to request cloud resources in more than one location, then you will have to make one request for each location. On CCDB, cloud resources follow this convention:
+
+* system-compute-cloud or system-persistent-cloud: you can select compute or persistent VMs on the Arbutus, Fir and Béluga clouds, but only persistent VMs on the NIbi cloud. Each cloud resource will only show the specific "flavours" of VMs available for that particular site.
+
+Please email allocations@tech.alliancecan.ca with any questions on how to request resources.
+
+
+================================================================================
+PAGE: RAC available resources
+URL: https://docs.alliancecan.ca/wiki/RAC_available_resources
+Category: General
+================================================================================
+
+
+Below is the list of resources available for the Resource Allocation Competition 2027.
+
+Resources in the clusters and in the cloud are organized by subsystems. Each subsystem will only show the resources that it has available. For example, the trillium-storage subsystem will only show /project storage as /nearline storage is available in the hpss-storage subsystem; trillium-compute will only show CPU (and memory), etc.
+
+Important: There should be no discrepancies between the resources requested in the document attached to your application and the online form. In case of discrepancy, what is requested in the online form will prevail.
+
+System          	Sub-system (as shown on CCDB)	Available resources for each sub-system                                                                                                         	Backup storage?
+Arbutus cloud   	arbutus-compute-cloud        	VCPU, VGPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage, shared filesystem storage*, object storage	No
+Arbutus cloud   	arbutus-persistent-cloud     	VCPU, VGPU, RAM, local ephemeral disk, volumes, snapshots, floating IPs, volume and snapshot storage, shared filesystem storage*, object storage	No
+Arbutus cloud   	arbutus-dcache               	dCache storage                                                                                                                                  	No
+Rorqual cluster 	rorqual-compute              	CPU                                                                                                                                             	No
+Rorqual cluster 	rorqual-gpu                  	GPU                                                                                                                                             	No
+Rorqual cluster 	rorqual-storage              	Project storage, Nearline storage                                                                                                               	Yes
 Fir cluster     	fir-compute                  	CPU                                                                                                                                             	No
 Fir cluster     	fir-gpu                      	GPU                                                                                                                                             	No
 Fir cluster     	fir-storage                  	Project storage, Nearline storage, dCache storage                                                                                               	Yes
@@ -38114,15 +38481,15 @@ Event                                   	Date
 Resources for Research Groups (RRG)
 * Including Fast Track applications
 Research Platforms and Portals (RPP)
-* Including RPP Annual Progress Reports	September 23 to November 4, 2025, until 11:59 PM (EST)
+* Including RPP Annual Progress Reports	September 23 to November 3, 2026, until 11:59 PM (EST)
 (extension of this deadline is not possible)
-RAC general overview information session	September 24 (English) – Presentation, Recording
-RAC general overview information session	September 29 (French) – Presentation, Recording
-Information session about GPU requests  	October 1 (English) - Presentation, Recording
-Information session about GPU requests  	October 2 (French) - Presentation, Recording
-Information session about Cloud requests	October 3 (English) - Presentation, Recording
-Announcement of RAC results             	Late March 2026
-Start of allocations                    	Early April 2026
+RAC general overview information session	September 22 (English) – Register
+RAC general overview information session	September 24 (French) – Register
+Information session about GPU requests  	September 25 (French) - Register
+Information session about GPU requests  	September 28 (English) - Register
+Information session about Cloud requests	TBC
+Announcement of RAC results             	Late March 2027
+Start of allocations                    	Early April 2027
 
 = Useful RAC documentation =
 
@@ -38131,11 +38498,51 @@ Start of allocations                    	Early April 2026
 ** Annual RPP progress report guide
 * Available resources
 * RAC FAQ
-* CCV submission guide
 * Rapid Access Service
 
 = Past competitions =
-To view the annual reports with the results of past RAC rounds, please visit this page.
+To view the annual reports with the results of past RAC rounds, including the list of awards, please visit this page.
+
+
+================================================================================
+PAGE: Resource Allocation Competition
+URL: https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition
+Category: General
+================================================================================
+
+
+The Resource Allocation Competition (RAC) enables faculty members and their research groups to access compute, storage and cloud resources beyond what can be obtained via the Rapid Access Service (RAS).
+
+If you are not sure about which application process is best for your project, please email allocations@tech.alliancecan.ca.
+
+You may also wish to consult the RAC Frequently Asked Questions and Technical Glossary.
+= Key dates =
+
+Event                                   	Date
+Resources for Research Groups (RRG)
+* Including Fast Track applications
+Research Platforms and Portals (RPP)
+* Including RPP Annual Progress Reports	September 23 to November 3, 2026, until 11:59 PM (EST)
+(extension of this deadline is not possible)
+RAC general overview information session	September 22 (English) – Register
+RAC general overview information session	September 24 (French) – Register
+Information session about GPU requests  	September 25 (French) - Register
+Information session about GPU requests  	September 28 (English) - Register
+Information session about Cloud requests	TBC
+Announcement of RAC results             	Late March 2027
+Start of allocations                    	Early April 2027
+
+= Useful RAC documentation =
+
+* RAC Application Guide (for RRG and RPP full applications)
+** Fast Track application guide
+** Annual RPP progress report guide
+* Available resources
+* RAC FAQ
+* Rapid Access Service
+
+= Past competitions =
+To view the annual reports with the results of past RAC rounds, including the list of awards, please visit this page.
 
 
 ================================================================================
@@ -40264,7 +40671,7 @@ Once you are finished using the remote desktop you may stop the vncserver with:
 
 
 ================================================================================
-PAGE: Sharing data
+PAGE: Sharing data/en
 URL: https://docs.alliancecan.ca/wiki/Sharing_data/en
 Category: General
 ================================================================================
@@ -40424,22 +40831,22 @@ $ setfacl -m u:smithj:rx my_script.py
 
 To allow read and write access to a single user in a whole subdirectory, including new files created in it, you can run the following commands:
 
-$ setfacl -d -m u:smithj:rwX /home//projects/def-/shared_data
-$ setfacl -R -m u:smithj:rwX /home//projects/def-/shared_data
+$ setfacl -d -m u:smithj:rwX /project/def-/shared_data
+$ setfacl -R -m u:smithj:rwX /project/def-/shared_data
 
 ; Note: The X attribute above (compared to x) sets the execute permission only when the item is already executable (either a directory or a file with the execute permission). A directory needs the execute permission to allow it to be browsed.
 
-The first command sets default access rules to directory /home//projects/def-/shared_data, so any file or directory created within it will inherit the same ACL rule. It is required for new data. The second command sets ACL rules to directory /home//projects/def-/shared_data and all its content currently in it. So it is applicable only to existing data.
+The first command sets default access rules to directory /project/def-/shared_data, so any file or directory created within it will inherit the same ACL rule. It is required for new data. The second command sets ACL rules to directory /project/def-/shared_data and all its content currently in it. So it is applicable only to existing data.
 
 In order for this method to work the following things need to be in place:
-* The directory, /home/smithj/projects/def-smithj/shared_data in our example, must be owned by you.
-* Parent directories (and parents of parents, etc.) of the one you are trying to share must allow execute permission to the user you are trying to share with. This can be supplied with setfacl -m u:smithj:X ... in this example, or it can be supplied by allowing everyone entry, i.e. chmod o+x .... They do not need to have public read permission. In particular you will need to grant execute permission on the project directory (/projects/def-) either for everyone, or one-by-one to all the people you are trying to share your data with.
+* The directory, /project/def-smithj/shared_data in our example, must be owned by you.
+* Parent directories (and parents of parents, etc.) of the one you are trying to share must allow execute permission to the user you are trying to share with. This can be supplied with setfacl -m u:smithj:X ... in this example, or it can be supplied by allowing everyone entry, i.e. chmod o+x .... They do not need to have public read permission. In particular you will need to grant execute permission on the project directory (/project/def-) either for everyone, or one-by-one to all the people you are trying to share your data with.
 * When sharing a directory in the project filesystem, you must provide your collaborators with a path that starts with /project, not with /home//projects. The latter contains symbolic links (symlinks, or shortcuts) to the physical directories in /project, and these symlinks will not be reachable by your collaborators unless they also have access to your home directory. You can get the physical path a symlink points to using the realpath command. For example, realpath /home/smithj/projects/def-smithj/shared_data could return /project/9041430/shared_data. The physical path to a project directory is not the same on all clusters. If you wish to share a project directory on more than one cluster, check its physical path with realpath on each cluster.
 
 ==== Removing ACL ====
 To remove all extended ACL attributes from a directory recursively, use:
 
-setfacl -bR /home//projects/def-/shared_data
+setfacl -bR /project/def-/shared_data
 
 === Data sharing groups ===
 
@@ -40470,8 +40877,8 @@ $ setfacl -m g:wg_datasharing:X /project/def-/
 
 Finally, you can add your group to the ACL for the directory you are trying to share. The commands parallel those needed to share with an individual:
 
-$ setfacl -d -m g:wg-datasharing:rwx /home//projects/def-/shared_data
-$ setfacl -R -m g:wg-datasharing:rwx /home//projects/def-/shared_data
+$ setfacl -d -m g:wg-datasharing:rwx /project/def-/shared_data
+$ setfacl -R -m g:wg-datasharing:rwx /project/def-/shared_data
 
 ==Troubleshooting==
 

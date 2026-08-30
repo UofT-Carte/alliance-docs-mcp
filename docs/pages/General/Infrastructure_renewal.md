@@ -2,34 +2,53 @@
 title: "Infrastructure renewal"
 url: "https://docs.alliancecan.ca/wiki/Infrastructure_renewal"
 category: "General"
-last_modified: "2026-01-11T11:54:26Z"
+last_modified: "2026-08-24T15:46:56Z"
 page_id: 26380
 display_title: "Infrastructure renewal"
 ---
 
 =Major upgrade of our Advanced Research Computing infrastructure=
 
-Our Advanced Research Computing infrastructure is undergoing major changes starting in winter 2024-2025, most new systems are now expected to be available to users during summer 2025. These changes will improve High Performance Computing (HPC) and Cloud services for Canadian researchers. This page will be regularly updated to keep you informed of the activities concerning the transition to the new equipment.
+The Advanced Research Computing infrastructure renewal began in winter 2024–2025 and new systems were made available to users throughout 2025 and early 2026. These changes have improved High Performance Computing (HPC) and Cloud services for Canadian researchers. Migration and decommissioning activities remain ongoing for some systems. This page will continue to be updated with information related to the transition.
 
-The infrastructure renewal will replace the nearly 80% of our current equipment that is approaching end-of-life. The new equipment will offer faster processing speeds, greater storage capacity, and improved reliability.
+The infrastructure renewal has replaced nearly 80% of the equipment that had been approaching end-of-life. The new systems provide faster processing speeds, greater storage capacity, and improved reliability.
 
-=New system details=
+=System details=
 
-New System	Old System to be Replaced                                                     	Documentation
-Arbutus   	Cloud (as a virtual infrastructure there is no change to the cloud interface.)	see this page
-Rorqual   	Béluga                                                                        	see this page
-Fir       	Cedar                                                                         	see this page
-Trillium  	Niagara & Mist                                                                	see this page
-Nibi      	Graham                                                                        	see this page
+Documentation	Old System to be Replaced
+Arbutus      	Cloud (as a virtual infrastructure there is no change to the cloud interface.)
+Rorqual      	Béluga
+Fir          	Cedar
+Trillium     	Niagara & Mist
+Nibi         	Graham
 
 =System capacity, reductions and outages =
-During the installation and the transition to the new systems, outages and reductions will be unavoidable due to constraints on space and electrical power.
+During the installation and the transition to the new infrastructure, outages and reductions will be unavoidable due to constraints on space and electrical power.
 We recommend that you consider the possibility of outages when you plan research programs, graduate examinations, etc.
 
 For a list of completed events, please see Infrastructure renewal completed events.
 
-Start Time   	End Time     	Status     	System 	Type           	Description
-January 2026 	June 20, 2026	In Progress	Béluga 	Decommissioning
+Start Time   	End Time       	Status           	System 	Type               	Description
+April 7, 2026	August 31, 2026	Upgrade Completed	Arbutus	Upgrade / Migration
+
+The upgraded Arbutus Cloud is now in production and available to RAC 2026–2027 recipients.
+
+Actions Required
+* Both RAC recipients and RAS users with a 2025–2026 allocation on legacy Arbutus are responsible for migrating existing resources before August 31, 2026.
+* Migration may begin as soon as access to the new Arbutus Cloud is available.
+* 2025–2026 RAC allocations will remain active on legacy Arbutus during the migration period.
+* Projects with existing Arbutus RAS Cloud allocations must submit a request to cloud@tech.alliancecan.ca to be added to the provisioning queue. Provisioning is performed in bulk and delays may occur before access is available.
+
+What’s Different
+* The new Arbutus Cloud introduces single sign-on (SSO) authentication with multi-factor authentication (MFA).
+* Users must select “Authenticate using Digital Research Alliance of Canada” when logging in.
+
+Documentation
+* Arbutus Migration Guide
+* Multifactor Authentication
+
+For access: Arbutus Cloud
+January 2026 	June 20, 2026  	Completed        	Béluga 	End of Service
 The Béluga compute service, which was stopped with the deployment of Rorqual, will not return to service. No restoration or reactivation is planned.
 
 Storage shutdown
@@ -43,22 +62,22 @@ will be reduced to allow data deletion or archiving only. This provides a six-mo
 
 Note
 *Béluga Cloud (`beluga-cloud`) is a separate infrastructure and is not impacted by the decommissioning of the Béluga compute cluster.
-Sept 30, 2025	Ongoing      	In Progress	Niagara	End of Service
+Sept 30, 2025	Sept 30, 2025  	Completed        	Niagara	End of Service
 On September 30, 2025, the Niagara compute cluster was retired.
 
 For migration guidance, see: Transition from Niagara to Trillium.
-Sept 16, 2025	Ongoing      	In Progress	Mist   	End of Service
+Sept 16, 2025	Sept 30, 2025  	Completed        	Mist   	End of Service
 On September 16, 2025, the Mist compute cluster was retired.
 
 Please transition new work to Trillium. See: Trillium Quickstart.
-Sept 12, 2025	Ongoing      	In Progress	Cedar  	End of Service
+Sept 12, 2025	Sept 12, 2025  	Completed        	Cedar  	End of Service
 On September 12, 2025, the Cedar compute cluster was retired.
 
 Data Access
 *Files stored on Cedar are already available on Fir because the two clusters share the same file systems. No action is required regarding your stored files.
 
 Starting September 12, please submit your jobs to another cluster on our new national infrastructure, including Fir.
-Sept 1, 2025 	Ongoing      	In Progress	Graham 	End of Service
+Sept 1, 2025 	Sept 2, 2025   	Completed        	Graham 	End of Service
 On September 1, 2025, the Graham compute cluster was retired.
 
 Data Access
