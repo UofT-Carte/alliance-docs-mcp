@@ -1,9 +1,9 @@
 ---
-title: "ORCA/en"
-url: "https://docs.alliancecan.ca/wiki/ORCA/en"
+title: "ORCA"
+url: "https://docs.alliancecan.ca/wiki/ORCA"
 category: "General"
-last_modified: "2025-03-11T18:18:52Z"
-page_id: 4592
+last_modified: "2026-09-03T14:39:46Z"
+page_id: 4567
 display_title: "ORCA"
 ---
 
@@ -14,8 +14,7 @@ ORCA is a flexible, efficient and easy-to-use general-purpose tool for quantum c
 If you wish to use prebuilt ORCA executables:
 # You have to register at https://orcaforum.kofo.mpg.de/.
 # You will receive a first email to verify the email address and activate the account. Follow the instructions in that email.
-# Once the registration is complete, you will get a second email stating that the "registration for ORCA download and usage has been completed".
-#  Contact us requesting access to ORCA with a copy of the second email.
+# Once the registration is complete,  Contact us requesting access to ORCA with a copy of the first email.
 
 == ORCA versions ==
 
@@ -67,7 +66,7 @@ For a general discussion about submitting jobs, see Running jobs.
 
 NOTE: If you run into MPI errors with some of the ORCA executables, you can try to define the following variables:
 
- export OMPI_MCA_mtl='^mxm'
+export OMPI_MCA_mtl='^mxm'
  export OMPI_MCA_pml='^yalla'
 
 The following is a job script to run ORCA using MPI. Note that, unlike most MPI programs, ORCA is not started with a parallel launch command such as mpirun or srun, but requires the full path to the program, which is given by $EBROOTORCA.

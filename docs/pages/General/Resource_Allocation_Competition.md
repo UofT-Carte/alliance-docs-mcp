@@ -2,7 +2,7 @@
 title: "Resource Allocation Competition"
 url: "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition"
 category: "General"
-last_modified: "2026-08-28T15:29:07Z"
+last_modified: "2026-09-01T15:39:54Z"
 page_id: 29477
 display_title: "Resource Allocation Competition"
 ---
@@ -24,7 +24,7 @@ RAC general overview information session	September 22 (English) – Register
 RAC general overview information session	September 24 (French) – Register
 Information session about GPU requests  	September 25 (French) - Register
 Information session about GPU requests  	September 28 (English) - Register
-Information session about Cloud requests	TBC
+Information session about Cloud requests	October 1 (English) -  Register
 Announcement of RAC results             	Late March 2027
 Start of allocations                    	Early April 2027
 

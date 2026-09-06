@@ -1,9 +1,9 @@
 ---
-title: "RAC available resources"
-url: "https://docs.alliancecan.ca/wiki/RAC_available_resources"
+title: "RAC available resources/en"
+url: "https://docs.alliancecan.ca/wiki/RAC_available_resources/en"
 category: "General"
-last_modified: "2026-08-26T12:52:58Z"
-page_id: 29481
+last_modified: "2026-08-27T13:56:23Z"
+page_id: 29764
 display_title: "RAC available resources"
 ---
 

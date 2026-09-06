@@ -1,14 +1,14 @@
 ---
-title: "RPP Annual Progress Report Guidelines/en"
-url: "https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines/en"
+title: "RPP Annual Progress Report Guidelines"
+url: "https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines"
 category: "User Guide"
-last_modified: "2025-09-09T16:07:01Z"
-page_id: 29749
+last_modified: "2026-09-01T10:57:48Z"
+page_id: 29480
 display_title: "RPP Annual Progress Report Guidelines"
 ---
 
 Application process       	Start             	Deadline
-RPP Annual Progress Report	September 23, 2025	November 4, 2025, at 11:59 p.m. Eastern Standard Time
+RPP Annual Progress Report	September 23, 2026	November 3, 2026, at 11:59 p.m. Eastern Standard Time
 
 Extension of this deadline is not possible.
 
@@ -25,7 +25,7 @@ The report also provides an opportunity for projects to identify any issues they
 == Information Requested in the RPP Progress Report Online Form ==
 In the online form on CCDB, PIs with awarded multi-year RPPs will be asked to answer the questions listed below. The form also allows PIs to attach a document (PDF format only) if needed.
 
-The reporting period is August 8 to October 8, 2025.
+The reporting period is April 1 to October 1, 2026.
 
 Q1. Operational status
 
@@ -99,7 +99,11 @@ The progress report is reviewed by Federation staff. Particular items considered
 == Acceptable changes ==
 Some changes to projected resources are allowed in the annual RPP Progress Report without having to submit a new application. These changes include:
 
-* A 10% increase of PROJECT, NEARLINE and/or dCache storage, up to a maximum of 50 TB of additional storage based on the amount requested in your RPP application. The additional storage resources requested may be fully, partially or not allocated based on resource constraints and storage utilization information.
-* A 10% increase in compute and storage cloud resources;
+* increasing up to 10% of the amount of CPU, GPU, storage or cloud originally requested for the current competition period (all requests for an increase are subject to review and are dependent on capacity constraints, so they are not guaranteed);
+* moving an allocation from one system to another;
+* splitting an existing allocation into up to two systems;
+* consolidating allocations on multiple systems into one location;
+* decreasing an allocation;
+* terminating an allocation (if no longer needed).
 
 * PIs are encouraged to inform us if their projects require fewer quantities than originally requested so that limited resources can be redistributed to ensure optimal utilization.

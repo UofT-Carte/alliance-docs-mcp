@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-08-30T10:52:19.724497+00:00
-# Total pages: 467
+# Generated: 2026-09-06T09:53:16.916795+00:00
+# Total pages: 469
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -283,6 +283,7 @@
 - Nibi/en (General): https://docs.alliancecan.ca/wiki/Nibi/en
 - Nvprof (General): https://docs.alliancecan.ca/wiki/Nvprof
 - ORCA (General): https://docs.alliancecan.ca/wiki/ORCA/en
+- ORCA (General): https://docs.alliancecan.ca/wiki/ORCA
 - Octave (General): https://docs.alliancecan.ca/wiki/Octave
 - Open Babel (General): https://docs.alliancecan.ca/wiki/Open_Babel/en
 - Open OnDemand (General): https://docs.alliancecan.ca/wiki/Open_OnDemand
@@ -340,13 +341,14 @@
 - RAC FAQ/en (General): https://docs.alliancecan.ca/wiki/RAC_FAQ/en
 - RAC Fast Track Application Guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en
 - RAC application guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_application_guide/en
-- RAC available resources (General): https://docs.alliancecan.ca/wiki/RAC_available_resources/en
 - RAC available resources (General): https://docs.alliancecan.ca/wiki/RAC_available_resources
+- RAC available resources/en (General): https://docs.alliancecan.ca/wiki/RAC_available_resources/en
 - RAC transition FAQ (General): https://docs.alliancecan.ca/wiki/RAC_transition_FAQ/en
 - RAPIDS (Technical Reference): https://docs.alliancecan.ca/wiki/RAPIDS/en
 - RDKit (General): https://docs.alliancecan.ca/wiki/RDKit/en
 - README files (General): https://docs.alliancecan.ca/wiki/README_files/en
 - RPP Annual Progress Report Guidelines (User Guide): https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines/en
+- RPP Annual Progress Report Guidelines (User Guide): https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines
 - Rapid Access Service (Technical Reference): https://docs.alliancecan.ca/wiki/Rapid_Access_Service/en
 - Ray (General): https://docs.alliancecan.ca/wiki/Ray
 - Recent changes to the software environment (General): https://docs.alliancecan.ca/wiki/Recent_changes_to_the_software_environment
