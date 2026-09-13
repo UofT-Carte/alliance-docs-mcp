@@ -1,9 +1,9 @@
 ---
-title: "Resource Allocation Competition"
-url: "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition"
+title: "Resource Allocation Competition/en"
+url: "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en"
 category: "General"
-last_modified: "2026-09-01T15:39:54Z"
-page_id: 29477
+last_modified: "2026-09-03T14:53:53Z"
+page_id: 29717
 display_title: "Resource Allocation Competition"
 ---
 

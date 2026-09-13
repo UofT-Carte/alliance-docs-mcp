@@ -2,7 +2,7 @@
 title: "Cloud Quick Start/en"
 url: "https://docs.alliancecan.ca/wiki/Cloud_Quick_Start/en"
 category: "General"
-last_modified: "2026-04-09T18:20:04Z"
+last_modified: "2026-09-03T19:03:25Z"
 page_id: 228
 display_title: "Cloud Quick Start"
 ---
@@ -140,21 +140,7 @@ __TOC__
 ==Request access to a Windows image==
 To create a Windows VM on one of our clouds you must first request access to a Windows image by emailing technical support.
 
-You will be provided access to a Windows Server 2012 Evaluation image and a username to use when connecting. The evaluation period is 180 days. It may be possible to apply a Windows license to a running VM created from this evaluation image, however we do not provide these licenses.
-
-==SSH key pair==
-
-Windows VMs encrypt the administrative account password with a public key. The matching private key decrypts the password.
-
-We recommend creating a new key pair within the OpenStack dashboard rather than importing an existing key pair. To create a new key pairː
-#Click on Access & Security from the left menu.
-#Select the Key Pairs tab.
-#Click on ; the Create Key Pair window is displayed.
-#Give your key pair a name.
-#Click Create Key Pair button.
-#Save the .pem file on your local drive.
-
-If you would like to use an existing key pair with your Windows VM see the comments on key pairs below.
+You will be provided access to a Windows Server 2025 Datacenter image and a Windows specific flavor.
 
 ==Launching a VM==
 
@@ -163,44 +149,33 @@ To create a virtual machine, click on the Instances menu item on the left, then 
 A form is displayed where you define your virtual machine.
 
 * Details tab
-** Availability Zone: There is only one zone; do not change its name.
+** Availability Zone: Keep the default option, Any Availability Zone
 ** Instance Name: Enter a name for your virtual machine. For details on naming rules see restrictions on valid host names.
-** Flavor: The flavor defines virtual machine hardware specifications; choose the 'p2-3gb' flavor.The Windows image is quite large and requires a large bootable drive. C-flavors, as described here, only have root drives of 20 GB, choosing a "p" flavor allows for larger root volumes. The smallest "p" flavor has 1.5 GB of RAM and from experience this is too little to run Windows well. Choosing a slightly larger flavor, such as "p2-3gb", improves the performance of the VM.
 ** Instance Count: Number of virtual machines to create.
-** Instance Boot Source: What source should be used to boot the VM; choose Boot from Image (creates new volume).
-** Image Name: select the Windows image name you were provided.
-** Device Size: The size of the root drive; enter 30GB or more. The final operating system occupies approximately 20 GB of space, though more is needed during setup.
-** Delete on Terminate: If this box is checked the volume that is created with the VM will be deleted when the VM is terminated. It is generally recommended not to check this box as the volume can be deleted manually if desired and allows the VM to be terminated without deleting the volume.
-** Project Limits: The green bars reflect the fraction of your available resources that will be consumed by the VM you are about to launch. If the bars become red, the flavor chosen will consume more resources than your project has available. Blue bars indicate any existing resources your project may be using.
+* Source tab
+** Select Boot Source: What source should be used to boot the VM; choose Image.
+** Create New Volume: Keep the default option, Yes.
+** Volume Size: The size of the root drive; enter 50GB or more.
+** Delete Volume on Instance Delete: If Yes is selected the volume that is created with the VM will be deleted when the VM is terminated. It is generally recommended not to delete the volume on instance delete. The volume can be deleted manually if desired and allows the VM to be terminated without deleting the volume.
+** Image Name: select the Windows image name you were provided - e.g., Windows-2025-Datacenter.
+* Flavor tab
+** Flavor: The flavor defines virtual machine hardware specifications; choose the 'p4-15gb-windows' flavor.
 * Access & Security tab
-** Key pair: Select your SSH key pair.If you have only one, it is selected by default. If you do not have a key pair, please see above.
 ** Security Groups: Ensure the default security group is checked.
-* Networking tab: Do not change this now. Networking will be discussed later, after you have launched a virtual machine.
-* Post-Creation tab: Do not change this now.
-* Advanced Options tab: Leave Disk Partition on Automatic for now.
+* Networking tab: Select the IPv4 network - e.g., -network.
 
-Once you have reviewed all the tabs and defined your virtual machine, click on the Launch button and your virtual machine will be created. The Instances list will be displayed and the Task field will show the current task for the VM; it will likely be "Block Device Mapping" initially. Once the VM has spawned and beginning to boot, it will have the Power State of "Running". It will likely take 10+ minutes to finish creating the volume and coping the image to it before beginning to boot.
+Once you have reviewed all the tabs and defined your virtual machine, click on the Launch Instance button and your virtual machine will be created. The Instances list will be displayed and the Task field will show the current task for the VM; it will likely be "Block Device Mapping" initially. Once the VM has spawned and begins to boot, it will have the Power State of "Running". It will likely take 10+ minutes to finish creating the volume and copying the image to it before beginning to boot.
 
-==Locality settings and license agreement==
+==Change the Administrator Password==
 
-When the VM first boots it will not finish booting until location, language, and keyboard settings are selected and you agree to the license using the console built into the OpenStack dashboard.
+When the VM first boots it will not finish booting until you change the Administrator password using the console built into the OpenStack dashboard.
 
 To get to the console:
 # Go to Instances on the left hand menu.
 # Click on the Instance Name of your Windows VM.
-# Click on the Console tab to display the Instance Console and wait until you see a Settings screen as shown in the figure to the right.If you waited a significant amount of time the console screen may have gone into a screensaver mode (blank/black screen). If this is case, click on the blank/black screen so that it gains focus and if necessary press a key on your keyboard to wake it up.
+# Click on the Console tab to display the Instance Console and wait until you see the screen as shown in the figure to the right.If you waited a significant amount of time the console screen may have gone into a screensaver mode (blank/black screen). If this is case, click on the blank/black screen so that it gains focus and if necessary press a key on your keyboard to wake it up.
 
-The console mouse pointer often lags behind the actual mouse pointer location. You can either try to account for the lag or use keyboard shortcuts when the console screen has focus.
-* The tab key will select different fields.
-* The up and down arrows will select different options.
-* Under the Country or region drop down menu, letter keys move to the top of the countries beginning with that letter.
-* Finally press the tab key until the next box is selected then press the enter key.
-
-You will then be presented with a request to accept the terms and conditions of the license agreement.
-* Press the tab key until the I accept box is highlighted.
-* Press the enter key.
-
-At this point your VM will restart. Once it finishes restarting the Console will display a sign in screen with the current (UTC) time and date.
+At this point your VM will continue booting. Once it finishes, the Console will display a Server Manager.
 
 ==Network==
 
@@ -218,7 +193,7 @@ The Manage Floating IP Associations screen is displayed again, indicating the IP
 ===Firewall, add rules to allow RDP===
 To connect to your virtual machine using a remote desktop connection client, you will need to allow access for remote desktop protocol (RDP) to your VM.
 
-#On the Security Groups tab, select Access & Security; on the default row, click
+#On the Security Groups tab, select Access & Security (under Network); on the default row, click
 #On the next screen, click
 #RDP has a predefined rule. Select it in the  Rules dropdown menu and leave CIDR under Remote.
 #Replace the 0.0.0.0/0 in the CIDR text box with /32. If you don't know your current IP address you can see it by going to ipv4.icanhazip.com in your browser. Leaving 0.0.0.0/0 will allow anyone to attempt a connection with your VM. You should never allow completely open access with RDP as your VM will be susceptible to brute force attacks. This replacement will restrict RDP access to your VM only from this IP. If you want to allow access from other IPs you can add additional RDP rules with different IP address or you can specify a range of IP addresses by using this tool to calculate your CIDR rule from a range of IP addresses.If you leave RDP open to the world by leaving the 0.0.0.0/0 in the CIDR text box, a cloud administrator may revoke access to your VM until the security rule is fixed.
@@ -228,27 +203,22 @@ To connect to your virtual machine using a remote desktop connection client, you
 
 To connect to a Windows VM we will use a Remote Desktop Connection client. To connect to your Windows VM you need to supply a floating IP, user name, and password.
 
-===Retrieving the password===
-Open the Retrieve Instance Password form:
-# Go to Instances on the left menu.
-# In the drop down menu next the instance select Retrieve Password.
-
-The password has been encrypted using the public key you selected when creating the VM. To decrypt the password:
-# Click the Choose File button and browse to your private key file. If you followed the steps above in the ssh key section, you should have a private key saved on your local computer with a ".pem" extension which matches the public key.
-# Select the key and click Open.
-# Click the Decrypt Password button at the bottom left.
-
-Keep this form open as we will use the password in the next step. This process can be repeated later to retrieve the password again.
-
 ===From a Windows client===
 Many Windows systems come with the remote desktop connection tool pre-installed. Try searching for "remote desktop connection" in your Windows system search. If you can not find it, you can go to the Microsoft store and install it. It should be a free installation.
 
 Once you have run the remote desktop connection tool you should see a window similar to the one displayed on the right. To connect to your Windows VM:
 # Enter the public IP address next to Computer.
-# Add the user name you were provided with in the User name text box.
+# Add Administrator in the User name text box.
 # Click the Connect button at the bottom.
-# Enter the password retrieved in the previous step when prompted.
+# Enter the password when prompted.
 # Click the OK button.
+
+If you are using the Windows App tool you should see a window similar to the one displayed on the right. To connect to your Windows VM:
+# Select Add from the menu on the left.
+# Enter the public IP address next to PC Name.
+# Click the Add & Connect button at the bottom.
+# Enter the password when prompted.
+#Click the OK button.
 
 You will likely be presented with an alert The identity of the remote computer cannot be verified. Do you want to connect anyway?. This is normal click Yes to continue. Once you connect you should see the desktop of your Windows VM displayed within the RDC window.
 
@@ -261,12 +231,21 @@ Once you have installed and launched Remmina to connect to your Windows VM:
 # Click on Create a new remote desktop file (file with a green '+' sign). You should see a window similar to that shown on the right.
 # Enter the public IP of your Windows VM next to Server.
 # Enter the user name you were provided next to User name.
-# Enter the password you retrieved in the above step next to Password.
+# Enter the password next to Password.
 # Click Connect.
 
 ===From a Mac client===
 
-TODO: Anyone with a Mac want to write up this section?
+To connect via RDP from MacOS you will need a remote desktop client. There are a number of different clients but the Windows App appears to work well. To install the client, go to the App Store and search for “Windows App”
+
+When you have installed and launched Windows App, to connect to your Windows VM:
+# Select Devices from the menu on the left.
+# Select + in the top right corner, and select Add PC.
+# Enter the public IP address next to PC Name.
+# Click the Add button at the bottom.
+# Double click the newly created tile.
+# Enter the username Administrator and the password when prompted.
+# Click the Continue button.
 
 ==License information==
 
@@ -275,40 +254,6 @@ TODO: need to provide information which would be helpful for users to know what 
 * What kind of license do I need/what licenses will work on the cloud
 * How to apply my license to my existing cloud VM
 * How to apply it to a new VM (if that is different than above bullet item)
-
-==Comments on key pairs==
-There are a couple different formats for key files and you can also choose to protect your private keys with passphrases or not. In order to be able to decrypt the Windows VM password your private key must be in OpenSSH format and not have a passphrase. If you created your key pair with OpenStack and downloaded the .pem key file it will already be in the correct format. If you used the ssh-keygen command to create your key pair and didn't specify a passphrase it will also likely be in the correct format. For more general information about key pairs see the SSH Keys page.
-
-An example of an acceptable private key in the OpenSSH format without a passphrase:
-
------BEGIN RSA PRIVATE KEY-----
- MIIEowIBAAKCAQEAvMP5ziiOw9b5XMZUphATDZdnbFPCT0TKZwOI9qRNBJmfeLfe
- ...
- DrzXjRpzmTb4D1+wTG1u7ucpY04Q3KHmX11YJxXcykq4l5jRZTKj
- -----END RSA PRIVATE KEY-----
-
-The ... in the middle indicates multiple lines of characters similar to those above and below it.
-Below are two examples of private keys which will not work with OpenStack with Windows VMs
-
-OpenSSH format with a passphrase:
-
------BEGIN RSA PRIVATE KEY-----
- Proc-Type: 4,ENCRYPTED
- DEK-Info: DES-EDE3-CBC,CA51DBE454ACC89A
-
- 0oXD+6j5aiWIwrNMiGYDqoD0OqlURfKeQhy//FwHuyuithOSI8uwjSUqV9BM9vi1
- ...
- 8XaBb/ALqh8zLQOXEUuTstlMWXnhzBWLvu7tob0QN7pI16g3CXuOag==
- -----END RSA PRIVATE KEY-----
-
-ssh.com format without a passphrase
-
----- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----
- Comment: "rsa-key-20171130"
- P2/56wAAA+wAAAA3aWYtbW9kbntzaWdue3JzYS1wa2NzMS1zaGExfSxlbmNyeXB0e3JzYS
- ...
- QJX/qgGp0=
- ---- END SSH2 ENCRYPTED PRIVATE KEY ----
 
 ==Where to go from here==
 * learn about security considerations when running a VM

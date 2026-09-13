@@ -2,7 +2,7 @@
 title: "Using ipv6 in cloud/en"
 url: "https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en"
 category: "General"
-last_modified: "2023-02-27T21:10:01Z"
+last_modified: "2026-09-08T20:28:46Z"
 page_id: 20575
 display_title: "Using ipv6 in cloud"
 ---
@@ -36,7 +36,7 @@ openstack server list
 | 74be352d-19ca-46cc-9661-7088d2652e34 | test            | ACTIVE  | IPv6-GUA=2607:f8f0:c11:7004:f816:3eff:fef1:8cee; def-bott-network=192.168.27.140, 206.12.93.29 | Debian-10.9.2-Buster-x64-2021-05 | p1-1.5gb |
 +--------------------------------------+-----------------+---------+------------------------------------------------------------------------------------------------+----------------------------------+----------+
 
-=== Example of a Webinterface configuration  ===
+=== Example of a Web interface configuration  ===
 Log in to the dashboard and go to the Instances menu, click on Attach Interface, which will open a dialog.
 Use IPv6-GUA (2607:f8f0:c11:7004::/64) from the network menu and click on Attach.
 
@@ -50,6 +50,24 @@ the GUA is released and put back into the pool and thus, can be used by anyone e
 release the GUA.
 
 Access from any IPv6 GUA can be granted via Security Groups in OpenStack; the only difference is the CIDR which automatically detects the address type.
+
+=== Example of a Debian Instance ===
+When researchers launch an instance with the Debian operating system with the IPv6 network (i.e., IPv6-GUA), the selected SSH key pair will not install successfully. As a result, the researchers cannot ssh into the instance and will receive the following a “Permission Denied” error message instead. To work around the problem, when researchers are launching a new instance, they can create an initial user account by completing the following steps:
+# Go to to the "Configuration" step
+# Add the following script to the "Customization Script". Replace [username] with the researcher's preferred username and [public key] with the user's public key.
+# Select “Configuration Drive”
+
+users:
+  - name: [username]
+    gecos: [username]
+    groups: sudo
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    lock_passwd: true
+    ssh_authorized_keys:
+      - [public key]
+
+ssh_pwauth: false
 
 == Example of a Linux configuration ==
 

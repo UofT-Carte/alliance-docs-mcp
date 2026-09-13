@@ -1,9 +1,9 @@
 ---
-title: "ORCA"
-url: "https://docs.alliancecan.ca/wiki/ORCA"
+title: "ORCA/en"
+url: "https://docs.alliancecan.ca/wiki/ORCA/en"
 category: "General"
-last_modified: "2026-09-03T14:39:46Z"
-page_id: 4567
+last_modified: "2026-09-03T14:39:47Z"
+page_id: 4592
 display_title: "ORCA"
 ---
 
@@ -66,7 +66,7 @@ For a general discussion about submitting jobs, see Running jobs.
 
 NOTE: If you run into MPI errors with some of the ORCA executables, you can try to define the following variables:
 
-export OMPI_MCA_mtl='^mxm'
+ export OMPI_MCA_mtl='^mxm'
  export OMPI_MCA_pml='^yalla'
 
 The following is a job script to run ORCA using MPI. Note that, unlike most MPI programs, ORCA is not started with a parallel launch command such as mpirun or srun, but requires the full path to the program, which is given by $EBROOTORCA.

@@ -2,7 +2,7 @@
 title: "RAC Fast Track Application Guide/en"
 url: "https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en"
 category: "User Guide"
-last_modified: "2025-08-20T15:58:16Z"
+last_modified: "2026-09-03T14:54:24Z"
 page_id: 29995
 display_title: "RAC Fast Track Application Guide"
 ---
@@ -10,57 +10,81 @@ display_title: "RAC Fast Track Application Guide"
 == Key dates ==
 
 Date              	Process
-Mid September 2025	Invitation email sent to eligible PIs
-September 23, 2025	CCDB open for Fast Track submissions
-November 4, 2025  	Deadline to submit Fast Track applications
+Mid September 2026	Invitation email sent to eligible PIs
+September 23, 2026	CCDB open for Fast Track submissions
+November 3, 2026  	Deadline to submit Fast Track applications
 
 (extending this deadline is not possible)
-Late March 2026   	Notification with the results of the competition sent to PIs
-Early April 2026  	Implement new allocations
+Late March 2027   	Notification with the results of the competition sent to PIs
+Early April 2027  	Implement new allocations
 
 == About the Fast Track application process ==
-PIs with an existing RRG award who meet the Fast Track eligibility are allowed to submit a lightweight progress report to renew their request for computational resources.
-* Applying through the Fast Track process DOES NOT guarantee that you will receive the same allocation as last year.
-* The score received in your original RRG application will be reused and your resource request will be scaled using the same function used for all other applications according to demand and supply. This means that the resulting allocation may be scaled by a different factor than last year, which could lead to either an increase or a decrease in allocated resources for your project compared to last year.
+Resources for Research Groups (RRG) projects with at least one active allocation are eligible to apply for continuation of that project through the submission of a lightweight progress report.
 
-== Eligibility Criteria ==
-In order to use the Fast Track process, the previous RRG application must have received a science score greater than 2.0 points (out of 5). This process can be used for no more than two consecutive years for a given application.
+Eligible projects can generally Fast Track for up to 2 consecutive years, after which a new full RRG application must be submitted. Fast Track applications do not receive another scientific review, only a technical review. Note that new Co-PIs cannot be added to a Fast Track application.
 
-If you believe you meet the eligibility criteria, yet did not receive an invitation to Fast Track, please email  allocations@tech.alliancecan.ca.
+An invitation email will be sent to these PIs indicating the maximum amount of resources that their group is allowed to request (plus any acceptable changes as described in the Change request section of this guide). Keep in mind the following regarding the invitation:
 
-== Benefits of the Fast Track Process ==
+* It is intended to confirm eligibility to Fast Track and indicate the maximum amount of resources that can be requested—the invitation is not a guarantee that these resources will be allocated;
+* It gives the opportunity to accept the invitation to Fast Track, or decline it and submit a new full application;
+* It is not a confirmation that a past allocation will be automatically renewed: if a project continues and the need for our computational resources persists, a new application (either a Fast Track or a full application) must be submitted to confirm that the resources are still needed. Failing to do so will result in the expiration of your allocation.
 
-* Lightweight application.
-* No additional peer-review.
-* Can apply through the Fast Track process for up to 2 consecutive years.
+If you have questions, please email allocations@tech.alliancecan.ca.
+
+== Terms of Access for Fast Track applications ==
+By submitting a Fast Track application you understand that
+
+# The general RAC Terms of Access also apply to Fast Track applications.
+# The score provided by the peer-review evaluation of the original RRG application will be reused for scaling and allocation decisions—resource requests will be scaled using the same function used for all other applications. This means that
+## Resource requests may be scaled by a different factor than the previous year, which could lead to an increase or a decrease in resources previously allocated;
+## All change requests will be reviewed: additional resources requested may be fully, partially or not allocated based on factors such as the individual score of the application relative to the average for the entire competition, the total resource demand, the progress reported over the past year, resource constraints, evidence of effective and efficient usage, and the justification for underutilization of an allocation (if applicable).
+## Terminating an allocation is a possibility when resources allocated are underutilized and no reasonable justification is provided, or when the resulting scaled allocation is below what can be obtained by computing opportunistically through the Rapid Access Service (RAS).
 
 == How to apply ==
-Fast Track applications receive a technical review but do not receive another scientific review.
-# Eligible PIs will receive in September an email with an invitation to Fast Track.
-# The Fast Track application form will show by default on CCDB. To start working on it, click on Edit and then Submit when you are ready.
-# To decline the invitation to Fast Track and submit a full RRG application instead, click on Change to RRG. Any information that you have entered in your Fast Track application will be saved, and if you change your mind later on, you can click on Change to Fast Track to continue working on your Fast Track application.
-# If desired, click on Delegate to grant access to another user with an active account with the Alliance, to the application you wish to submit (e.g., RRG, Fast Track, etc.). Note that the delegated user can submit an application on behalf of the PI, but the latter remains responsible for the application submitted and the utilization of the computational resources allocated.
+* The Fast Track application form will show by default on CCDB for eligible PIs. To start working on it, click on Edit and then Submit when you are ready.
+* To decline the invitation to Fast Track and submit a full RRG application instead, click on Change to RRG. Any information that you have entered in your Fast Track application will be saved, and if you change your mind later on, you can click on Change to Fast Track to continue working on your Fast Track application.
+* If desired, click on Delegate to grant access to a user with an active CCDB account
 
-=== Application form ===
-The Fast Track 2026 application form includes the following sections:
+== Information requirements ==
+The online Fast Track form on CCDB includes the following information:
 
-==== Details (required): ====
-* If applicable, provide sufficient justification to any change requested compared to the eligible amount of resources communicated in the invitation email sent to you. While we cannot guarantee the fulfilment of change requests, we will make every effort to make reasonable accommodations. There may also be a general scaling of requests due to oversubscription of resources, if applicable.
-* If applicable, list and describe any issues that you may have had with your allocation; otherwise, enter “No issue to report”.
+=== Change request ===
+Describe any issues that your research group may have had with an allocation. If these issues led to the underutilization of an allocation, provide details in the Justification of underutilization of a resource allocation section.
 
-Acceptable Changes
+The following changes can be requested through the Fast Track application process:
 
-Certain modifications to current allocations are allowed. This includes:
+* increasing up to 10% of the eligible amount of CPU, GPU, storage or cloud indicated in the invitation email (all requests for an increase are subject to review and are dependent on capacity constraints, so they are not guaranteed);
+* moving an allocation from one system to another;
+* splitting an existing allocation into up to two systems;
+* consolidating allocations on multiple systems into one location;
+* decreasing an allocation;
+* terminating an allocation (if no longer needed).
 
-* Change of resource location (i.e., request to migrate current allocation from one system to another). Please visit the Available Resources page to see the list of systems available.
-* A 10% increase in cloud compute and storage resources.
-* A 10% increase of PROJECT, NEARLINE and/or dCache storage resources is allowed, up to a maximum of 50 TB of additional storage based on the eligible amount communicated in the invitation email. Note that the additional storage resources requested may be fully, partially or not allocated based on resource constraints and storage utilization information. For example:
-**according to the invitation email you are allowed to request 100 TB of project storage—then you may request 10 TB more (your new storage request would then be 110 TB);
-**according to the invitation email you are allowed to request a maximum 1,000 TB of nearline storage; 10% of that would be 100 TB, but since the request increase is capped at 50 TB, then the maximum that you can request is 50 TB more (your new storage request would then be 1,050 TB).
+Are you requesting any eligible change? (required)
 
-Important: You may only request up to the amount of CPU and/or GPU mentioned in the invitation email. Increase of CPU or GPU requests is not allowed. If you need more compute resources, you must submit a new application.
+Yes/No
 
-==== Progress report (required): ====
-Provide details about what has been accomplished with the resources used (e.g., publications).
+If Yes - Please indicate the type of change requested (required - multiple selection possible):
 
-If you have questions about the Fast Track process, please email allocations@tech.alliancecan.ca.
+* Increase
+* Move
+* Split
+* Consolidate
+* Decrease
+* Terminate
+* Other
+
+==== Change request justification and other comments ====
+Any change requested must be sufficiently justified: be specific about systems, quantities and other relevant aspects that need to be considered to properly address your request. Note that additional resources requested may be fully, partially or not allocated based on factors such as the individual score of the application relative to the average for the entire competition, the total resource demand, the progress reported over the past year, resource constraints, evidence of effective and efficient usage, and the justification for underutilization of an allocation. If you are not requesting any changes but want to add any other comments related to your allocation, please do so here.
+
+=== Justification of underutilization ===
+If the projected utilization of a RAC allocation you currently hold is 50% or less, you must explain the reasons for the underutilization and describe any mitigation in place.
+
+We want to understand why resources allocated from the RAC pool to your research group may have not been fully utilized and what you plan to do about it. While we understand that there may be legitimate reasons for underutilization, we need to know what those are to make appropriate allocation decisions—failing to provide a reasonable justification with sufficient details may negatively impact your application.
+
+The justification is only required for resources allocated in RAC Resource Allocation Projects, which are labelled rrg-name or rpp-name (for HPC allocations) and crg-name or cpp-name (for cloud allocations). If the utilization of CPU or GPU resources in your Default project is greater than the utilization in your RAC project, you must explain why this is the case and what you plan to do about it.
+
+If you have access to other computational resources within Canada (e.g. contributed hardware, access to a local cluster at your institution, etc.) or abroad, please also mention it here
+
+=== Progress over the last year ===
+Describe any progress over the past year made with the use of the resources made available by the Alliance, including those used through the Rapid Access Service. This may be linked to a publication or it may be a work in progress.

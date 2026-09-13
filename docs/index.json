@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-06T09:53:16.910790+00:00",
-  "total_pages": 469,
+  "last_updated": "2026-09-13T10:45:39.187870+00:00",
+  "total_pages": 474,
   "pages": [
     {
       "page_id": 10049,
@@ -304,7 +304,7 @@
       "title": "Arbutus Migration Guide/en",
       "url": "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en",
       "category": "User Guide",
-      "last_modified": "2026-06-23T14:17:29Z",
+      "last_modified": "2026-09-04T14:16:22Z",
       "file_path": "docs/pages/User Guide/Arbutus_Migration_Guide.md",
       "slug": "Arbutus_Migration_Guide"
     },
@@ -745,7 +745,7 @@
       "title": "Cloud Quick Start/en",
       "url": "https://docs.alliancecan.ca/wiki/Cloud_Quick_Start/en",
       "category": "General",
-      "last_modified": "2026-04-09T18:20:04Z",
+      "last_modified": "2026-09-03T19:03:25Z",
       "file_path": "docs/pages/General/Cloud_Quick_Start.md",
       "slug": "Cloud_Quick_Start"
     },
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-09-03T15:20:25Z",
+      "last_modified": "2026-09-11T19:28:08Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-09-03T15:20:13Z",
+      "last_modified": "2026-09-11T19:27:46Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
@@ -2200,10 +2200,10 @@
     },
     {
       "page_id": 4592,
-      "title": "ORCA",
+      "title": "ORCA/en",
       "url": "https://docs.alliancecan.ca/wiki/ORCA/en",
       "category": "General",
-      "last_modified": "2025-03-11T18:18:52Z",
+      "last_modified": "2026-09-03T14:39:47Z",
       "file_path": "docs/pages/General/ORCA.md",
       "slug": "ORCA"
     },
@@ -2650,19 +2650,19 @@
     },
     {
       "page_id": 29995,
-      "title": "RAC Fast Track Application Guide",
+      "title": "RAC Fast Track Application Guide/en",
       "url": "https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en",
       "category": "User Guide",
-      "last_modified": "2025-08-20T15:58:16Z",
+      "last_modified": "2026-09-03T14:54:24Z",
       "file_path": "docs/pages/User Guide/RAC_Fast_Track_Application_Guide.md",
       "slug": "RAC_Fast_Track_Application_Guide"
     },
     {
       "page_id": 29716,
-      "title": "RAC application guide",
+      "title": "RAC application guide/en",
       "url": "https://docs.alliancecan.ca/wiki/RAC_application_guide/en",
       "category": "User Guide",
-      "last_modified": "2025-11-03T20:57:51Z",
+      "last_modified": "2026-09-11T19:10:09Z",
       "file_path": "docs/pages/User Guide/RAC_application_guide.md",
       "slug": "RAC_application_guide"
     },
@@ -2713,10 +2713,10 @@
     },
     {
       "page_id": 29749,
-      "title": "RPP Annual Progress Report Guidelines",
+      "title": "RPP Annual Progress Report Guidelines/en",
       "url": "https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines/en",
       "category": "User Guide",
-      "last_modified": "2025-09-09T16:07:01Z",
+      "last_modified": "2026-09-03T14:54:37Z",
       "file_path": "docs/pages/User Guide/RPP_Annual_Progress_Report_Guidelines.md",
       "slug": "RPP_Annual_Progress_Report_Guidelines"
     },
@@ -2767,10 +2767,10 @@
     },
     {
       "page_id": 29717,
-      "title": "Resource Allocation Competition",
+      "title": "Resource Allocation Competition/en",
       "url": "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en",
       "category": "General",
-      "last_modified": "2025-10-07T18:13:19Z",
+      "last_modified": "2026-09-03T14:53:53Z",
       "file_path": "docs/pages/General/Resource_Allocation_Competition.md",
       "slug": "Resource_Allocation_Competition"
     },
@@ -2875,10 +2875,10 @@
     },
     {
       "page_id": 7403,
-      "title": "SSH tunnelling",
+      "title": "SSH tunnelling/en",
       "url": "https://docs.alliancecan.ca/wiki/SSH_tunnelling/en",
       "category": "General",
-      "last_modified": "2025-09-23T22:00:06Z",
+      "last_modified": "2026-09-03T14:40:07Z",
       "file_path": "docs/pages/General/SSH_tunnelling.md",
       "slug": "SSH_tunnelling"
     },
@@ -3298,10 +3298,10 @@
     },
     {
       "page_id": 29549,
-      "title": "User roles to access resources and services of the Alliance Federation",
+      "title": "User roles to access resources and services of the Alliance Federation/en",
       "url": "https://docs.alliancecan.ca/wiki/User_roles_to_access_resources_and_services_of_the_Alliance_Federation/en",
       "category": "User Guide",
-      "last_modified": "2025-11-03T20:57:02Z",
+      "last_modified": "2026-09-03T14:40:31Z",
       "file_path": "docs/pages/User Guide/User_roles_to_access_resources_and_services_of_the_Alliance_Federation.md",
       "slug": "User_roles_to_access_resources_and_services_of_the_Alliance_Federation"
     },
@@ -3388,10 +3388,10 @@
     },
     {
       "page_id": 20575,
-      "title": "Using ipv6 in cloud",
+      "title": "Using ipv6 in cloud/en",
       "url": "https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en",
       "category": "General",
-      "last_modified": "2023-02-27T21:10:01Z",
+      "last_modified": "2026-09-08T20:28:46Z",
       "file_path": "docs/pages/General/Using_ipv6_in_cloud.md",
       "slug": "Using_ipv6_in_cloud"
     },
@@ -4222,6 +4222,51 @@
       "last_modified": "2026-09-01T10:57:48Z",
       "file_path": "docs/pages/User Guide/RPP_Annual_Progress_Report_Guidelines.md",
       "slug": "RPP_Annual_Progress_Report_Guidelines"
+    },
+    {
+      "page_id": 34831,
+      "title": "Getting started with Claude on Alliance clusters",
+      "url": "https://docs.alliancecan.ca/wiki/Getting_started_with_Claude_on_Alliance_clusters",
+      "category": "Getting Started",
+      "last_modified": "2026-09-05T00:06:24Z",
+      "file_path": "docs/pages/Getting Started/Getting_started_with_Claude_on_Alliance_clusters.md",
+      "slug": "Getting_started_with_Claude_on_Alliance_clusters"
+    },
+    {
+      "page_id": 34830,
+      "title": "Mes premiers pas avec Claude sur les grappes",
+      "url": "https://docs.alliancecan.ca/wiki/Mes_premiers_pas_avec_Claude_sur_les_grappes",
+      "category": "General",
+      "last_modified": "2026-09-05T00:03:49Z",
+      "file_path": "docs/pages/General/Mes_premiers_pas_avec_Claude_sur_les_grappes.md",
+      "slug": "Mes_premiers_pas_avec_Claude_sur_les_grappes"
+    },
+    {
+      "page_id": 34829,
+      "title": "Using AI Agents",
+      "url": "https://docs.alliancecan.ca/wiki/Using_AI_Agents",
+      "category": "General",
+      "last_modified": "2026-09-04T23:51:09Z",
+      "file_path": "docs/pages/General/Using_AI_Agents.md",
+      "slug": "Using_AI_Agents"
+    },
+    {
+      "page_id": 34833,
+      "title": "Utiliser les agents IA",
+      "url": "https://docs.alliancecan.ca/wiki/Utiliser_les_agents_IA",
+      "category": "General",
+      "last_modified": "2026-09-04T23:50:10Z",
+      "file_path": "docs/pages/General/Utiliser_les_agents_IA.md",
+      "slug": "Utiliser_les_agents_IA"
+    },
+    {
+      "page_id": 27437,
+      "title": "Nibi",
+      "url": "https://docs.alliancecan.ca/wiki/Nibi",
+      "category": "General",
+      "last_modified": "2026-09-03T19:19:44Z",
+      "file_path": "docs/pages/General/Nibi.md",
+      "slug": "Nibi"
     }
   ]
 }

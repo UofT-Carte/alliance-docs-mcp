@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-09-06T09:53:16.916795+00:00
-# Total pages: 469
+# Generated: 2026-09-13T10:45:39.194188+00:00
+# Total pages: 474
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -172,6 +172,7 @@
 - Gaussian/en (General): https://docs.alliancecan.ca/wiki/Gaussian/en
 - General directives for migration (General): https://docs.alliancecan.ca/wiki/General_directives_for_migration/en
 - Generating SSH keys in Windows (General): https://docs.alliancecan.ca/wiki/Generating_SSH_keys_in_Windows/en
+- Getting started with Claude on Alliance clusters (Getting Started): https://docs.alliancecan.ca/wiki/Getting_started_with_Claude_on_Alliance_clusters
 - Getting started with the new national systems (Getting Started): https://docs.alliancecan.ca/wiki/Getting_started_with_the_new_national_systems/en
 - Getting started/en (Getting Started): https://docs.alliancecan.ca/wiki/Getting_started/en
 - Git (General): https://docs.alliancecan.ca/wiki/Git/en
@@ -241,6 +242,7 @@
 - Managing your cloud resources with OpenStack/en (General): https://docs.alliancecan.ca/wiki/Managing_your_cloud_resources_with_OpenStack/en
 - Materials Studio (General): https://docs.alliancecan.ca/wiki/Materials_Studio/en
 - Meltdown and Spectre bugs (General): https://docs.alliancecan.ca/wiki/Meltdown_and_Spectre_bugs/en
+- Mes premiers pas avec Claude sur les grappes (General): https://docs.alliancecan.ca/wiki/Mes_premiers_pas_avec_Claude_sur_les_grappes
 - MetaPhlAn (General): https://docs.alliancecan.ca/wiki/MetaPhlAn/en
 - Metrix/en (General): https://docs.alliancecan.ca/wiki/Metrix/en
 - Metrix/en-ca (General): https://docs.alliancecan.ca/wiki/Metrix/en-ca
@@ -280,10 +282,11 @@
 - Nextflow (General): https://docs.alliancecan.ca/wiki/Nextflow/en
 - Niagara (General): https://docs.alliancecan.ca/wiki/Niagara/en
 - Niagara Quickstart (General): https://docs.alliancecan.ca/wiki/Niagara_Quickstart/en
+- Nibi (General): https://docs.alliancecan.ca/wiki/Nibi
 - Nibi/en (General): https://docs.alliancecan.ca/wiki/Nibi/en
 - Nvprof (General): https://docs.alliancecan.ca/wiki/Nvprof
-- ORCA (General): https://docs.alliancecan.ca/wiki/ORCA/en
 - ORCA (General): https://docs.alliancecan.ca/wiki/ORCA
+- ORCA/en (General): https://docs.alliancecan.ca/wiki/ORCA/en
 - Octave (General): https://docs.alliancecan.ca/wiki/Octave
 - Open Babel (General): https://docs.alliancecan.ca/wiki/Open_Babel/en
 - Open OnDemand (General): https://docs.alliancecan.ca/wiki/Open_OnDemand
@@ -339,23 +342,23 @@
 - R/en (General): https://docs.alliancecan.ca/wiki/R/en
 - RAC Annual Reports (General): https://docs.alliancecan.ca/wiki/RAC_Annual_Reports/en
 - RAC FAQ/en (General): https://docs.alliancecan.ca/wiki/RAC_FAQ/en
-- RAC Fast Track Application Guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en
-- RAC application guide (User Guide): https://docs.alliancecan.ca/wiki/RAC_application_guide/en
+- RAC Fast Track Application Guide/en (User Guide): https://docs.alliancecan.ca/wiki/RAC_Fast_Track_Application_Guide/en
+- RAC application guide/en (User Guide): https://docs.alliancecan.ca/wiki/RAC_application_guide/en
 - RAC available resources (General): https://docs.alliancecan.ca/wiki/RAC_available_resources
 - RAC available resources/en (General): https://docs.alliancecan.ca/wiki/RAC_available_resources/en
 - RAC transition FAQ (General): https://docs.alliancecan.ca/wiki/RAC_transition_FAQ/en
 - RAPIDS (Technical Reference): https://docs.alliancecan.ca/wiki/RAPIDS/en
 - RDKit (General): https://docs.alliancecan.ca/wiki/RDKit/en
 - README files (General): https://docs.alliancecan.ca/wiki/README_files/en
-- RPP Annual Progress Report Guidelines (User Guide): https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines/en
 - RPP Annual Progress Report Guidelines (User Guide): https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines
+- RPP Annual Progress Report Guidelines/en (User Guide): https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines/en
 - Rapid Access Service (Technical Reference): https://docs.alliancecan.ca/wiki/Rapid_Access_Service/en
 - Ray (General): https://docs.alliancecan.ca/wiki/Ray
 - Recent changes to the software environment (General): https://docs.alliancecan.ca/wiki/Recent_changes_to_the_software_environment
 - Recovering data from a compromised VM (General): https://docs.alliancecan.ca/wiki/Recovering_data_from_a_compromised_VM/en
 - Research Data Management (General): https://docs.alliancecan.ca/wiki/Research_Data_Management/en
-- Resource Allocation Competition (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en
 - Resource Allocation Competition (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition
+- Resource Allocation Competition/en (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en
 - Rorqual/en (General): https://docs.alliancecan.ca/wiki/Rorqual/en
 - Running jobs (General): https://docs.alliancecan.ca/wiki/Running_jobs
 - Running jobs/en (General): https://docs.alliancecan.ca/wiki/Running_jobs/en
@@ -368,7 +371,7 @@
 - SSH configuration file (General): https://docs.alliancecan.ca/wiki/SSH_configuration_file/en
 - SSH host keys (General): https://docs.alliancecan.ca/wiki/SSH_host_keys/en
 - SSH security improvements (General): https://docs.alliancecan.ca/wiki/SSH_security_improvements/en
-- SSH tunnelling (General): https://docs.alliancecan.ca/wiki/SSH_tunnelling/en
+- SSH tunnelling/en (General): https://docs.alliancecan.ca/wiki/SSH_tunnelling/en
 - SSH/en (General): https://docs.alliancecan.ca/wiki/SSH/en
 - Samtools (General): https://docs.alliancecan.ca/wiki/Samtools/en
 - Scalability (General): https://docs.alliancecan.ca/wiki/Scalability/en
@@ -422,7 +425,8 @@
 - Trillium/en (General): https://docs.alliancecan.ca/wiki/Trillium/en
 - Tuning Lustre (General): https://docs.alliancecan.ca/wiki/Tuning_Lustre/en
 - Tutoriel Apprentissage machine (General): https://docs.alliancecan.ca/wiki/Tutoriel_Apprentissage_machine/en
-- User roles to access resources and services of the Alliance Federation (User Guide): https://docs.alliancecan.ca/wiki/User_roles_to_access_resources_and_services_of_the_Alliance_Federation/en
+- User roles to access resources and services of the Alliance Federation/en (User Guide): https://docs.alliancecan.ca/wiki/User_roles_to_access_resources_and_services_of_the_Alliance_Federation/en
+- Using AI Agents (General): https://docs.alliancecan.ca/wiki/Using_AI_Agents
 - Using Conda in Apptainer/en (General): https://docs.alliancecan.ca/wiki/Using_Conda_in_Apptainer/en
 - Using GPUs with Slurm/en (General): https://docs.alliancecan.ca/wiki/Using_GPUs_with_Slurm/en
 - Using Nix (General): https://docs.alliancecan.ca/wiki/Using_Nix
@@ -432,12 +436,13 @@
 - Using a new empty volume on a Windows VM (General): https://docs.alliancecan.ca/wiki/Using_a_new_empty_volume_on_a_Windows_VM
 - Using a resource allocation/en (General): https://docs.alliancecan.ca/wiki/Using_a_resource_allocation/en
 - Using cloud vGPUs (General): https://docs.alliancecan.ca/wiki/Using_cloud_vGPUs/en
-- Using ipv6 in cloud (General): https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en
+- Using ipv6 in cloud/en (General): https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en
 - Using nearline storage (General): https://docs.alliancecan.ca/wiki/Using_nearline_storage
 - Using nearline storage/en (General): https://docs.alliancecan.ca/wiki/Using_nearline_storage/en
 - Using node-local storage (General): https://docs.alliancecan.ca/wiki/Using_node-local_storage/en
 - Using swift (General): https://docs.alliancecan.ca/wiki/Using_swift
 - Utiliser des modules (General): https://docs.alliancecan.ca/wiki/Utiliser_des_modules/en
+- Utiliser les agents IA (General): https://docs.alliancecan.ca/wiki/Utiliser_les_agents_IA
 - Uv (General): https://docs.alliancecan.ca/wiki/Uv/en
 - VASP/en (General): https://docs.alliancecan.ca/wiki/VASP/en
 - VLLM (General): https://docs.alliancecan.ca/wiki/VLLM

@@ -2,7 +2,7 @@
 title: "SSH tunnelling/en"
 url: "https://docs.alliancecan.ca/wiki/SSH_tunnelling/en"
 category: "General"
-last_modified: "2025-09-23T22:00:06Z"
+last_modified: "2026-09-03T14:40:07Z"
 page_id: 7403
 display_title: "SSH tunnelling"
 ---
@@ -71,7 +71,7 @@ export MLM_LICENSE_FILE=COMPUTEPORT@localhost
 
 == Example job script==
 
-The following job script sets up an SSH tunnel to contact licenseserver.institution.ca at port 9999.
+The following job script sets up an SSH tunnel to contact licenseserver.institution.ca at port 9999, on Trillium.
 
 #!/bin/bash
 #SBATCH --nodes 1
