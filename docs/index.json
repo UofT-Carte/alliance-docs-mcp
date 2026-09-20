@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13T10:45:39.187870+00:00",
+  "last_updated": "2026-09-20T10:15:15.853986+00:00",
   "total_pages": 474,
   "pages": [
     {
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-09-11T19:28:08Z",
+      "last_modified": "2026-09-19T01:08:11Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-09-11T19:27:46Z",
+      "last_modified": "2026-09-19T01:08:02Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
