@@ -2,7 +2,7 @@
 title: "Getting started/en"
 url: "https://docs.alliancecan.ca/wiki/Getting_started/en"
 category: "Getting Started"
-last_modified: "2026-06-11T14:48:01Z"
+last_modified: "2026-09-17T20:34:25Z"
 page_id: 635
 display_title: "Getting started"
 ---
@@ -12,8 +12,8 @@ display_title: "Getting started"
 ** Apply for a CCDB account
 ** Multifactor authentication
 ** Frequently Asked Questions about the CCDB
-* If you are an experienced HPC user and are ready to log into a cluster, you probably want to know
-**  what systems are available;
+* If you are ready to log in to a cluster, you probably want to know
+**  what systems are available and how to obtain login permissions;
 ** what software is available;
 ** how environment modules work;
 ** how to submit jobs;
@@ -38,17 +38,16 @@ display_title: "Getting started"
 For any other questions, you might try the Search box in the upper right corner of this page, the main page for our technical documentation or contact us by email.
 
 ==Username and password==
-Your password to log in to all new national systems is the same one you use to log into CCDB. Your username will be displayed at the top of the page once you've logged in.
+Your password to log in to all national systems is the same one you use to log into CCDB. Your username will be displayed at the top of the page once you've logged in.
 
 ==What systems are available?==
 
-You must request access to one or more of our systems: Arbutus, Fir, Narval, Nibi, Rorqual, and Trillium.
+You must  request access separately to each of our systems on this CCDB page.
 
 * Arbutus is a cloud site, which allows users to launch and customize virtual machines. See Cloud for how to obtain access to Arbutus.
-
-* Fir, Narval, Nibi, and Rorqual are general-purpose clusters (or supercomputers) composed of a variety of nodes including large memory nodes and nodes with accelerators such as GPUs.  You can log into any of these using SSH. A /home directory will be automatically created for you the first time you log in.
-
+* Fir, Narval, Nibi, and Rorqual are general-purpose clusters (or supercomputers) composed of a variety of nodes including large memory nodes and nodes with accelerators such as GPUs.
 * Trillium is a homogeneous cluster (or supercomputer) designed for large parallel jobs (>1000 cores).
+* Killarney, tamIA, and Vulcan are clusters in the Pan-Canadian Artificial Intelligence Computing Environment (PAICE) and specialize in AI research.
 
 In this documentation, we generally use the term “cluster” instead of “supercomputer” since it better reflects the architecture of our systems: A large number of individual computers, or “nodes”, linked together as a unit, or “cluster”.
 

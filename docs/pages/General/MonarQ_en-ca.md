@@ -2,14 +2,12 @@
 title: "MonarQ/en-ca"
 url: "https://docs.alliancecan.ca/wiki/MonarQ/en-ca"
 category: "General"
-last_modified: "2025-11-03T20:57:14Z"
+last_modified: "2026-09-18T12:43:02Z"
 page_id: 27460
 display_title: "MonarQ"
 ---
 
-Nœud de connexion : https://monarq.calculquebec.ca
-
-MonarQ est actuellement en cours de maintenance et devrait être opérationnel en février 2026. En attendant, Calcul Québec peut offrir l'accès à une machine similaire mais plus petite, avec 6 qubits.
+Nœud de connexion : https://manager.anyonlabs.com
 
 MonarQ est un  ordinateur quantique supraconducteur à 24 qubits développé à Montréal par Anyon Systèmes et situé à l'École de technologie supérieure. Pour plus d'informations sur les spécifications et les performances de MonarQ voir Spécifications techniques ci-dessous.
 
@@ -50,7 +48,7 @@ Les portes logiques quantiques du processeur de MonarQ sont appelées par le bia
 Prérequis : Assurez-vous d’avoir un accès à MonarQ ainsi que vos identifiants de connexion (username, API token). Pour toute question, écrivez à  quantique@calculquebec.ca.
 
 * Étape 1 : Connectez-vous à Narval
-** MonarQ est uniquement accessible depuis Narval, une grappe de Calcul Québec. L’accès à Narval se fait à partir du nœud de connexion narval.alliancecan.ca.
+** MonarQ est accessible depuis Narval, une grappe de Calcul Québec. L’accès à Narval se fait à partir du nœud de connexion narval.alliancecan.ca.
 ** Pour de l’aide concernant la connexion à Narval, consultez la page SSH.
 
 * Étape 2 : Créez l’environnement
@@ -58,7 +56,7 @@ Prérequis : Assurez-vous d’avoir un accès à MonarQ ainsi que vos identifian
 
 * Étape 3 : Configurez vos identifiants sur MonarQ et définissez MonarQ comme machine (device)
 ** Ouvrez un fichier Python .py et importez les dépendances nécessaires soit PennyLane et CalculQuebecClient dans l’exemple ci-dessous.
-** Créez un client avec vos identifiants. Votre jeton est disponible à partir du portail Thunderhead. Le host est https://monarq.calculquebec.ca.
+** Créez un client avec vos identifiants. Votre jeton est disponible à partir du portail Thunderhead. Le host est https://manager.anyonlabs.com
 ** Créez un device PennyLane avec votre client. Vous pouvez également mentionner le nombre de qubits (wires) à utiliser et le nombre d'échantillons ( shots).
 ** Pour de l’aide, consultez pennylane_calculquebec.
 

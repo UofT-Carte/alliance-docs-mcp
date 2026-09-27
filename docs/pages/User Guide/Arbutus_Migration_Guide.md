@@ -2,14 +2,14 @@
 title: "Arbutus Migration Guide/en"
 url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en"
 category: "User Guide"
-last_modified: "2026-09-04T14:16:22Z"
+last_modified: "2026-09-17T19:42:38Z"
 page_id: 9289
 display_title: "Arbutus Migration Guide"
 ---
 
 This document describes how to migrate virtual machine (VM) instances from the legacy (that is, old) Arbutus Cloud to the new Arbutus Cloud. Because you know your workload best, we recommend that you migrate your instances yourself, according to your own application requirements and schedule.
 
-Migration is necessary for all cloud resources (e.g., instances, storage volumes, object storage containers, networks, keys, etc.) currently on the legacy Arbutus Cloud because it will be decommissioned in 2026. The deadline for both RAS and RAC projects to migrate all remaining resources to the new Arbutus Cloud has been extended to September 30, 2026.
+Migration is necessary for all cloud resources (e.g., instances, storage volumes, object storage containers, networks, keys, etc.) currently on the legacy Arbutus Cloud because it will be decommissioned in 2026. The deadline for both RAS and RAC projects to migrate all remaining resources to the new Arbutus Cloud has been extended to October 15, 2026.
 
 This document explains different migration methods. You and your research team need to select the approach(es) appropriate for your research project and specific circumstances.
 

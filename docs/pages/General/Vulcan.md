@@ -2,7 +2,7 @@
 title: "Vulcan/en"
 url: "https://docs.alliancecan.ca/wiki/Vulcan/en"
 category: "General"
-last_modified: "2026-02-18T19:56:01Z"
+last_modified: "2026-09-18T19:31:13Z"
 page_id: 28485
 display_title: "Vulcan"
 ---
@@ -11,7 +11,7 @@ Availability: April 15, 2025
 Login node: vulcan.alliancecan.ca
 Globus collection: Vulcan Globus v5
 System Status Page: https://status.alliancecan.ca/system/Vulcan
-Portal: https://portal.vulcan.alliancecan.ca
+Portal: https://metrix.vulcan.alliancecan.ca
 
 Vulcan is a cluster dedicated to the needs of the Canadian scientific Artificial Intelligence community. Vulcan is located at the University of Alberta and is managed by the University of Alberta and Amii. It is named after the town Vulcan, AB, located in southern Alberta.
 
@@ -25,7 +25,10 @@ Maximum duration of jobs is 7 days.
 Vulcan is currently open to all researchers doing research on AI or applying AI methods in their research.
 
 ==Access==
-To access the Vulcan cluster, each researcher must first request access in CCDB.
+To be able to log in to Vulcan, you must request access in CCDB.
+
+To be able to submit jobs, you must be a member of an AIP RAP.
+If you are a PI and you do not already have one, apply for General Access to PAICE Systems.
 
 If you are a PI and need to sponsor other researchers you will have to add them to your AIP RAP. Follow these steps to manage users:
 * Go to the "Resource Allocation Projects" table on the CCDB home page.

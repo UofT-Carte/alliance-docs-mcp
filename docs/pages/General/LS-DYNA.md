@@ -2,7 +2,7 @@
 title: "LS-DYNA/en"
 url: "https://docs.alliancecan.ca/wiki/LS-DYNA/en"
 category: "General"
-last_modified: "2026-07-23T13:51:25Z"
+last_modified: "2026-09-17T15:24:01Z"
 page_id: 14902
 display_title: "LS-DYNA"
 ---

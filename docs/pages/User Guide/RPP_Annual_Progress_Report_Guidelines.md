@@ -2,7 +2,7 @@
 title: "RPP Annual Progress Report Guidelines/en"
 url: "https://docs.alliancecan.ca/wiki/RPP_Annual_Progress_Report_Guidelines/en"
 category: "User Guide"
-last_modified: "2026-09-03T14:54:37Z"
+last_modified: "2026-09-17T15:24:56Z"
 page_id: 29749
 display_title: "RPP Annual Progress Report Guidelines"
 ---
@@ -60,22 +60,7 @@ User         	# of Unique Users	# of Accesses	Compute Usage (Core-Years)	Storage
 Canadian
 International
 
-Q6. Training and outreach
-
-Provide the total number of HQP directly engaged in projects utilizing the provided computational resources through the use of your platform and across academic levels.
-
-HQP                  	# of Unique HQP
-Undergraduate Student
-Master’s Student
-PhD
-PostDoc
-Research Associates
-Research Staff
-Visiting Scholars
-Alumni Faculty
-Other
-
-Q7. General comments
+Q6. General comments
 
 If you have any other comments that you would like to include, add them in the text box or attach a PDF file using the browser button.
 

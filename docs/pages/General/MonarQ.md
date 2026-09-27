@@ -2,7 +2,7 @@
 title: "MonarQ/en"
 url: "https://docs.alliancecan.ca/wiki/MonarQ/en"
 category: "General"
-last_modified: "2025-11-27T19:18:01Z"
+last_modified: "2026-09-18T12:42:43Z"
 page_id: 26558
 display_title: "MonarQ"
 ---
@@ -11,8 +11,6 @@ Login node: https://monarq.calculquebec.ca
 ''
 
 Monarq is currently undergoing maintenance and should be operational in February 2026. In the meantime, Calcul Québec can offer access to a similar but smaller machine, with 6 qubits.
-
-MonarQ is a 24-qubit superconducting quantum computer developed in Montreal by Anyon Systems and located at the École de technologie supérieure. See section Technical specifications below.
 
 Its name is inspired by the monarch butterfly, a symbol of evolution and migration. The capital Q denotes the quantum nature of the computer and its origins in Quebec. Acquisition of MonarQ was made possible with the support of the Ministère de l'Économie, de l'Innovation et de l'Énergie du Québec (MEIE) and Canada Economic Development (CED).
 

@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-09-20T10:15:15.858190+00:00
+# Generated: 2026-09-27T11:00:10.640990+00:00
 # Total pages: 474
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -258,7 +258,7 @@
 - Modules avx512 (General): https://docs.alliancecan.ca/wiki/Modules_avx512
 - Modules specific to Niagara (General): https://docs.alliancecan.ca/wiki/Modules_specific_to_Niagara
 - Modules sse3 (General): https://docs.alliancecan.ca/wiki/Modules_sse3
-- MonarQ (General): https://docs.alliancecan.ca/wiki/MonarQ/en
+- MonarQ/en (General): https://docs.alliancecan.ca/wiki/MonarQ/en
 - MonarQ/en-ca (General): https://docs.alliancecan.ca/wiki/MonarQ/en-ca
 - Monitoring jobs/en (General): https://docs.alliancecan.ca/wiki/Monitoring_jobs/en
 - Moose (General): https://docs.alliancecan.ca/wiki/Moose/en

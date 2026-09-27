@@ -1,9 +1,9 @@
 ---
-title: "Trillium Open OnDemand Quickstart"
-url: "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart"
+title: "Trillium Open OnDemand Quickstart/en"
+url: "https://docs.alliancecan.ca/wiki/Trillium_Open_OnDemand_Quickstart/en"
 category: "General"
-last_modified: "2026-07-08T15:17:40Z"
-page_id: 32098
+last_modified: "2026-09-17T20:00:55Z"
+page_id: 32168
 display_title: "Trillium Open OnDemand Quickstart"
 ---
 
@@ -104,6 +104,15 @@ From a terminal (started either in JupyterLab or by clicking Cluster -> Trillium
 To turn this into a JupyterLab kernel, run the venv2jup command from within the activated virtual environment:
 
 When you start a JupyterLab session, you should now see your virtual environment, myenv, as a kernel option.
+
+==VS Code Extensions==
+
+VS Code comes with ~40 default extensions.  If you want to install your own extensions follow these steps:
+
+* From a terminal, create symbolic links to the centrally installed code-server extensions in your HOME directory:
+
+* Add the following command to your ~/.bashrc file: export CODESERVER_EXTENSIONS_DIR=$HOME/.local/share/code-server/extensions
+* Start a new VS Code interactive session and you will be able to install your own extensions.
 
 =Running an application GUI=
 

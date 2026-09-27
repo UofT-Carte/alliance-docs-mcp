@@ -2,7 +2,7 @@
 title: "Metrix/en"
 url: "https://docs.alliancecan.ca/wiki/Metrix/en"
 category: "General"
-last_modified: "2026-06-30T14:17:29Z"
+last_modified: "2026-09-18T19:32:34Z"
 page_id: 31422
 display_title: "Metrix"
 ---

@@ -2,11 +2,12 @@
 title: "Using ipv6 in cloud/en"
 url: "https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en"
 category: "General"
-last_modified: "2026-09-08T20:28:46Z"
+last_modified: "2026-09-17T22:23:02Z"
 page_id: 20575
 display_title: "Using ipv6 in cloud"
 ---
 
+fin to
 == IPv6 in Arbutus Cloud ==
 IPv6 Link-Local (LLA) and Global Unicast Addresses (GUA) are generally available within the Arbutus cloud environment.
 GUA can be set up via a separate interface, which in turn also handles only the IPv6 traffic.
@@ -37,7 +38,7 @@ openstack server list
 +--------------------------------------+-----------------+---------+------------------------------------------------------------------------------------------------+----------------------------------+----------+
 
 === Example of a Web interface configuration  ===
-Log in to the dashboard and go to the Instances menu, click on Attach Interface, which will open a dialog.
+Log into the dashboard and go to the Instances menu, click on Attach Interface, which will open a dialog.
 Use IPv6-GUA (2607:f8f0:c11:7004::/64) from the network menu and click on Attach.
 
 Instancemenu.png|1. Dashboard showing instances
@@ -51,11 +52,13 @@ release the GUA.
 
 Access from any IPv6 GUA can be granted via Security Groups in OpenStack; the only difference is the CIDR which automatically detects the address type.
 
-=== Example of a Debian Instance ===
-When researchers launch an instance with the Debian operating system with the IPv6 network (i.e., IPv6-GUA), the selected SSH key pair will not install successfully. As a result, the researchers cannot ssh into the instance and will receive the following a “Permission Denied” error message instead. To work around the problem, when researchers are launching a new instance, they can create an initial user account by completing the following steps:
-# Go to to the "Configuration" step
-# Add the following script to the "Customization Script". Replace [username] with the researcher's preferred username and [public key] with the user's public key.
-# Select “Configuration Drive”
+=== Example of a Debian or Ubuntu 26.04 Instance ===
+When researchers launch an instance with the Debian or Ubuntu 26.04 operating system with the IPv6 network (i.e., IPv6-GUA), the selected SSH key pair will not install successfully. As a result, the researchers cannot ssh into the instance and will receive the following a Permission Denied error message instead. To work around the problem, when researchers are launching a new instance, they can create an initial user account by completing the following steps:
+# To create a virtual machine, select Compute->Instances on the left menu, then click on the Launch Instance button.
+# Follow the Cloud Quick Start Guide to complete the displayed form where you define your virtual machine.
+# Select Configuration in the left menu.
+# Add the following script to the Customization Script. Replace [username] with the researcher's preferred username and [public key] with the user's public key.
+# Select Configuration Drive.
 
 users:
   - name: [username]
