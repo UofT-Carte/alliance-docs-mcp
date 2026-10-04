@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-09-27T11:00:10.640990+00:00
-# Total pages: 474
+# Generated: 2026-10-04T11:30:28.567356+00:00
+# Total pages: 476
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -28,7 +28,7 @@
 - Advanced MPI scheduling (General): https://docs.alliancecan.ca/wiki/Advanced_MPI_scheduling/en
 - AiiDA (General): https://docs.alliancecan.ca/wiki/AiiDA
 - Alliance CCV submission guide (User Guide): https://docs.alliancecan.ca/wiki/Alliance_CCV_submission_guide/en
-- Allocations and compute scheduling (General): https://docs.alliancecan.ca/wiki/Allocations_and_compute_scheduling/en
+- Allocations and compute scheduling/en (General): https://docs.alliancecan.ca/wiki/Allocations_and_compute_scheduling/en
 - AlphaFold2 (General): https://docs.alliancecan.ca/wiki/AlphaFold2/en
 - AlphaFold3/en (General): https://docs.alliancecan.ca/wiki/AlphaFold3/en
 - Altair FEKO (General): https://docs.alliancecan.ca/wiki/Altair_FEKO/en
@@ -359,6 +359,7 @@
 - Research Data Management (General): https://docs.alliancecan.ca/wiki/Research_Data_Management/en
 - Resource Allocation Competition (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition
 - Resource Allocation Competition/en (General): https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en
+- Rocky (General): https://docs.alliancecan.ca/wiki/Rocky
 - Rorqual/en (General): https://docs.alliancecan.ca/wiki/Rorqual/en
 - Running jobs (General): https://docs.alliancecan.ca/wiki/Running_jobs
 - Running jobs/en (General): https://docs.alliancecan.ca/wiki/Running_jobs/en
@@ -444,6 +445,7 @@
 - Utiliser des modules (General): https://docs.alliancecan.ca/wiki/Utiliser_des_modules/en
 - Utiliser les agents IA (General): https://docs.alliancecan.ca/wiki/Utiliser_les_agents_IA
 - Uv (General): https://docs.alliancecan.ca/wiki/Uv/en
+- VASP (General): https://docs.alliancecan.ca/wiki/VASP
 - VASP/en (General): https://docs.alliancecan.ca/wiki/VASP/en
 - VLLM (General): https://docs.alliancecan.ca/wiki/VLLM
 - VM Best Practices (General): https://docs.alliancecan.ca/wiki/VM_Best_Practices/en

@@ -1,9 +1,9 @@
 ---
-title: "VASP/en"
-url: "https://docs.alliancecan.ca/wiki/VASP/en"
+title: "VASP"
+url: "https://docs.alliancecan.ca/wiki/VASP"
 category: "General"
-last_modified: "2026-07-23T13:51:42Z"
-page_id: 4649
+last_modified: "2026-10-02T13:54:12Z"
+page_id: 3529
 display_title: "VASP"
 ---
 
@@ -19,11 +19,11 @@ Once you have a license, if you wish to use the prebuilt VASP binaries on Fir, N
 ** Email address
 ** Department and institution (university)
 * Include license information:
-** Version of the VASP license (VASP version 4 or version 5)
+** Version of the VASP license (VASP version 5 or version 6)
 ** License number
 ** Provide an updated list of who is allowed to use your VASP license. For example, forward to us the most recent email from the VASP license administrator that contains the list of licensed users.
 
-If you are licensed for version 5 you may also use version 4, but a version 4 license does not permit you to use version 5. The same for version 6, if you are licensed for version 6 you may also use versions 5 and 4.
+If you are licensed for version 6 you may also use version 5, but a version 5 license does not permit you to use version 6.
 
 You may also choose to install VASP yourself, according to the terms of your license.  See Building VASP yourself below.
 
@@ -62,6 +62,17 @@ For vasp/6.4.2
  module load StdEnv/2023 intel/2023.2.1 intelmpi/2021.9.0 hdf5/1.14.2
  module use /opt/software/commercial/modules
  module load vasp/6.4.2
+
+For vasp/6.6.1
+ module load StdEnv/2023 intel/2025.2.0 intelmpi/2021.16.0 hdf5/1.14.6
+ module use /opt/software/commercial/modules
+ module load vasp/6.6.1
+
+For vasp/6.4.2-gpu on the Trillium GPU subcluster
+ module load StdEnv/2023 nvhpc/25.1 cuda/12.6 nccl/2.26.2 imkl/2023.2.0 hdf5/1.14.5
+ module use /opt/software/commercial/modules
+ module load vasp/6.4.2-gpu
+
 For general usage of Trillium, please see the Trillium Quickstart page.
 
 === Pseudopotential files ===

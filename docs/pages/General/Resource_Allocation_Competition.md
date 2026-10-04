@@ -2,7 +2,7 @@
 title: "Resource Allocation Competition/en"
 url: "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en"
 category: "General"
-last_modified: "2026-09-03T14:53:53Z"
+last_modified: "2026-10-02T13:54:57Z"
 page_id: 29717
 display_title: "Resource Allocation Competition"
 ---
@@ -20,11 +20,11 @@ Resources for Research Groups (RRG)
 Research Platforms and Portals (RPP)
 * Including RPP Annual Progress Reports	September 23 to November 3, 2026, until 11:59 PM (EST)
 (extension of this deadline is not possible)
-RAC general overview information session	September 22 (English) – Register
-RAC general overview information session	September 24 (French) – Register
-Information session about GPU requests  	September 25 (French) - Register
-Information session about GPU requests  	September 28 (English) - Register
-Information session about Cloud requests	October 1 (English) -  Register
+RAC general overview information session	September 22 (English) – Slides, Recording
+RAC general overview information session	September 24 (French) – Slides, Recording
+Information session about GPU requests  	September 25 (French) - Slide, Recording
+Information session about GPU requests  	September 28 (English) - Slides, Recording
+Information session about Cloud requests	October 1 (English) -  Slides, Recording
 Announcement of RAC results             	Late March 2027
 Start of allocations                    	Early April 2027
 

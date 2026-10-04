@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-27T11:00:10.635619+00:00",
-  "total_pages": 474,
+  "last_updated": "2026-10-04T11:30:28.560463+00:00",
+  "total_pages": 476,
   "pages": [
     {
       "page_id": 10049,
@@ -202,10 +202,10 @@
     },
     {
       "page_id": 6419,
-      "title": "Allocations and compute scheduling",
+      "title": "Allocations and compute scheduling/en",
       "url": "https://docs.alliancecan.ca/wiki/Allocations_and_compute_scheduling/en",
       "category": "General",
-      "last_modified": "2025-09-19T14:36:02Z",
+      "last_modified": "2026-09-25T01:20:02Z",
       "file_path": "docs/pages/General/Allocations_and_compute_scheduling.md",
       "slug": "Allocations_and_compute_scheduling"
     },
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-09-25T19:27:59Z",
+      "last_modified": "2026-10-01T14:39:20Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-09-25T19:27:53Z",
+      "last_modified": "2026-10-01T14:39:14Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
@@ -2770,7 +2770,7 @@
       "title": "Resource Allocation Competition/en",
       "url": "https://docs.alliancecan.ca/wiki/Resource_Allocation_Competition/en",
       "category": "General",
-      "last_modified": "2026-09-03T14:53:53Z",
+      "last_modified": "2026-10-02T13:54:57Z",
       "file_path": "docs/pages/General/Resource_Allocation_Competition.md",
       "slug": "Resource_Allocation_Competition"
     },
@@ -4267,6 +4267,24 @@
       "last_modified": "2026-09-03T19:19:44Z",
       "file_path": "docs/pages/General/Nibi.md",
       "slug": "Nibi"
+    },
+    {
+      "page_id": 3529,
+      "title": "VASP",
+      "url": "https://docs.alliancecan.ca/wiki/VASP",
+      "category": "General",
+      "last_modified": "2026-10-02T13:54:12Z",
+      "file_path": "docs/pages/General/VASP.md",
+      "slug": "VASP"
+    },
+    {
+      "page_id": 35052,
+      "title": "Rocky",
+      "url": "https://docs.alliancecan.ca/wiki/Rocky",
+      "category": "General",
+      "last_modified": "2026-09-24T18:55:07Z",
+      "file_path": "docs/pages/General/Rocky.md",
+      "slug": "Rocky"
     }
   ]
 }
