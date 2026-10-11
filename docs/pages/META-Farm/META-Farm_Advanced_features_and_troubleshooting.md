@@ -2,7 +2,7 @@
 title: "META-Farm: Advanced features and troubleshooting/en"
 url: "https://docs.alliancecan.ca/wiki/META-Farm:_Advanced_features_and_troubleshooting/en"
 category: "META-Farm"
-last_modified: "2025-09-05T17:48:06Z"
+last_modified: "2026-10-02T13:53:53Z"
 page_id: 21476
 display_title: "META-Farm: Advanced features and troubleshooting"
 ---
@@ -20,9 +20,11 @@ This can be used in either SIMPLE or META mode. If your original submit.run comm
 When you add -auto, (re)submit.run submits one more (serial) job, in addition to the farm jobs. The purpose of this job is to run the resubmit.run command automatically right after the current farm finishes running. The job script for this additional job is resubmit_script.sh, which should be present in the farm directory; a sample file is automatically copied there when you run farm_init.run. The only customization you need to do to this file is to correct the account name in the #SBATCH -A line.
 
 If you are using -auto, the value of the NJOBS_MAX parameter defined in the config.h file should be at least one smaller than the largest number of jobs you can submit on the cluster.
-E.g. if the largest number of jobs one can submit on the cluster is 999 and you intend to use -auto, set NJOBS_MAX to 998.
+E.g. if the largest number of jobs one can submit on the cluster is 999 and you intend to use -auto, set NJOBS_MAX to 998. To find out the maximum number of submitted jobs limit (MaxSubmit) associated with your account on a specific cluster, run the following command:
 
-When using -auto, if at some point the only cases left to be processed are the ones which failed earlier, auto-resubmission will stop, and farm computations will end. This is to avoid an infinite loop on badly-formed cases which will always fail. If this happens, you will have to address the reasons for these cases failing before attempting to resubmit the farm.  You can see the relevant messages in the file farm.log created in the farm directory.
+ $ sacctmgr list user $USER withassoc
+
+When using -auto, if at some point the only cases left to be processed are the ones which failed earlier, auto-resubmission will stop, and farm computations will end. This is to avoid an infinite loop on badly-formed cases which will always fail. If this happens, you need to address the reasons for these cases failing before attempting to resubmit the farm.  You can see the relevant messages in the file farm.log created in the farm directory.
 
 = Running a post-processing job automatically =
 

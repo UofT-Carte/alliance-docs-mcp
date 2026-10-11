@@ -1,6 +1,6 @@
 # Alliance Documentation - Full Content
-# Generated: 2026-10-04T11:30:28.570112+00:00
-# Total pages: 476
+# Generated: 2026-10-11T11:46:04.553594+00:00
+# Total pages: 477
 ================================================================================
 
 
@@ -2855,6 +2855,22 @@ aws s3 ls
 aws s3 sync local_directory s3://container-name/prefix
 
 More examples of using the AWS CLI can be found on this external site.
+
+
+================================================================================
+PAGE: Accessing the PAICE clusters
+URL: https://docs.alliancecan.ca/wiki/Accessing_the_PAICE_clusters
+Category: General
+================================================================================
+
+
+To run jobs or be granted large storage allocations (i.e. project and scratch), a user needs to belong to an AI project (AIP), and the PI responsible for that AIP must have a tier assigned to them. There are two methods for a PI to get a valid AIP. The first involves PIs that are affiliated with the three AI institutes (AMII, MILA, Vector). These have AIPs created for them by their home institutes, and are then added to the appropriate tier group to grant them preferential access to resources. An AIP can be created for a PI by navigating to that PI's role page and clicking Create AI project in the menu on the left. The PI must then be added to the aip-[clustername]-tier[1/2] group (the AI institute determines which group to add them to). This grants that PI, and any members of the AI project (aip-[PI-name]), storage and job access on that cluster, and also grants this access (at a tier 3 level, amounting to fewer resources and lower cluster priority) on the other two PAICE clusters.
+
+The second way for a PI to gain resources on PAICE systems is if they are either researching AI without being affiliated with these three institutes, or if they are using AI in their (non-AI) research. The PI can create an AIP by first connecting to the CCDB and then clicking on Resources -> General Access to PAICE Systems, checking a box, and clicking the Submit button. This will create an AIP in their name and put them in the aip-tier3 or aip-tier4 group, which then gives them cluster resources and job submission access.
+
+If a PI already has an AIP, but no tier assigned, they can still click one of these boxes to be granted tier 3 or tier 4 access; however, an AIP created for them with no tier assigned represents an admin error, as users will notice they have an AIP and yet still cannot use the clusters.
+
+Note that users may have an AIP without having opted in to SSH access (via the first process described above); these are the several layers of configuration required to fully utilize the PAICE systems, and missing one leads to confusion and frustration for user and admin alike.
 
 
 ================================================================================
@@ -23008,19 +23024,22 @@ There are several modules installed for running jobs on multiple nodes using the
 
 === Specify node count ===
 
-Jobs can be submitted to a specified number of whole compute nodes with the following script.
+Jobs can be submitted to a specified number of whole compute nodes with the following script.  Please note naming of the modules has changed from ls-dyna-mpi to ls-dyna-mpp for all versions >= 13.2.0 in the below script as well these modules use avx512 and sharelib binaries.
 
 where
 *ls-dyna_s = single precision mpp solver
-*ls-dyna_d = double precision mpp solver
+*ls-dyna_d = double precision mpp solver\
+note
+To use version 12.2.1 or 12.2.2 on narval the above script will likely need to be modified to run jobs under $SLURM_TMPDIR otherwise performance may be ~100x slower than other clusters.  Narval only has lsdyna modules for 12.2.1 and 12.2.2 installed on it since all of its servers are legacy AVX2 based.  Newer versions have been installed using AVX512 binaries and are therefore only available on other clusters.
 
 === Specify core count ===
 
-Jobs can be submitted to an arbitrary number of compute nodes by specifying the number of cores.  This approach allows the scheduler to determine the optimal number of compute nodes to minimize job wait time in the queue.  Memory limits are applied per core, therefore a sufficiently large value of mem-per-cpu must be specified so the master processor can successfully decompose and handle its computations as explained in more detail in the opening paragraph of this section.
+Jobs can be submitted to an arbitrary number of compute nodes by specifying the number of cores.  This approach allows the scheduler to determine the optimal number of compute nodes to minimize job wait time in the queue.  Memory limits are applied per core, therefore a sufficiently large value of mem-per-cpu must be specified so the master processor can successfully decompose and handle its computations as explained in more detail in the opening paragraph of this section.  Please note the naming of the modules has changed from ls-dyna-mpi to ls-dyna-mpp for all versions >= 13.2.0 in the below script as well these modules use avx512 and sharelib binaries.
 
 where
 *ls-dyna_s = single precision mpp solver
 *ls-dyna_d = double precision mpp solver
+To use version 12.2.1 or 12.2.2 on narval the above script will likely need to be modified to run jobs under $SLURM_TMPDIR otherwise performance may be ~100x slower than other clusters.  Narval only has lsdyna modules for 12.2.1 and 12.2.2 installed on it since all of its servers are legacy AVX2 based.  Newer versions have been installed using AVX512 binaries and are therefore only available on other clusters.
 
 == Performance testing ==
 
@@ -23123,19 +23142,22 @@ There are several modules installed for running jobs on multiple nodes using the
 
 === Specify node count ===
 
-Jobs can be submitted to a specified number of whole compute nodes with the following script.
+Jobs can be submitted to a specified number of whole compute nodes with the following script.  Please note naming of the modules has changed from ls-dyna-mpi to ls-dyna-mpp for all versions >= 13.2.0 in the below script as well these modules use avx512 and sharelib binaries.
 
 where
 *ls-dyna_s = single precision mpp solver
-*ls-dyna_d = double precision mpp solver
+*ls-dyna_d = double precision mpp solver\
+note
+To use version 12.2.1 or 12.2.2 on narval the above script will likely need to be modified to run jobs under $SLURM_TMPDIR otherwise performance may be ~100x slower than other clusters.  Narval only has lsdyna modules for 12.2.1 and 12.2.2 installed on it since all of its servers are legacy AVX2 based.  Newer versions have been installed using AVX512 binaries and are therefore only available on other clusters.
 
 === Specify core count ===
 
-Jobs can be submitted to an arbitrary number of compute nodes by specifying the number of cores.  This approach allows the scheduler to determine the optimal number of compute nodes to minimize job wait time in the queue.  Memory limits are applied per core, therefore a sufficiently large value of mem-per-cpu must be specified so the master processor can successfully decompose and handle its computations as explained in more detail in the opening paragraph of this section.
+Jobs can be submitted to an arbitrary number of compute nodes by specifying the number of cores.  This approach allows the scheduler to determine the optimal number of compute nodes to minimize job wait time in the queue.  Memory limits are applied per core, therefore a sufficiently large value of mem-per-cpu must be specified so the master processor can successfully decompose and handle its computations as explained in more detail in the opening paragraph of this section.  Please note the naming of the modules has changed from ls-dyna-mpi to ls-dyna-mpp for all versions >= 13.2.0 in the below script as well these modules use avx512 and sharelib binaries.
 
 where
 *ls-dyna_s = single precision mpp solver
 *ls-dyna_d = double precision mpp solver
+To use version 12.2.1 or 12.2.2 on narval the above script will likely need to be modified to run jobs under $SLURM_TMPDIR otherwise performance may be ~100x slower than other clusters.  Narval only has lsdyna modules for 12.2.1 and 12.2.2 installed on it since all of its servers are legacy AVX2 based.  Newer versions have been installed using AVX512 binaries and are therefore only available on other clusters.
 
 == Performance testing ==
 
@@ -24205,7 +24227,7 @@ If you need more help, contact technical support, mentioning the name of the pac
 
 
 ================================================================================
-PAGE: META-Farm: Advanced features and troubleshooting
+PAGE: META-Farm: Advanced features and troubleshooting/en
 URL: https://docs.alliancecan.ca/wiki/META-Farm:_Advanced_features_and_troubleshooting/en
 Category: META-Farm
 ================================================================================
@@ -24224,9 +24246,11 @@ This can be used in either SIMPLE or META mode. If your original submit.run comm
 When you add -auto, (re)submit.run submits one more (serial) job, in addition to the farm jobs. The purpose of this job is to run the resubmit.run command automatically right after the current farm finishes running. The job script for this additional job is resubmit_script.sh, which should be present in the farm directory; a sample file is automatically copied there when you run farm_init.run. The only customization you need to do to this file is to correct the account name in the #SBATCH -A line.
 
 If you are using -auto, the value of the NJOBS_MAX parameter defined in the config.h file should be at least one smaller than the largest number of jobs you can submit on the cluster.
-E.g. if the largest number of jobs one can submit on the cluster is 999 and you intend to use -auto, set NJOBS_MAX to 998.
+E.g. if the largest number of jobs one can submit on the cluster is 999 and you intend to use -auto, set NJOBS_MAX to 998. To find out the maximum number of submitted jobs limit (MaxSubmit) associated with your account on a specific cluster, run the following command:
 
-When using -auto, if at some point the only cases left to be processed are the ones which failed earlier, auto-resubmission will stop, and farm computations will end. This is to avoid an infinite loop on badly-formed cases which will always fail. If this happens, you will have to address the reasons for these cases failing before attempting to resubmit the farm.  You can see the relevant messages in the file farm.log created in the farm directory.
+ $ sacctmgr list user $USER withassoc
+
+When using -auto, if at some point the only cases left to be processed are the ones which failed earlier, auto-resubmission will stop, and farm computations will end. This is to avoid an infinite loop on badly-formed cases which will always fail. If this happens, you need to address the reasons for these cases failing before attempting to resubmit the farm.  You can see the relevant messages in the file farm.log created in the farm directory.
 
 = Running a post-processing job automatically =
 
@@ -26134,10 +26158,10 @@ Category: General
 The Metrix portal is a website for Alliance users. It collects information on compute nodes and management servers, to interactively generate data so you can track your resource usage (CPUs, GPUs, memory, filesystems) in real time.
 
 Rorqual	https://metrix.rorqual.alliancecan.ca
-Narval 	http://metrix.narval.alliancecan.ca
+Narval 	https://metrix.narval.alliancecan.ca
 Nibi   	https://portal.nibi.sharcnet.ca
 tamIA  	https://portail.tamia.ecpia.ca
-Vulcan 	http://metrix.vulcan.alliancecan.ca
+Vulcan 	https://metrix.vulcan.alliancecan.ca
 
 Filesystem performance
 
@@ -44768,11 +44792,17 @@ Category: General
 
 
 Availability: Aug/07 2025
-Login node: trillium.alliancecan.ca and trillium-gpu.alliancecan.ca
+Login nodes
+* CPU subcluster: trillium.alliancecan.ca
+
+* GPU subcluster: trillium-gpu.alliancecan.ca
 Globus collections: alliancecan#trillium (file system)
 alliancecan#hpss (archive/nearline)
-Data transfer node (rsync, scp, sftp,...): tri-dm{2,3,4}.scinet.utoronto.ca
-Automation node: robot3.scinet.utoronto.ca
+Data transfer nodes (rsync, scp, sftp,...): tri-dm{1,2,3,4}.scinet.utoronto.ca
+Automation nodes
+* CPU subcluster: robot{1,2,3,4}.scinet.utoronto.ca
+
+* GPU subcluster: trig-robot1.scinet.utoronto.ca
 Open OnDemand: ondemand.scinet.utoronto.ca (includes JupyterLab)
 Portal: my.scinet.utoronto.ca
 
@@ -44782,23 +44812,25 @@ The Trillium Quickstart has specific instructions for Trillium, where the user e
 
 Current users transitioning from Niagara are strongly encouraged to peruse the documentation on the Transition from Niagara to Trillium.
 
-=Installation and transition=
-Due to limits on available power and cooling capacity there will be an interim period in which a significant portion of the old Niagara will be shut down in order to provide power for the new system's acceptance testing and transition. We'll update you when we have a better idea of Trillium's installation schedule.
-
 =Storage=
 Parallel storage: 29 petabytes, NVMe SSD based storage from VAST Data.
 
 =High-performance network=
-* Nvidia “NDR” Infiniband network
+*Nvidia “NDR” Infiniband network
 ** 400 Gbit/s network bandwidth for CPU nodes
 ** 800 Gbit/s network bandwidth for GPU nodes
-** Fully non-blocking, meaning every node can talk to every other node at full bandwidth simultaneously.
+**Fully non-blocking, meaning every node can talk to every other node at full bandwidth simultaneously.
 
 =Node characteristics=
 
-nodes	cores	available memory	CPU                                                	GPU
-1224 	192  	749G or 767000M 	2 x AMD EPYC 9655 (Zen 5) @ 2.6 GHz, 384MB cache L3
-63   	96   	749G or 767000M 	1 x AMD EPYC 9654 (Zen 4) @ 2.4 GHz, 384MB cache L3	4 x NVidia H100 SXM (80 GB memory), connected via NVLink
+Login Node             	nodes	cores	available memory 	CPU                                                 	GPU
+trillium.alliancecan.ca	1224 	192  	749G or 767000M  	2 x AMD EPYC 9655 (Zen 5) @ 2.6 GHz, 384MB cache L3
+trillium‑gpu.alliancecan.ca
+(important: the B200s are not yet available)	63   	96   	749G or 767000M  	1 x AMD EPYC 9654 (Zen 4) @ 2.4 GHz, 384MB cache L3 	4 x NVidia H100 SXM (80 GB memory), connected via NVLink
+trillium‑gpu.alliancecan.ca
+(important: the B200s are not yet available)	1    	96   	1498G or 1534M   	2 x AMD EPYC 9455 (Zen 5) @ 3.15 GHz, 256MB cache L3	4 x NVidia H200 SXM (141GB memory), connected via NVLink
+trillium‑gpu.alliancecan.ca
+(important: the B200s are not yet available)	52   	96   	2000G or 2048000M	2 x Intel 8558P @ 2.7 GHz, 260MB cache L3           	8 x NVidia B200 SXM (180 GB memory), connected via NVLink
 
 = Technical details =
 
@@ -44814,9 +44846,9 @@ Trillium is fully direct liquid cooled using warm water (35–40 °C input), r
 
 The VAST high-performance file system is comprised of a unified 29 PB NVMe-backed storage pool, with:
 
-* 29 PB effective capacity (deduplicated via VAST)
-* 16.7 PB raw flash capacity
-* 714 GB/s read bandwidth, 275 GB/s write bandwidth
+*29 PB effective capacity (deduplicated via VAST)
+*16.7 PB raw flash capacity
+*714 GB/s read bandwidth, 275 GB/s write bandwidth
 * 10 million read IOPS, 2 million write IOPS
 * POSIX and S3 access protocols under a unified namespace
 * 48 C-Boxes and 14 D-Boxes for data services
@@ -44828,6 +44860,72 @@ An additional 114 PB HPSS tape-based archive is available for nearline storage:
 * Dual-copy archive across geographically separate libraries
 * Used for both backup and archival purposes
 * Backups are managed using Atempo backup software
+
+=Site specifics=
+
+Do not assume that things work the same on Trillium as on the other
+clusters. While there is a large degree of conformity, Trillium was
+designed for large-scale computations and this has resulted in a few
+different design and policy decisions.
+
+The specifics of Trillium are described only briefly below; please read
+the Trillium Quickstart for details.
+
+==Logging in==
+
+* Password access to the login nodes is disabled. You must use SSH Keys and MFA.
+* There are separate login and robot nodes for CPU and GPU subclusters.
+
+==Internet access==
+* The internet cannot be reached from compute nodes.
+* Interactive Apps on OnDemand, however, do have internet access.
+
+==Home space==
+
+* You will have space for up to 100 GB or 1 million files in your $HOME directory.
+
+* $HOME cannot be written to from compute jobs.
+
+* Interactive Apps on OnDemand, however, do have write access to HOME.
+
+==Project space==
+
+* You can find links to the project spaces to which you have access in the $HOME/links directory.
+
+* Default accounts have access to a project space of 1 TB per group.
+
+* It is not possible to request more project space on Trillium through RAS.
+
+* $PROJECT cannot be written to from compute jobs.
+
+==Scratch space==
+
+* Users have a nominal quota of 25TB, but are expected to clean up all unused data.
+
+* There is no purging policy yet, but this is subject to change in the future.
+
+==Nearline space==
+
+* The nearline storage on Trillium is not mounted on the nodes but needs to be accessed via jobs submitted to the HPSS SLURM partition, or via Globus.
+
+==Local disk space==
+
+* Trillium nodes have no local storage.
+
+* For certain workflows, using the RAM disk can be a possibility.  To reflect this, the $SLURM_TMPDIR environment variable points to a folder on the RAM disk.
+
+==Access through Open OnDemand (OOD)==
+
+* Instead of JupyterHub, Trillium has  OpenOnDemand. This support a growing number of applications from your browser, such as JupyterLab, VS Code, RStudio, MATLAB, ParaView, the DDT debugger, as well as a
+terminal and job submissions.
+
+==Job scheduling==
+
+* The resources in the CPU subcluster are scheduled by whole 192-core node.
+
+* The resources in the GPU subcluster are scheduled by whole GPU (no "MIG"), or by whole node.
+
+* For other scheduling specifics, please see the Trillium Quickstart.
 
 
 ================================================================================
@@ -45843,11 +45941,17 @@ Category: General
 
 
 Availability: Aug/07 2025
-Login node: trillium.alliancecan.ca and trillium-gpu.alliancecan.ca
+Login nodes
+* CPU subcluster: trillium.alliancecan.ca
+
+* GPU subcluster: trillium-gpu.alliancecan.ca
 Globus collections: alliancecan#trillium (file system)
 alliancecan#hpss (archive/nearline)
-Data transfer node (rsync, scp, sftp,...): tri-dm{2,3,4}.scinet.utoronto.ca
-Automation node: robot3.scinet.utoronto.ca
+Data transfer nodes (rsync, scp, sftp,...): tri-dm{1,2,3,4}.scinet.utoronto.ca
+Automation nodes
+* CPU subcluster: robot{1,2,3,4}.scinet.utoronto.ca
+
+* GPU subcluster: trig-robot1.scinet.utoronto.ca
 Open OnDemand: ondemand.scinet.utoronto.ca (includes JupyterLab)
 Portal: my.scinet.utoronto.ca
 
@@ -45857,23 +45961,25 @@ The Trillium Quickstart has specific instructions for Trillium, where the user e
 
 Current users transitioning from Niagara are strongly encouraged to peruse the documentation on the Transition from Niagara to Trillium.
 
-=Installation and transition=
-Due to limits on available power and cooling capacity there will be an interim period in which a significant portion of the old Niagara will be shut down in order to provide power for the new system's acceptance testing and transition. We'll update you when we have a better idea of Trillium's installation schedule.
-
 =Storage=
 Parallel storage: 29 petabytes, NVMe SSD based storage from VAST Data.
 
 =High-performance network=
-* Nvidia “NDR” Infiniband network
+*Nvidia “NDR” Infiniband network
 ** 400 Gbit/s network bandwidth for CPU nodes
 ** 800 Gbit/s network bandwidth for GPU nodes
-** Fully non-blocking, meaning every node can talk to every other node at full bandwidth simultaneously.
+**Fully non-blocking, meaning every node can talk to every other node at full bandwidth simultaneously.
 
 =Node characteristics=
 
-nodes	cores	available memory	CPU                                                	GPU
-1224 	192  	749G or 767000M 	2 x AMD EPYC 9655 (Zen 5) @ 2.6 GHz, 384MB cache L3
-63   	96   	749G or 767000M 	1 x AMD EPYC 9654 (Zen 4) @ 2.4 GHz, 384MB cache L3	4 x NVidia H100 SXM (80 GB memory), connected via NVLink
+Login Node             	nodes	cores	available memory 	CPU                                                 	GPU
+trillium.alliancecan.ca	1224 	192  	749G or 767000M  	2 x AMD EPYC 9655 (Zen 5) @ 2.6 GHz, 384MB cache L3
+trillium‑gpu.alliancecan.ca
+(important: the B200s are not yet available)	63   	96   	749G or 767000M  	1 x AMD EPYC 9654 (Zen 4) @ 2.4 GHz, 384MB cache L3 	4 x NVidia H100 SXM (80 GB memory), connected via NVLink
+trillium‑gpu.alliancecan.ca
+(important: the B200s are not yet available)	1    	96   	1498G or 1534M   	2 x AMD EPYC 9455 (Zen 5) @ 3.15 GHz, 256MB cache L3	4 x NVidia H200 SXM (141GB memory), connected via NVLink
+trillium‑gpu.alliancecan.ca
+(important: the B200s are not yet available)	52   	96   	2000G or 2048000M	2 x Intel 8558P @ 2.7 GHz, 260MB cache L3           	8 x NVidia B200 SXM (180 GB memory), connected via NVLink
 
 = Technical details =
 
@@ -45889,9 +45995,9 @@ Trillium is fully direct liquid cooled using warm water (35–40 °C input), r
 
 The VAST high-performance file system is comprised of a unified 29 PB NVMe-backed storage pool, with:
 
-* 29 PB effective capacity (deduplicated via VAST)
-* 16.7 PB raw flash capacity
-* 714 GB/s read bandwidth, 275 GB/s write bandwidth
+*29 PB effective capacity (deduplicated via VAST)
+*16.7 PB raw flash capacity
+*714 GB/s read bandwidth, 275 GB/s write bandwidth
 * 10 million read IOPS, 2 million write IOPS
 * POSIX and S3 access protocols under a unified namespace
 * 48 C-Boxes and 14 D-Boxes for data services
@@ -45903,6 +46009,72 @@ An additional 114 PB HPSS tape-based archive is available for nearline storage:
 * Dual-copy archive across geographically separate libraries
 * Used for both backup and archival purposes
 * Backups are managed using Atempo backup software
+
+=Site specifics=
+
+Do not assume that things work the same on Trillium as on the other
+clusters. While there is a large degree of conformity, Trillium was
+designed for large-scale computations and this has resulted in a few
+different design and policy decisions.
+
+The specifics of Trillium are described only briefly below; please read
+the Trillium Quickstart for details.
+
+==Logging in==
+
+* Password access to the login nodes is disabled. You must use SSH Keys and MFA.
+* There are separate login and robot nodes for CPU and GPU subclusters.
+
+==Internet access==
+* The internet cannot be reached from compute nodes.
+* Interactive Apps on OnDemand, however, do have internet access.
+
+==Home space==
+
+* You will have space for up to 100 GB or 1 million files in your $HOME directory.
+
+* $HOME cannot be written to from compute jobs.
+
+* Interactive Apps on OnDemand, however, do have write access to HOME.
+
+==Project space==
+
+* You can find links to the project spaces to which you have access in the $HOME/links directory.
+
+* Default accounts have access to a project space of 1 TB per group.
+
+* It is not possible to request more project space on Trillium through RAS.
+
+* $PROJECT cannot be written to from compute jobs.
+
+==Scratch space==
+
+* Users have a nominal quota of 25TB, but are expected to clean up all unused data.
+
+* There is no purging policy yet, but this is subject to change in the future.
+
+==Nearline space==
+
+* The nearline storage on Trillium is not mounted on the nodes but needs to be accessed via jobs submitted to the HPSS SLURM partition, or via Globus.
+
+==Local disk space==
+
+* Trillium nodes have no local storage.
+
+* For certain workflows, using the RAM disk can be a possibility.  To reflect this, the $SLURM_TMPDIR environment variable points to a folder on the RAM disk.
+
+==Access through Open OnDemand (OOD)==
+
+* Instead of JupyterHub, Trillium has  OpenOnDemand. This support a growing number of applications from your browser, such as JupyterLab, VS Code, RStudio, MATLAB, ParaView, the DDT debugger, as well as a
+terminal and job submissions.
+
+==Job scheduling==
+
+* The resources in the CPU subcluster are scheduled by whole 192-core node.
+
+* The resources in the GPU subcluster are scheduled by whole GPU (no "MIG"), or by whole node.
+
+* For other scheduling specifics, please see the Trillium Quickstart.
 
 
 ================================================================================

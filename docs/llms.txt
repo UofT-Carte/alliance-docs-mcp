@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-10-04T11:30:28.567356+00:00
-# Total pages: 476
+# Generated: 2026-10-11T11:46:04.551407+00:00
+# Total pages: 477
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -19,6 +19,7 @@
 - Accessing object storage with WinSCP (General): https://docs.alliancecan.ca/wiki/Accessing_object_storage_with_WinSCP/en
 - Accessing object storage with s3cmd (General): https://docs.alliancecan.ca/wiki/Accessing_object_storage_with_s3cmd/en
 - Accessing the Arbutus object storage with AWS CLI (General): https://docs.alliancecan.ca/wiki/Accessing_the_Arbutus_object_storage_with_AWS_CLI/en
+- Accessing the PAICE clusters (General): https://docs.alliancecan.ca/wiki/Accessing_the_PAICE_clusters
 - Account renewal (General): https://docs.alliancecan.ca/wiki/Account_renewal/en
 - Account renewal FAQ (General): https://docs.alliancecan.ca/wiki/Account_renewal_FAQ/en
 - Acknowledging the Alliance (General): https://docs.alliancecan.ca/wiki/Acknowledging_the_Alliance/en
@@ -227,7 +228,7 @@
 - MATLAB (General): https://docs.alliancecan.ca/wiki/MATLAB/en
 - ME modelling (General): https://docs.alliancecan.ca/wiki/ME_modelling
 - META-Farm (General): https://docs.alliancecan.ca/wiki/META-Farm/en
-- META-Farm: Advanced features and troubleshooting (META-Farm): https://docs.alliancecan.ca/wiki/META-Farm:_Advanced_features_and_troubleshooting/en
+- META-Farm: Advanced features and troubleshooting/en (META-Farm): https://docs.alliancecan.ca/wiki/META-Farm:_Advanced_features_and_troubleshooting/en
 - MIKE/en (General): https://docs.alliancecan.ca/wiki/MIKE/en
 - ML Performance Guide (User Guide): https://docs.alliancecan.ca/wiki/ML_Performance_Guide
 - MLflow (General): https://docs.alliancecan.ca/wiki/MLflow

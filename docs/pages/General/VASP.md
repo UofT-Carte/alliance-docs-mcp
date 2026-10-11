@@ -1,9 +1,9 @@
 ---
-title: "VASP"
-url: "https://docs.alliancecan.ca/wiki/VASP"
+title: "VASP/en"
+url: "https://docs.alliancecan.ca/wiki/VASP/en"
 category: "General"
-last_modified: "2026-10-02T13:54:12Z"
-page_id: 3529
+last_modified: "2026-10-02T13:54:16Z"
+page_id: 4649
 display_title: "VASP"
 ---
 

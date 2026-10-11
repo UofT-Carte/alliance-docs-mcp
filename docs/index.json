@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-10-04T11:30:28.560463+00:00",
-  "total_pages": 476,
+  "last_updated": "2026-10-11T11:46:04.540349+00:00",
+  "total_pages": 477,
   "pages": [
     {
       "page_id": 10049,
@@ -1663,7 +1663,7 @@
       "title": "LS-DYNA/en",
       "url": "https://docs.alliancecan.ca/wiki/LS-DYNA/en",
       "category": "General",
-      "last_modified": "2026-09-17T15:24:01Z",
+      "last_modified": "2026-10-02T13:54:06Z",
       "file_path": "docs/pages/General/LS-DYNA.md",
       "slug": "LS-DYNA"
     },
@@ -1732,10 +1732,10 @@
     },
     {
       "page_id": 21476,
-      "title": "META-Farm: Advanced features and troubleshooting",
+      "title": "META-Farm: Advanced features and troubleshooting/en",
       "url": "https://docs.alliancecan.ca/wiki/META-Farm:_Advanced_features_and_troubleshooting/en",
       "category": "META-Farm",
-      "last_modified": "2025-09-05T17:48:06Z",
+      "last_modified": "2026-10-02T13:53:53Z",
       "file_path": "docs/pages/META-Farm/META-Farm_Advanced_features_and_troubleshooting.md",
       "slug": "META-Farm_Advanced_features_and_troubleshooting"
     },
@@ -1879,7 +1879,7 @@
       "title": "Metrix/en",
       "url": "https://docs.alliancecan.ca/wiki/Metrix/en",
       "category": "General",
-      "last_modified": "2026-09-18T19:32:34Z",
+      "last_modified": "2026-10-08T15:40:59Z",
       "file_path": "docs/pages/General/Metrix.md",
       "slug": "Metrix"
     },
@@ -3265,7 +3265,7 @@
       "title": "Trillium/en",
       "url": "https://docs.alliancecan.ca/wiki/Trillium/en",
       "category": "General",
-      "last_modified": "2026-01-29T14:36:01Z",
+      "last_modified": "2026-10-02T13:54:06Z",
       "file_path": "docs/pages/General/Trillium.md",
       "slug": "Trillium"
     },
@@ -3445,7 +3445,7 @@
       "title": "VASP/en",
       "url": "https://docs.alliancecan.ca/wiki/VASP/en",
       "category": "General",
-      "last_modified": "2026-07-23T13:51:42Z",
+      "last_modified": "2026-10-02T13:54:16Z",
       "file_path": "docs/pages/General/VASP.md",
       "slug": "VASP"
     },
@@ -4111,7 +4111,7 @@
       "title": "Metrix/en-ca",
       "url": "https://docs.alliancecan.ca/wiki/Metrix/en-ca",
       "category": "General",
-      "last_modified": "2026-09-18T19:32:57Z",
+      "last_modified": "2026-10-06T12:16:25Z",
       "file_path": "docs/pages/General/Metrix_en-ca.md",
       "slug": "Metrix_en-ca"
     },
@@ -4285,6 +4285,15 @@
       "last_modified": "2026-09-24T18:55:07Z",
       "file_path": "docs/pages/General/Rocky.md",
       "slug": "Rocky"
+    },
+    {
+      "page_id": 35053,
+      "title": "Accessing the PAICE clusters",
+      "url": "https://docs.alliancecan.ca/wiki/Accessing_the_PAICE_clusters",
+      "category": "General",
+      "last_modified": "2026-10-09T15:37:47Z",
+      "file_path": "docs/pages/General/Accessing_the_PAICE_clusters.md",
+      "slug": "Accessing_the_PAICE_clusters"
     }
   ]
 }

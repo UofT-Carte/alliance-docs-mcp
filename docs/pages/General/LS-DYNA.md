@@ -2,7 +2,7 @@
 title: "LS-DYNA/en"
 url: "https://docs.alliancecan.ca/wiki/LS-DYNA/en"
 category: "General"
-last_modified: "2026-09-17T15:24:01Z"
+last_modified: "2026-10-02T13:54:06Z"
 page_id: 14902
 display_title: "LS-DYNA"
 ---
@@ -74,19 +74,22 @@ There are several modules installed for running jobs on multiple nodes using the
 
 === Specify node count ===
 
-Jobs can be submitted to a specified number of whole compute nodes with the following script.
+Jobs can be submitted to a specified number of whole compute nodes with the following script.  Please note naming of the modules has changed from ls-dyna-mpi to ls-dyna-mpp for all versions >= 13.2.0 in the below script as well these modules use avx512 and sharelib binaries.
 
 where
 *ls-dyna_s = single precision mpp solver
-*ls-dyna_d = double precision mpp solver
+*ls-dyna_d = double precision mpp solver\
+note
+To use version 12.2.1 or 12.2.2 on narval the above script will likely need to be modified to run jobs under $SLURM_TMPDIR otherwise performance may be ~100x slower than other clusters.  Narval only has lsdyna modules for 12.2.1 and 12.2.2 installed on it since all of its servers are legacy AVX2 based.  Newer versions have been installed using AVX512 binaries and are therefore only available on other clusters.
 
 === Specify core count ===
 
-Jobs can be submitted to an arbitrary number of compute nodes by specifying the number of cores.  This approach allows the scheduler to determine the optimal number of compute nodes to minimize job wait time in the queue.  Memory limits are applied per core, therefore a sufficiently large value of mem-per-cpu must be specified so the master processor can successfully decompose and handle its computations as explained in more detail in the opening paragraph of this section.
+Jobs can be submitted to an arbitrary number of compute nodes by specifying the number of cores.  This approach allows the scheduler to determine the optimal number of compute nodes to minimize job wait time in the queue.  Memory limits are applied per core, therefore a sufficiently large value of mem-per-cpu must be specified so the master processor can successfully decompose and handle its computations as explained in more detail in the opening paragraph of this section.  Please note the naming of the modules has changed from ls-dyna-mpi to ls-dyna-mpp for all versions >= 13.2.0 in the below script as well these modules use avx512 and sharelib binaries.
 
 where
 *ls-dyna_s = single precision mpp solver
 *ls-dyna_d = double precision mpp solver
+To use version 12.2.1 or 12.2.2 on narval the above script will likely need to be modified to run jobs under $SLURM_TMPDIR otherwise performance may be ~100x slower than other clusters.  Narval only has lsdyna modules for 12.2.1 and 12.2.2 installed on it since all of its servers are legacy AVX2 based.  Newer versions have been installed using AVX512 binaries and are therefore only available on other clusters.
 
 == Performance testing ==
 
