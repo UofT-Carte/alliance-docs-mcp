@@ -2,15 +2,15 @@
 title: "Arbutus/en"
 url: "https://docs.alliancecan.ca/wiki/Arbutus/en"
 category: "General"
-last_modified: "2025-06-27T18:07:03Z"
+last_modified: "2026-10-09T17:22:16Z"
 page_id: 27302
 display_title: "Arbutus"
 ---
 
-Availability: late summer 2025
-OpenStack dashboard: https://arbutus.cloud.alliancecan.ca
+Availability: late spring 2026
+OpenStack dashboard: https://arbutus.alliancecan.ca
 Globus endpoint: to be determined
-Object Storage (S3 or Swift): https://object-arbutus.cloud.computecanada.ca/
+Object Storage (S3 or Swift): https://object-arbutus.alliancecan.ca/:/
 
 Arbutus is an Infrastructure-as-a-Service cloud hosted at the University of Victoria.
 

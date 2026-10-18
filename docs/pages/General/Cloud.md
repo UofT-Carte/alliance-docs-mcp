@@ -2,7 +2,7 @@
 title: "Cloud/en"
 url: "https://docs.alliancecan.ca/wiki/Cloud/en"
 category: "General"
-last_modified: "2025-09-18T17:17:58Z"
+last_modified: "2026-10-08T17:51:01Z"
 page_id: 538
 display_title: "Cloud"
 ---
@@ -68,10 +68,11 @@ More detailed instructions are available for some of the common cloud use cases,
 
 ==Cloud systems==
 Your project will be on one of the following clouds:
-* Béluga
+* Béluga cloud
 * Arbutus
-* Nibi
-* Cedar
+* Legacy Arbutus
+* Nibi cloud
+* Cedar cloud
 The details of the underlying hardware and OpenStack versions are described on the cloud resources page. The System status wiki page contains information about the current cloud status and future planned maintenance and upgrade activities.
 
 ==Support==

@@ -2,7 +2,7 @@
 title: "RAC application guide/en"
 url: "https://docs.alliancecan.ca/wiki/RAC_application_guide/en"
 category: "User Guide"
-last_modified: "2026-09-11T19:10:09Z"
+last_modified: "2026-10-08T16:07:24Z"
 page_id: 29716
 display_title: "RAC application guide"
 ---
@@ -67,9 +67,9 @@ Compute resources needed to support the backend of a RPP project can be requeste
 
 === Application document ===	The template provided is required.
 
-*Word or OpenDocument
+*Word or OpenDocument (English, French)
 
-LaTeX
+LaTeX (English, French)
 
 *This link will open a non-editable Google document. Once there, go to File → Download in the main menu and select Microsoft Word or OpenDocument Format to download the template in the format of your choosing.
 
@@ -79,9 +79,9 @@ Important:
 * Only PDF format is accepted.
 * Instructions may change from year to year so always use the latest version of the template.	The template provided is required.
 
-*Word or OpenDocument
+*Word or OpenDocument (English, French)
 
-LaTeX
+LaTeX (English, French)
 
 *This link will open a non-editable Google document. Once there, go to File → Download in the main menu and select Microsoft Word or OpenDocument Format to download the template in the format of your choosing.
 

@@ -2,12 +2,11 @@
 title: "Using ipv6 in cloud/en"
 url: "https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en"
 category: "General"
-last_modified: "2026-09-17T22:23:02Z"
+last_modified: "2026-10-14T18:41:09Z"
 page_id: 20575
 display_title: "Using ipv6 in cloud"
 ---
 
-fin to
 == IPv6 in Arbutus Cloud ==
 IPv6 Link-Local (LLA) and Global Unicast Addresses (GUA) are generally available within the Arbutus cloud environment.
 GUA can be set up via a separate interface, which in turn also handles only the IPv6 traffic.

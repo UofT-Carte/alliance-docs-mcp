@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-11T11:46:04.540349+00:00",
+  "last_updated": "2026-10-18T10:03:24.606738+00:00",
   "total_pages": 477,
   "pages": [
     {
@@ -79,7 +79,7 @@
       "title": "Abaqus/en",
       "url": "https://docs.alliancecan.ca/wiki/Abaqus/en",
       "category": "General",
-      "last_modified": "2026-07-24T18:42:37Z",
+      "last_modified": "2026-10-08T16:59:57Z",
       "file_path": "docs/pages/General/Abaqus.md",
       "slug": "Abaqus"
     },
@@ -292,10 +292,10 @@
     },
     {
       "page_id": 27302,
-      "title": "Arbutus",
+      "title": "Arbutus/en",
       "url": "https://docs.alliancecan.ca/wiki/Arbutus/en",
       "category": "General",
-      "last_modified": "2025-06-27T18:07:03Z",
+      "last_modified": "2026-10-09T17:22:16Z",
       "file_path": "docs/pages/General/Arbutus.md",
       "slug": "Arbutus"
     },
@@ -304,7 +304,7 @@
       "title": "Arbutus Migration Guide/en",
       "url": "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en",
       "category": "User Guide",
-      "last_modified": "2026-09-17T19:42:38Z",
+      "last_modified": "2026-10-09T17:22:50Z",
       "file_path": "docs/pages/User Guide/Arbutus_Migration_Guide.md",
       "slug": "Arbutus_Migration_Guide"
     },
@@ -724,10 +724,10 @@
     },
     {
       "page_id": 538,
-      "title": "Cloud",
+      "title": "Cloud/en",
       "url": "https://docs.alliancecan.ca/wiki/Cloud/en",
       "category": "General",
-      "last_modified": "2025-09-18T17:17:58Z",
+      "last_modified": "2026-10-08T17:51:01Z",
       "file_path": "docs/pages/General/Cloud.md",
       "slug": "Cloud"
     },
@@ -769,10 +769,10 @@
     },
     {
       "page_id": 184,
-      "title": "Cloud resources",
+      "title": "Cloud resources/en",
       "url": "https://docs.alliancecan.ca/wiki/Cloud_resources/en",
       "category": "General",
-      "last_modified": "2024-12-19T17:48:01Z",
+      "last_modified": "2026-10-08T17:49:47Z",
       "file_path": "docs/pages/General/Cloud_resources.md",
       "slug": "Cloud_resources"
     },
@@ -2662,7 +2662,7 @@
       "title": "RAC application guide/en",
       "url": "https://docs.alliancecan.ca/wiki/RAC_application_guide/en",
       "category": "User Guide",
-      "last_modified": "2026-09-11T19:10:09Z",
+      "last_modified": "2026-10-08T16:07:24Z",
       "file_path": "docs/pages/User Guide/RAC_application_guide.md",
       "slug": "RAC_application_guide"
     },
@@ -3391,7 +3391,7 @@
       "title": "Using ipv6 in cloud/en",
       "url": "https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en",
       "category": "General",
-      "last_modified": "2026-09-17T22:23:02Z",
+      "last_modified": "2026-10-14T18:41:09Z",
       "file_path": "docs/pages/General/Using_ipv6_in_cloud.md",
       "slug": "Using_ipv6_in_cloud"
     },

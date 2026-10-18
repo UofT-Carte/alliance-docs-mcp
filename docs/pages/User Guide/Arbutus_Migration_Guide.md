@@ -2,7 +2,7 @@
 title: "Arbutus Migration Guide/en"
 url: "https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en"
 category: "User Guide"
-last_modified: "2026-09-17T19:42:38Z"
+last_modified: "2026-10-09T17:22:50Z"
 page_id: 9289
 display_title: "Arbutus Migration Guide"
 ---
@@ -26,6 +26,7 @@ To plan your migration, you should be able to answer the following questions abo
 * Do you have custom DNS entries? If so, they will need to be updated because the new Arbutus Cloud uses different floating IP address ranges.
 * Do you use the OpenStack dashboard or the OpenStack Command Line Interface (CLI) to manage your Arbutus Cloud resources? Simple migrations can be done via the Web user interface, but complex migrations may require CLI access.
 * Do all users who need access have an active account with the Alliance? Remember that account sharing is strictly forbidden. Any person who requires an account should apply on CCDB.
+* If you have a large amount of data, migrating with IPv6 may be faster than migrating with IPv4. Are you able to use IPv6 on both old and new instances?
 * Depending on the scope of the migration, an outage of a couple of hours to a couple of days may occur. How will you manage this outage? Who needs to be informed?
 * If your resources were obtained via the rapid access service, you must submit a migration request to cloud@tech.alliancecan.ca.
 

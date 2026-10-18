@@ -1,5 +1,5 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-10-11T11:46:04.551407+00:00
+# Generated: 2026-10-18T10:03:24.611791+00:00
 # Total pages: 477
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
@@ -43,12 +43,12 @@
 - Apply for a CCDB account (General): https://docs.alliancecan.ca/wiki/Apply_for_a_CCDB_account
 - Apply for a CCDB account/en (General): https://docs.alliancecan.ca/wiki/Apply_for_a_CCDB_account/en
 - Apptainer/en (General): https://docs.alliancecan.ca/wiki/Apptainer/en
-- Arbutus (General): https://docs.alliancecan.ca/wiki/Arbutus/en
 - Arbutus Migration Guide (User Guide): https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide
 - Arbutus Migration Guide/en (User Guide): https://docs.alliancecan.ca/wiki/Arbutus_Migration_Guide/en
 - Arbutus object storage (General): https://docs.alliancecan.ca/wiki/Arbutus_object_storage/en
 - Arbutus object storage clients (General): https://docs.alliancecan.ca/wiki/Arbutus_object_storage_clients/en
 - Arbutus user documentation (User Guide): https://docs.alliancecan.ca/wiki/Arbutus_user_documentation
+- Arbutus/en (General): https://docs.alliancecan.ca/wiki/Arbutus/en
 - Archiving and compressing files (General): https://docs.alliancecan.ca/wiki/Archiving_and_compressing_files/en
 - Arrow/en (General): https://docs.alliancecan.ca/wiki/Arrow/en
 - Astronomy and High Energy Physics Interactive Analysis Facility (General): https://docs.alliancecan.ca/wiki/Astronomy_and_High_Energy_Physics_Interactive_Analysis_Facility
@@ -97,17 +97,17 @@
 - CheckV (General): https://docs.alliancecan.ca/wiki/CheckV/en
 - CirQ (General): https://docs.alliancecan.ca/wiki/CirQ/en
 - Classiq (General): https://docs.alliancecan.ca/wiki/Classiq
-- Cloud (General): https://docs.alliancecan.ca/wiki/Cloud/en
 - Cloud Account Lifecycle Management (General): https://docs.alliancecan.ca/wiki/Cloud_Account_Lifecycle_Management
 - Cloud Quick Start/en (General): https://docs.alliancecan.ca/wiki/Cloud_Quick_Start/en
 - Cloud RAS Allocations (General): https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations
 - Cloud RAS Allocations/en (General): https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations/en
 - Cloud Technical Glossary (Technical Reference): https://docs.alliancecan.ca/wiki/Cloud_Technical_Glossary/en
-- Cloud resources (General): https://docs.alliancecan.ca/wiki/Cloud_resources/en
 - Cloud resources (General): https://docs.alliancecan.ca/wiki/Cloud_resources
+- Cloud resources/en (General): https://docs.alliancecan.ca/wiki/Cloud_resources/en
 - Cloud shared security responsibility model (General): https://docs.alliancecan.ca/wiki/Cloud_shared_security_responsibility_model/en
 - Cloud storage options (General): https://docs.alliancecan.ca/wiki/Cloud_storage_options/en
 - Cloud troubleshooting guide/en (User Guide): https://docs.alliancecan.ca/wiki/Cloud_troubleshooting_guide/en
+- Cloud/en (General): https://docs.alliancecan.ca/wiki/Cloud/en
 - Cluster batch job submission with Ansys/en (General): https://docs.alliancecan.ca/wiki/Cluster_batch_job_submission_with_Ansys/en
 - Clusterstats (General): https://docs.alliancecan.ca/wiki/Clusterstats
 - Comet.ml (General): https://docs.alliancecan.ca/wiki/Comet.ml/en

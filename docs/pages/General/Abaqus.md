@@ -2,7 +2,7 @@
 title: "Abaqus/en"
 url: "https://docs.alliancecan.ca/wiki/Abaqus/en"
 category: "General"
-last_modified: "2026-07-24T18:42:37Z"
+last_modified: "2026-10-08T16:59:57Z"
 page_id: 10030
 display_title: "Abaqus"
 ---
@@ -17,23 +17,46 @@ Abaqus software modules are available on the Alliance clusters, however you must
 
 == FLEXnet servers ==
 
-To configure your account on a cluster to use a FLEXnet-based (aka FlexLM) Abaqus license server, a single file named ~/.licenses/abaqus.lic must be created, specifying its fully qualified hostname FLEXnet-SERVER-HOSTNAME and license manager daemon port number LMGRD-PORT-NUMBER. These two pieces of information are then assigned to the ABAQUSLM_LICENSE_FILE environment variable whenever an Abaqus module is loaded by reading
+To configure your account on a cluster to use a FLEXnet-based (aka FlexLM) Abaqus license server, a single file named ~/.licenses/abaqus.lic must be first setup created containing the license manager daemon port number LMGRD-PORT-NUMBER and the fully qualified hostname FLEXnet-SERVER-HOSTNAME. These two pieces of information are then assigned to the ABAQUSLM_LICENSE_FILE environment variable whenever an Abaqus module is loaded.  Another file abaqus_v6.env may also need to exist in the home or job submission directory if its not assumed default:
+
+ [l2 (login node):~ ] cat abaqus_v6.env
+ license_server_type = FLEXNET
 
  [l2 (login node):~/.licenses] cat abaqus.lic
  prepend_path("ABAQUSLM_LICENSE_FILE","LMGRD-PORT-NUMBER@FLEXnet-SERVER-HOSTNAME")
 
-To use an old legacy version such as 6.14.1, change ABAQUSLM_LICENSE_FILE to LM_LICENSE_FILE.
+To check if your license server connection is working run the following command:
+
+ [l2 (login node):~]$ module load abaqus
+ [l2 (login node):~]$ abaqus licensing ru | grep ABAQUSLM:
+   ABAQUSLM: UP v11.19.6.   <-- indicates success
+
+To check how many cae licenses in a pool are available for immediate use by anyone (the difference between "issued" and "in use") run the following command.  Note that reserved licenses will always appear to be "in use" regardless if they actually are or not by the group they are reserved for.  In the case of the SHARCNET license there are 4 cae licenses but only 1 is reserved therefore 3 are in the pool available to anyone for use.  The following example shows that at the time the following command was run non of the 3 cae licenses in the pool were available for use by any group to run abaqus in gui mode on the nibi cluster On-Demand graphical system.
+
+ [l2 (login node):~]$ abaqus licensing ru | grep cae
+ Users of cae:  (Total of 4 licenses issued;  Total of 1 license in use)
+ "cae" v62.7, vendor: ABAQUSLM, expiry: 17-jan-2027
+
+For a summary of ALL licenses provided by a license
+
+ [l2 (login node):~]$ module load abaqus
+ [l2 (login node):~]$ abaqus licensing r
+ Feature                         Version     #licenses    Vendor        Expires
+ _______                         _________   _________    ______        ________
+ abaqus_extended                 62.7         4           ABAQUSLM      17-jan-2027
+ abaqus                          62.7         78          ABAQUSLM      17-jan-2027
+ ams                             62.7         1           ABAQUSLM      17-jan-2027
+ etc etc etc
 
 == DSLS servers ==
 
-To use a DSLS based license server (Dassault Systèmes License Server), you must first configure two small text files named abaqus_v6.env and DSLicSrv.txt so Abaqus can find the DSLS license server. You may either put a copy of abaqus_v6.env file into each abaqus working directory **OR**  put a single copy into your home directory.  Note that the abaqus_v6.env file must contain the absolute path to your  DSLicSrv.txt file so that both the dslsstat command and abaqus command will run properly.  Otherwise you will need to set export DSLS_CONFIG=/path/to/DSLicSrv.txt for every job you submit.  For example, placing both files into your home directory, you would just need to replace  with the output from "echo $USER" and then substitute the server IP and PORT values into  DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER in the following :
+To use a DSLS based license server (Dassault Systèmes License Server), you must first configure two single line text files named ~/.licenses/abaqus.lic and abaqus_v6.env as shown below. You may either put a copy of abaqus_v6.env file into each job submit directory **OR** a single copy into your home directory.  For example, placing both following abaqus_v6.env file in your home directory, you would just need to replace LICENSING-CLIENT-PORT-NUMBER:DSLS-SERVER-HOSTNAME in your ~/.licenses/abaqus.lic file then DSLS_LICENSE_FILE will be configured accordingly whenever an Abaqus module is loaded:
 
  [l2 (login node):~ ] cat abaqus_v6.env
  license_server_type=DSLS
- dsls_license_config="/home//DSLicSrv.txt"
 
-  [l2 (login node):~ ] cat DSLicSrv.txt
-  DSLS-SERVER-HOSTNAME:LICENSING-CLIENT-PORT-NUMBER
+ [l2 (login node):~/.licenses] cat abaqus.lic
+ prepend_path("DSLS_LICENSE_FILE","LICENSING-CLIENT-PORT-NUMBER@DSLS-SERVER-HOSTNAME")
 
 With both files setup, you may now check if the license server is reachable and responding by running:
 
@@ -46,12 +69,14 @@ With both files setup, you may now check if the license server is reachable and 
 
 If your license server was never set up for use on an Alliance cluster, some additional configuration changes by the Alliance system administrator and your local system administrator will need to be done. Such changes are necessary to ensure the required TCP ports (https protocol) of your Abaqus server are reachable from all cluster compute nodes through the client/server firewalls. For help, please write to technical support and be sure to include the following:
 * FLEXnet SERVER: flex lmgrd port number (default 27000), static vendor port number (default 28000)
+  where both ports need to be opened on the Alliance cluster and license server firewalls
 * DSLS SERVER: administrative port number (default 4084), licensing client port number (default 4085)
+  where only the licensing client port must be opened on the Alliance cluster and license server firewalls
 * Fully qualified domain name or IPV4 address of your new Abaqus server
-You will be sent a list of cluster IP addresses (known as NAT nodes) so that your administrator can open the local server firewall to allow connections from the cluster on both ports. Please note that a special license agreement must generally be negotiated and signed by both SIMULIA and your institution before a campus license may be legally used on Alliance hardware located remotely at another institution.
+You will be sent a list of cluster IP addresses (known as NAT nodes) so your administrator can open the local server firewall to allow connections from these nodes on the required port(s). Please note that a special license agreement must generally be negotiated and signed by both SIMULIA and your institution before a campus license may be used remotely on an Alliance cluster located on the campus of another institution.
 
 == License queuing ==
-The default setup for the license server is to queue jobs started on the cluster by Slurm if not enough tokens are available. There are two options to alter this behaviour ie) so jobs don't sit idle on a cluster compute node waiting for a license indefinitely wasting valuable resources. The first option is to terminate a job immediately if not enough licenses are available, therefore never entering a queue. To specify this setting, create a text file named abaqus_v6.env in either your /home OR working (submit) directory containing the line: lmlicensequeuing=OFF. The second option is to specify a finite wait time where the job can enter into a queued state on the license server such as 1 minute by adding the line: lmhanglimit=1. If within 1 minute sufficient licenses do not come available then the job will be dequeud by the license server and in turn be terminated by Slurm.  For each option, messages will be printed at the bottom of the Slurm output file as shown in the Example below.
+The default setup for the license server is to queue jobs started on the cluster by Slurm if not enough tokens are available. There are two options to alter this behaviour so jobs don't sit idle on a cluster compute node waiting for a license indefinitely wasting valuable resources. The first option is to terminate a job immediately if not enough licenses are available, therefore never entering a queue. To specify this setting, create a text file named abaqus_v6.env in either your /home OR working (submit) directory containing the line: lmlicensequeuing=OFF. The second option is to specify a finite wait time where the job can enter into a queued state on the license server such as 1 minute by adding the line: lmhanglimit=1. If within 1 minute sufficient licenses do not come available then the job will be dequeud by the license server and in turn be terminated by Slurm.  For each option, messages will be printed at the bottom of the Slurm output file as shown in the Example below.
 
 = Version notes =
 
@@ -68,7 +93,7 @@ All tests should Succeed except for CAE (unless you log into an ondemand/juypter
 
 == 2021 ==
 
-Its recommended to discontinue use of abaqus/2021 installed under the previous StdEnv/2020 since this legacy version generates *** buffer overflow detected *** error on all recent clusters.  To workaround this problem an unshare workaround has been added into each slurm script found in this wiki.  This however only works on single node jobs and does not guarantee accurate results.
+Its recommended to discontinue use of abaqus/2021 installed under the previous StdEnv/2020 since this legacy version generates *** buffer overflow detected *** error on all recent clusters.  An unshare workaround previously included in the single node slurm scripts wof this wiki has now been removed.
 
 = Cluster job submission =
 
@@ -79,7 +104,7 @@ Single node jobs that run less than one day should find the project directory sc
 Jobs that require large memory or larger compute resources (beyond that which a single compute node can provide) should use the mpi scripts in the multiple node sections below to distribute computing over arbitrary node ranges determined automatically by the scheduler.  Short scaling test jobs should be run to determine wall-clock times (and memory requirements) as a function of the number of cores (2, 4, 8, etc.) to determine the optimal number before running any long jobs.
 
 == Standard analysis ==
-Abaqus solvers support thread-based and mpi-based parallelization. Scripts for each type are provided below for running Standard Analysis type jobs on Single or Multiple nodes respectively. Scripts to perform multiple node job restarts are not currently provided.
+Abaqus solvers support thread-based and mpi-based parallelization. Scripts for each type are provided below for running Standard Analysis type jobs on Single or Multiple nodes respectively. Lines that start with ##SBATCH are commented, to uncomment change to #SBATCH.  Most users will find it sufficient to use the first scriptsp1.txt script that requires simply changing def-group to your account and mystd-sim.inp to the name of your input file before submitting with the "sbatch scriptsp1.txt" command.
 
 === Single node computing ===
 
@@ -369,14 +394,11 @@ Each GPU used requires 1 additional TOKEN
 
 == Western license ==
 
-[[ The abaqus.lic file given below no longer works since the license4 machine has been shutdown and retired. Therefore all abaqus license checkout requests on dusky cluster from the Western/Robarts abaqus license server currently will fail. A replacement server for license4 is currently be worked on. Once it is ready for use abaqus.lic will be updated with the new server name and this red warning message removed. In the meantime, the SHARCNET License may be used instead by following the above procedure to request access. ]]
+The Western abaqus site license may only be used by Western researchers on compute hardware located on Western's campus. Currently, only the Dusky cluster satisfies this condition. The Nibi and SHARCNET OOD systems may not be used since they are located on Waterloo's campus. Contact the Western Abaqus license server administrator  to inquire about being added to the Western Abaqus license. You will need to provide your alliance username and possibly make arrangements with your supervisor to purchase tokens. If you are granted access then you may proceed to login to Dusky and configure your abaqus.lic file using a text editor such as nano to contain the following single line:
 
-The Western site license may only be used by Western researchers on hardware located at Western's campus. Currently, only the Dusky cluster satisfies this condition. Nibi and SHARCNET OOD system are excluded since they are located on Waterloo's campus. Contact the Western Abaqus license server administrator  to inquire about using the Western Abaqus license. You will need to provide your username and possibly make arrangements to purchase tokens. If you are granted access then you may proceed to configure your abaqus.lic file to point to the Western license server:
-
-=== Configure license file ===
+[laptop:~] ssh dusky.alliancecan.ca
 
 [dus241:~] cat .licenses/abaqus.lic
-prepend_path("LM_LICENSE_FILE","27000@license4.sharcnet.ca")
-prepend_path("ABAQUSLM_LICENSE_FILE","27000@license4.sharcnet.ca")
+prepend_path("ABAQUSLM_LICENSE_FILE","27000@authorize.robarts.ca")
 
-Once configured, submit your job as described in the Cluster job submission section above. If there are any problems submit a problem ticket to technical support. Specify that you are using the Abaqus Western license on dusky and provide the failed job number along with a paste of any error messages as applicable.
+Now you may submit your job using a slurm script and the sbatch command as described in the Cluster job submission section above. If there are any problems submit a problem ticket to technical support. Specify that you are using the Abaqus Western license on dusky and provide the failed job number along with a paste of any error messages as applicable.
