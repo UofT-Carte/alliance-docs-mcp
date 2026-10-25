@@ -2,7 +2,7 @@
 title: "GROMACS/en"
 url: "https://docs.alliancecan.ca/wiki/GROMACS/en"
 category: "General"
-last_modified: "2026-07-14T19:38:46Z"
+last_modified: "2026-10-14T18:41:26Z"
 page_id: 4167
 display_title: "GROMACS"
 ---
@@ -50,6 +50,7 @@ This section summarizes configuration details.
 The following versions have been installed:
 
 GROMACS version	modules for running on CPUs                         	modules for running on GPUs (CUDA)                             	Notes
+gromacs/2026.1 	StdEnv/2023  gcc/12.3  openmpi/4.1.5  gromacs/2026.1	StdEnv/2023 gcc/12.3  openmpi/4.1.5  cuda/12.6  gromacs/2026.1 	GCC, FlexiBLAS & FFTW
 gromacs/2025.4 	StdEnv/2023  gcc/12.3  openmpi/4.1.5  gromacs/2025.4	StdEnv/2023 gcc/12.3  openmpi/4.1.5  cuda/12.6  gromacs/2025.4 	GCC, FlexiBLAS & FFTW
 gromacs/2024.6 	StdEnv/2023  gcc/12.3  openmpi/4.1.5  gromacs/2024.6	StdEnv/2023 gcc/12.3  openmpi/4.1.5  cuda/12.6  gromacs/2024.6 	GCC, FlexiBLAS & FFTW
 gromacs/2024.4 	StdEnv/2023  gcc/12.3  openmpi/4.1.5  gromacs/2024.4	StdEnv/2023 gcc/12.3  openmpi/4.1.5  cuda/12.2  gromacs/2024.4 	GCC, FlexiBLAS & FFTW
@@ -99,13 +100,13 @@ Notes:
 These modules can be loaded by using a module load command with the modules as stated in the second column in the above table.
 For example:
 
- $ module load  StdEnv/2023  gcc/12.3   openmpi/4.1.5  gromacs/2025.4
+ $ module load  StdEnv/2023  gcc/12.3   openmpi/4.1.5  gromacs/2026.1
  or
  $ module load  StdEnv/2020  gcc/9.3.0  openmpi/4.0.3  gromacs/2023.2
 
 These versions are also available with GPU support, albeit only with single precision. In order to load the GPU enabled version, the cuda module needs to be loaded first. The modules needed are listed in the third column of above table, e.g.:
 
- $ module load  StdEnv/2023  gcc/12.3  openmpi/4.1.5  cuda/12.6  gromacs/2025.4
+ $ module load  StdEnv/2023  gcc/12.3  openmpi/4.1.5  cuda/12.6  gromacs/2026.1
  or
  $ module load  StdEnv/2020  gcc/9.3.0  cuda/11.4  openmpi/4.0.3  gromacs/2023.2
 
@@ -437,6 +438,7 @@ Also the modules contain only MPI-enabled executables:
 * gmx_mpi_d - double precision GROMACS with OpenMP and MPI.
 
 GROMACS	CP2K	modules for running on CPUs                               	Notes
+v2026.3	2025	StdEnv/2023  gcc/12.3  openmpi/4.1.5  gromacs-cp2k/2026.3 	GCC, FlexiBLAS & FFTW
 v2022.2	9.1 	StdEnv/2020  gcc/9.3.0  openmpi/4.0.3  gromacs-cp2k/2022.2	GCC, FlexiBLAS & FFTW
 
 Here are links to various resources for running QM/MM simulations with this combination of GROMACS and CP2K:

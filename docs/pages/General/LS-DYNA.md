@@ -2,7 +2,7 @@
 title: "LS-DYNA/en"
 url: "https://docs.alliancecan.ca/wiki/LS-DYNA/en"
 category: "General"
-last_modified: "2026-10-02T13:54:06Z"
+last_modified: "2026-10-14T18:41:02Z"
 page_id: 14902
 display_title: "LS-DYNA"
 ---
@@ -60,7 +60,7 @@ The SHARCNET Ansys license supports running single node SMP or MPP LS-DYNA jobs 
 
 LS-DYNA provides binaries for running jobs on a single compute node (SMP - Shared Memory Parallel using OpenMP) or across multiple compute nodes (MPP - Message Passing Parallel using MPI).  This section provides slurm scripts for each job type.
 
-== Single node jobs  ==
+== SMP Jobs ==
 
 Modules for running jobs on a single compute node can be listed with: module spider ls-dyna.  Jobs may be submitted to the queue with: sbatch script-smp.sh. The following slurm script shows how to run LS-DYNA with 8 cores on a single compute node. Regarding the AUTO option of the LSTC_MEMORY environment variable, this setting allows memory to be dynamically extended beyond the specified memory=1500M word setting where it is suitable for explicit analysis such as metal forming simulations but not crash analysis.  Given there are 4 Bytes/word for the single precision solver and 8 Bytes/word for the double precision solver,  the 1500M setting in the slurm script example below equates to either 1) a maximum amount of (1500Mw*8Bytes/w) = 12GB memory before LS-DYNA self-terminates when solving an implicit problem or 2) a starting amount of 12GB memory prior to extending it (up 25% if necessary) when solving an explicit problem assuming LSTC_MEMORY=AUTO is uncommented.  Note that 12GB represents 75% of the total mem=16GB reserved for the job and is considered ideal for implicit jobs on a single node.   To summarize, for both implicit and explicit analysis, once an estimate for the total solver memory is determined in GB, the total memory  setting for slurm can be determined by multiplying by 25% while the memory parameter value in mega words can be calculated as (0.75*memGB/8Bytes/w)*1000M and (0.75*memGB/4Bytes/w)*1000M for double and single precision solutions respectively.
 
@@ -68,7 +68,7 @@ where
 *ls-dyna_s = single precision smp solver
 *ls-dyna_d = double precision smp solver
 
-== Multiple node jobs ==
+== MPP Jobs ==
 
 There are several modules installed for running jobs on multiple nodes using the MPP (Message Passing Parallel) version of LS-DYNA.  The method is based on mpi and can scale to very many cores (8 or more).  The modules may be listed by running module spider ls-dyna-mpi.  Sample slurm scripts below demonstrate how to use these modules for submitting jobs to a specified number of whole nodes *OR* a specified total number of cores using sbatch script-mpp-bynode.sh or sbatch script-mpp-bycore.sh respectively.  The MPP version requires a sufficiently  large enough amount of memory (memory1) for the first core (processor 0) on the master node to decompose and simulate the model.  This amount may be satisfied by specifying a value of mem-per-cpu to slurm slightly larger than the memory (memory2) required per core for simulation and then placing enough cores on the master node such that their differential sum (mem-per-cpu less memory2) is greater than or equal to memory1.  Similar to the single node model, for best results, keep the sum of all expected memory per node within 75% of the reserved ram on a node.  Thus in the first script below, assuming a 128GB full node memory compute node, memory1 maybe 6000M (48GB) maximum and memory2 200M (48GB/31cores).
 
@@ -97,7 +97,7 @@ Depending on the simulation LS-DYNA may not be able to efficiently use very many
 
 = Graphical use =
 
-LSTC provides LS-PrePost for pre- and post-processing of LS-DYNA models.  This program is made available by a separate module and does not require a license.  To run abaqus graphically in a remote gui desktop do one of the following where the OnDemand desktop approach is recommended :
+LSTC provides LS-PrePost for pre- and post-processing of LS-DYNA models.  This program is made available by a separate module and does not require a license.  To run it graphically in a remote gui desktop do one of the following where the OnDemand desktop approach is recommended :
 
 == OnDemand ==
 1. Connect to an OnDemand system using one of the following URLs in your laptop browser :

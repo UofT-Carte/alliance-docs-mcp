@@ -2,7 +2,7 @@
 title: "Cloud Quick Start/en"
 url: "https://docs.alliancecan.ca/wiki/Cloud_Quick_Start/en"
 category: "General"
-last_modified: "2026-09-03T19:03:25Z"
+last_modified: "2026-10-14T18:40:50Z"
 page_id: 228
 display_title: "Cloud Quick Start"
 ---
@@ -236,7 +236,7 @@ Once you have installed and launched Remmina to connect to your Windows VM:
 
 ===From a Mac client===
 
-To connect via RDP from MacOS you will need a remote desktop client. There are a number of different clients but the Windows App appears to work well. To install the client, go to the App Store and search for “Windows App”
+To connect via RDP from MacOS you will need a remote desktop client. There are a number of different clients but the Windows App appears to work well. To install the client, go to the App Store and search for Windows App.
 
 When you have installed and launched Windows App, to connect to your Windows VM:
 # Select Devices from the menu on the left.
