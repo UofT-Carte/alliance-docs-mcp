@@ -1,9 +1,9 @@
 ---
-title: "Nibi"
-url: "https://docs.alliancecan.ca/wiki/Nibi"
+title: "Nibi/en"
+url: "https://docs.alliancecan.ca/wiki/Nibi/en"
 category: "General"
-last_modified: "2026-09-03T19:19:44Z"
-page_id: 27437
+last_modified: "2026-10-23T14:59:32Z"
+page_id: 27510
 display_title: "Nibi"
 ---
 
@@ -43,11 +43,11 @@ Note also that Nibi is using a new, experimental mechanism for handling /scratch
 
 The topology of the network is described in the file
 
-/etc/slurm/topology.conf
+ /etc/slurm/topology.conf
 
 For better performance of tightly coupled multinode jobs, you may constrain them to use only one network switch, by adding this next option to your job submission script
 
-#SBATCH --switches=1
+ #SBATCH --switches=1
 
 =Node characteristics=
 
@@ -137,14 +137,14 @@ At this time, the MI300A should be scheduled as full nodes.  It is your responsi
 
 NOTE: Your code must be compiled with ROCm to use the MI300A nodes properly. Code compiled with CUDA will not work, as it will not be able to use the AMD GPUs.
 
-As of May 2026, work has just started to support the MI300A in our software stack and there are no modules available with ROCm support. You can install software yourself, building against the ROCm toolkit we installed in the /opt/rocm directory.   Please write to technical support if you run into problems.
+As of May 2026, work has just started to support the MI300A in our software stack and there are no modules available with ROCm support. You can install software yourself, building against the ROCm toolkit we installed in the /opt/rocm directory. Please write to technical support if you run into problems.
 
 ==Oops, I accidentally deleted my files, what should I do?==
 A backup mechanism on Nibi takes a snapshot of your files on /home and /project every 30 minutes, and saves the snapshots for two weeks.  If you accidentally delete a file, you may be able to retrieve it from these snapshots, providing the file was deleted less than two weeks back.  However, if you make changes to a file after the most recent snapshot and then delete it, the changes cannot be recovered.
 
 To find a deleted file, use the oops command to check the current directory, or give an optional directory name to check there instead. To recover a file, copy it from the path returned by oops using standard tools like cp. Snapshots are read-only; you cannot delete or change files in snapshots, you must copy them first. Do not refer to files in snapshots in your job scripts.
 
-== Brine: AI-as-a-Service Platform ==
+== Brine: AI-as-a-Service platform ==
 As part of a new effort, SHARCNET has launched an AI-as-a-Service platform hosted from within the Nibi datacenter. This service gives Canadian researchers access to hosted AI models on SHARCNET infrastructure, without the usual HPC queue wait.
 
 Brine provides an always-on, OpenAI-compatible API for hosted models that support chat, tool calling, and audio transcription. Model availability and parameters are outlined here.
@@ -153,7 +153,7 @@ Brine runs on hardware in the Nibi data centre, so data is processed in Canada r
 
 To request access, email help@sharcnet.ca and mention SHARCNET Brine.
 
-=== Receiving Access ===
+=== Receiving access ===
 After accepting the terms of service, you will receive an email invitation to your mailbox prompting you to register for a new account with LiteLLM. This is a new account for only this service.
 
 Note: We have received alerts that some mailboxes report the invitation as spam. Please check your junk mail.
@@ -162,7 +162,7 @@ Upon logging in, you should be presented with an interface that prompts you to c
 
 This key is what is required to access the service as an API outlined in the brine examples repository. This includes Python, Javascript, and Curl examples.
 
-=== LiteLLM Interface ===
+=== LiteLLM interface ===
 The back end of this service is powered by LiteLLM and offers several interesting features outside of API key creation and model service.
 
 * Monitor your own token usage and key activity
@@ -170,7 +170,7 @@ The back end of this service is powered by LiteLLM and offers several interestin
 * Add Vector stores
 * Manage MCP connections
 
-=== Service Status ===
+=== Service status ===
 To keep up to date with changes to this service, an invitation to a slack channel is available upon request.
 
 For outage alerts and updates, please see the status page here.

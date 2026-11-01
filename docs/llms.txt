@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-10-25T10:20:57.834534+00:00
-# Total pages: 478
+# Generated: 2026-11-01T12:15:02.970283+00:00
+# Total pages: 479
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -214,7 +214,7 @@
 - Jupyter (General): https://docs.alliancecan.ca/wiki/Jupyter/en
 - JupyterHub/en (General): https://docs.alliancecan.ca/wiki/JupyterHub/en
 - JupyterLab/en (General): https://docs.alliancecan.ca/wiki/JupyterLab/en
-- JupyterNotebook (General): https://docs.alliancecan.ca/wiki/JupyterNotebook/en
+- JupyterNotebook/en (General): https://docs.alliancecan.ca/wiki/JupyterNotebook/en
 - Kentutils (General): https://docs.alliancecan.ca/wiki/Kentutils
 - Keras (General): https://docs.alliancecan.ca/wiki/Keras/en
 - Killarney/en (General): https://docs.alliancecan.ca/wiki/Killarney/en
@@ -439,6 +439,7 @@
 - Using a new empty volume on a Windows VM (General): https://docs.alliancecan.ca/wiki/Using_a_new_empty_volume_on_a_Windows_VM
 - Using a resource allocation/en (General): https://docs.alliancecan.ca/wiki/Using_a_resource_allocation/en
 - Using cloud vGPUs (General): https://docs.alliancecan.ca/wiki/Using_cloud_vGPUs/en
+- Using cloud vGPUs (General): https://docs.alliancecan.ca/wiki/Using_cloud_vGPUs
 - Using ipv6 in cloud/en (General): https://docs.alliancecan.ca/wiki/Using_ipv6_in_cloud/en
 - Using nearline storage (General): https://docs.alliancecan.ca/wiki/Using_nearline_storage
 - Using nearline storage/en (General): https://docs.alliancecan.ca/wiki/Using_nearline_storage/en

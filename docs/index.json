@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-10-25T10:20:57.829309+00:00",
-  "total_pages": 478,
+  "last_updated": "2026-11-01T12:15:02.963894+00:00",
+  "total_pages": 479,
   "pages": [
     {
       "page_id": 10049,
@@ -1615,10 +1615,10 @@
     },
     {
       "page_id": 4559,
-      "title": "JupyterNotebook",
+      "title": "JupyterNotebook/en",
       "url": "https://docs.alliancecan.ca/wiki/JupyterNotebook/en",
       "category": "General",
-      "last_modified": "2025-09-10T17:59:02Z",
+      "last_modified": "2026-10-23T15:00:01Z",
       "file_path": "docs/pages/General/JupyterNotebook.md",
       "slug": "JupyterNotebook"
     },
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-10-23T18:41:06Z",
+      "last_modified": "2026-10-30T18:55:25Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-10-23T18:40:59Z",
+      "last_modified": "2026-10-30T18:55:08Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
@@ -2185,7 +2185,7 @@
       "title": "Nibi/en",
       "url": "https://docs.alliancecan.ca/wiki/Nibi/en",
       "category": "General",
-      "last_modified": "2026-06-25T14:26:20Z",
+      "last_modified": "2026-10-23T14:59:32Z",
       "file_path": "docs/pages/General/Nibi.md",
       "slug": "Nibi"
     },
@@ -2662,7 +2662,7 @@
       "title": "RAC application guide/en",
       "url": "https://docs.alliancecan.ca/wiki/RAC_application_guide/en",
       "category": "User Guide",
-      "last_modified": "2026-10-08T16:07:24Z",
+      "last_modified": "2026-10-23T15:00:05Z",
       "file_path": "docs/pages/User Guide/RAC_application_guide.md",
       "slug": "RAC_application_guide"
     },
@@ -4303,6 +4303,15 @@
       "last_modified": "2026-10-23T15:00:36Z",
       "file_path": "docs/pages/General/GRRM.md",
       "slug": "GRRM"
+    },
+    {
+      "page_id": 13658,
+      "title": "Using cloud vGPUs",
+      "url": "https://docs.alliancecan.ca/wiki/Using_cloud_vGPUs",
+      "category": "General",
+      "last_modified": "2026-10-23T19:12:29Z",
+      "file_path": "docs/pages/General/Using_cloud_vGPUs.md",
+      "slug": "Using_cloud_vGPUs"
     }
   ]
 }

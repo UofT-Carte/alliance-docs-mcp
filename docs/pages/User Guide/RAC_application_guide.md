@@ -2,7 +2,7 @@
 title: "RAC application guide/en"
 url: "https://docs.alliancecan.ca/wiki/RAC_application_guide/en"
 category: "User Guide"
-last_modified: "2026-10-08T16:07:24Z"
+last_modified: "2026-10-23T15:00:05Z"
 page_id: 29716
 display_title: "RAC application guide"
 ---

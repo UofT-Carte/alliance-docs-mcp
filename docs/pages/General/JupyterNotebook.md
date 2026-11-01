@@ -2,7 +2,7 @@
 title: "JupyterNotebook/en"
 url: "https://docs.alliancecan.ca/wiki/JupyterNotebook/en"
 category: "General"
-last_modified: "2025-09-10T17:59:02Z"
+last_modified: "2026-10-23T15:00:01Z"
 page_id: 4559
 display_title: "JupyterNotebook"
 ---
@@ -21,7 +21,7 @@ Other information:
 
 == Installing Jupyter Notebook ==
 
-These instructions install Jupyter Notebook with the pip command in a  Python virtual environment in your home directory. The following instructions are for Python 3.6, but you can also install the application for a different version by loading a different Python module.
+These instructions install Jupyter Notebook with the pip command in a  Python virtual environment in your home directory. The following instructions are for Python 3.7, but you can also install the application for a different version by loading a different Python module.
 
 Load the Python module.
 
