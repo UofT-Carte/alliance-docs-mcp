@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-11-01T12:15:02.963894+00:00",
+  "last_updated": "2026-11-08T12:25:20.716638+00:00",
   "total_pages": 479,
   "pages": [
     {
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-10-30T18:55:25Z",
+      "last_modified": "2026-11-06T17:23:43Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-10-30T18:55:08Z",
+      "last_modified": "2026-11-06T17:23:27Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
@@ -2977,7 +2977,7 @@
       "title": "Siku",
       "url": "https://docs.alliancecan.ca/wiki/Siku",
       "category": "General",
-      "last_modified": "2025-08-06T13:17:56Z",
+      "last_modified": "2026-10-29T17:50:32Z",
       "file_path": "docs/pages/General/Siku.md",
       "slug": "Siku"
     },
