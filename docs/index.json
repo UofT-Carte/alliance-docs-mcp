@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-11-08T12:25:20.716638+00:00",
-  "total_pages": 479,
+  "last_updated": "2026-11-15T13:06:32.699366+00:00",
+  "total_pages": 482,
   "pages": [
     {
       "page_id": 10049,
@@ -400,10 +400,10 @@
     },
     {
       "page_id": 2490,
-      "title": "Available software",
+      "title": "Available software/en",
       "url": "https://docs.alliancecan.ca/wiki/Available_software/en",
       "category": "General",
-      "last_modified": "2025-10-15T13:49:23Z",
+      "last_modified": "2026-11-08T16:20:56Z",
       "file_path": "docs/pages/General/Available_software.md",
       "slug": "Available_software"
     },
@@ -592,7 +592,7 @@
       "title": "COMSOL/en",
       "url": "https://docs.alliancecan.ca/wiki/COMSOL/en",
       "category": "General",
-      "last_modified": "2026-05-15T15:27:26Z",
+      "last_modified": "2026-11-05T20:04:50Z",
       "file_path": "docs/pages/General/COMSOL.md",
       "slug": "COMSOL"
     },
@@ -754,7 +754,7 @@
       "title": "Cloud RAS Allocations/en",
       "url": "https://docs.alliancecan.ca/wiki/Cloud_RAS_Allocations/en",
       "category": "General",
-      "last_modified": "2026-06-19T20:47:50Z",
+      "last_modified": "2026-11-05T20:04:49Z",
       "file_path": "docs/pages/General/Cloud_RAS_Allocations.md",
       "slug": "Cloud_RAS_Allocations"
     },
@@ -1393,7 +1393,7 @@
       "title": "Gurobi/en",
       "url": "https://docs.alliancecan.ca/wiki/Gurobi/en",
       "category": "General",
-      "last_modified": "2026-01-21T14:04:07Z",
+      "last_modified": "2026-11-08T16:21:37Z",
       "file_path": "docs/pages/General/Gurobi.md",
       "slug": "Gurobi"
     },
@@ -1960,7 +1960,7 @@
       "title": "Modules avx2",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx2",
       "category": "General",
-      "last_modified": "2026-11-06T17:23:43Z",
+      "last_modified": "2026-11-14T01:31:38Z",
       "file_path": "docs/pages/General/Modules_avx2.md",
       "slug": "Modules_avx2"
     },
@@ -1969,7 +1969,7 @@
       "title": "Modules avx512",
       "url": "https://docs.alliancecan.ca/wiki/Modules_avx512",
       "category": "General",
-      "last_modified": "2026-11-06T17:23:27Z",
+      "last_modified": "2026-11-14T01:31:31Z",
       "file_path": "docs/pages/General/Modules_avx512.md",
       "slug": "Modules_avx512"
     },
@@ -2014,7 +2014,7 @@
       "title": "Monitoring jobs/en",
       "url": "https://docs.alliancecan.ca/wiki/Monitoring_jobs/en",
       "category": "General",
-      "last_modified": "2026-08-17T17:48:28Z",
+      "last_modified": "2026-11-03T18:50:14Z",
       "file_path": "docs/pages/General/Monitoring_jobs.md",
       "slug": "Monitoring_jobs"
     },
@@ -2428,7 +2428,7 @@
       "title": "Parallel Debugging with DDT",
       "url": "https://docs.alliancecan.ca/wiki/Parallel_Debugging_with_DDT",
       "category": "General",
-      "last_modified": "2021-03-18T20:52:44Z",
+      "last_modified": "2026-11-06T16:47:14Z",
       "file_path": "docs/pages/General/Parallel_Debugging_with_DDT.md",
       "slug": "Parallel_Debugging_with_DDT"
     },
@@ -3010,10 +3010,10 @@
     },
     {
       "page_id": 14669,
-      "title": "Standard software environments",
+      "title": "Standard software environments/en",
       "url": "https://docs.alliancecan.ca/wiki/Standard_software_environments/en",
       "category": "General",
-      "last_modified": "2025-10-15T14:45:17Z",
+      "last_modified": "2026-11-05T15:07:58Z",
       "file_path": "docs/pages/General/Standard_software_environments.md",
       "slug": "Standard_software_environments"
     },
@@ -3109,10 +3109,10 @@
     },
     {
       "page_id": 20210,
-      "title": "Technical documentation",
+      "title": "Technical documentation/en",
       "url": "https://docs.alliancecan.ca/wiki/Technical_documentation/en",
       "category": "Technical Reference",
-      "last_modified": "2025-09-05T17:48:21Z",
+      "last_modified": "2026-11-06T15:41:19Z",
       "file_path": "docs/pages/Technical Reference/Technical_documentation.md",
       "slug": "Technical_documentation"
     },
@@ -3661,7 +3661,7 @@
       "title": "Working with volumes/en",
       "url": "https://docs.alliancecan.ca/wiki/Working_with_volumes/en",
       "category": "General",
-      "last_modified": "2026-06-18T17:33:41Z",
+      "last_modified": "2026-11-08T16:20:29Z",
       "file_path": "docs/pages/General/Working_with_volumes.md",
       "slug": "Working_with_volumes"
     },
@@ -3760,7 +3760,7 @@
       "title": "Ansys",
       "url": "https://docs.alliancecan.ca/wiki/Ansys",
       "category": "General",
-      "last_modified": "2026-05-15T20:23:56Z",
+      "last_modified": "2026-11-06T16:01:50Z",
       "file_path": "docs/pages/General/Ansys.md",
       "slug": "Ansys"
     },
@@ -4312,6 +4312,33 @@
       "last_modified": "2026-10-23T19:12:29Z",
       "file_path": "docs/pages/General/Using_cloud_vGPUs.md",
       "slug": "Using_cloud_vGPUs"
+    },
+    {
+      "page_id": 23143,
+      "title": "Mist",
+      "url": "https://docs.alliancecan.ca/wiki/Mist",
+      "category": "General",
+      "last_modified": "2026-11-08T18:12:38Z",
+      "file_path": "docs/pages/General/Mist.md",
+      "slug": "Mist"
+    },
+    {
+      "page_id": 4785,
+      "title": "SSH tunnelling",
+      "url": "https://docs.alliancecan.ca/wiki/SSH_tunnelling",
+      "category": "General",
+      "last_modified": "2026-11-09T18:38:37Z",
+      "file_path": "docs/pages/General/SSH_tunnelling.md",
+      "slug": "SSH_tunnelling"
+    },
+    {
+      "page_id": 27762,
+      "title": "Killarney",
+      "url": "https://docs.alliancecan.ca/wiki/Killarney",
+      "category": "General",
+      "last_modified": "2026-11-09T20:12:50Z",
+      "file_path": "docs/pages/General/Killarney.md",
+      "slug": "Killarney"
     }
   ]
 }

@@ -2,7 +2,7 @@
 title: "Available software/en"
 url: "https://docs.alliancecan.ca/wiki/Available_software/en"
 category: "General"
-last_modified: "2025-10-15T13:49:23Z"
+last_modified: "2026-11-08T16:20:56Z"
 page_id: 2490
 display_title: "Available software"
 ---
@@ -44,9 +44,8 @@ adf/2018.104    	chem	ADF          	Nibi   	Amsterdam Density Functional Modelin
 adf/2019.305    	chem	ADF          	Nibi   	Amsterdam Density Functional Modeling Suite, computational chemistry software
 ams/2020.102    	chem	AMS          	Nibi   	Amsterdam Modeling Suite products
 amber/16        	chem	AMBER        	Nibi   	The Amber Molecular Dynamics Package
-dirac/16.0      	phys	             	Cedar  	The DIRAC program computes molecular properties using relativistic quantum chemical methods. Homepage: http://diracprogram.org
-dirac/17.0      	phys	             	Cedar  	The DIRAC program computes molecular properties using relativistic quantum chemical methods. Homepage: http://diracprogram.org
-galaxy/20.01    	bio 	             	Cedar  	Galaxy is a scientific workflow, data integration, and data and analysis persistence and publishing platform that aims to make computational biology accessible to research scientists that do not have computer programming or systems administration experience. Any group on Cedar can have one Galaxy instance. The Galaxy instance will be run under a shared account which will be created by admins. Please contact technical support to set up Galaxy for you. Homepage: https://usegalaxy.org/
+dirac/16.0      	phys	             	Fir    	The DIRAC program computes molecular properties using relativistic quantum chemical methods. Homepage: http://diracprogram.org
+dirac/17.0      	phys	             	Fir    	The DIRAC program computes molecular properties using relativistic quantum chemical methods. Homepage: http://diracprogram.org
 gaussian/g03.d01	chem	Gaussian     	Nibi   	Gaussian is a general-purpose computational chemistry software package. Homepage: http://gaussian.com/
 gaussian/g09.e01	chem	Gaussian     	Nibi   	Gaussian is a general-purpose computational chemistry software package. Homepage: http://gaussian.com/
 gaussian/g16.b01	chem	Gaussian     	Nibi   	Gaussian is a general-purpose computational chemistry software package. Homepage: http://gaussian.com/
@@ -57,6 +56,3 @@ gaussian/g09.e01	chem	Gaussian     	Fir    	Gaussian is a general-purpose comput
 gaussian/g16.a03	chem	Gaussian     	Fir    	Gaussian is a general-purpose computational chemistry software package. Homepage: http://gaussian.com/
 gaussian/g16.b01	chem	Gaussian     	Fir    	Gaussian is a general-purpose computational chemistry software package. Homepage: http://gaussian.com/
 gaussian/g16.c01	chem	Gaussian     	Fir    	Gaussian is a general-purpose computational chemistry software package. Homepage: http://gaussian.com/
-gbrowse/2.56    	bio 	GBrowse      	Cedar  	GBrowse is a combination of database and interactive web pages for manipulating and displaying annotations on genomes. Homepage: http://gmod.org/wiki/GBrowse
-sas/9.4         	math	             	Cedar  	SAS is a software suite developed by SAS Institute for advanced analytics, multivariate analyses, business intelligence, data management, and predictive analytics. SAS on cedar is licensed software and it belongs to users from the Alberta School of Business who are eligible to run SAS. Homepage: https://www.sas.com/en_ca/home.html
-TPP/5.1.0       	bio 	             	Cedar  	The Trans-Proteomic Pipeline (TPP) is a collection of integrated tools for MS/MS proteomics, developed at the SPC. On cedar we can also provide TPP web interface (tpp_gui) per group upon user request

@@ -2,7 +2,7 @@
 title: "Gurobi/en"
 url: "https://docs.alliancecan.ca/wiki/Gurobi/en"
 category: "General"
-last_modified: "2026-01-21T14:04:07Z"
+last_modified: "2026-11-08T16:21:37Z"
 page_id: 14002
 display_title: "Gurobi"
 ---
@@ -30,7 +30,28 @@ If it returns "Success" you can begin using Gurobi immediately.  If the test ret
 
 ===Minimizing license checkouts===
 
-Note that all Gurobi license checkouts are handled by a single license server located in Ontario; it is therefore important to limit license checkout attempts as much as possible.  Rather than checking out a license for each invocation of Gurobi in a job---which may occur dozens or even hundreds of times---you should ensure that your program, whatever the language or computing environment used, only makes a single license checkout and then reuses this license token throughout the lifetime of the job. This will improve your job's performance because contacting a remote license server is very costly in time; moreover, responsiveness of our license server for everyone using Gurobi will also improve.  Failure to use Gurobi carefully in this regard may ultimately result in random intermittent license checkout failures for all users.  If this happens, you will be contacted and asked to kill all your jobs until your program is fixed and tested to ensure the problem is resolved.   Some documentation on this subject for C++ programs may be found here, explaining how to create a single Gurobi environment which can then be used for all your models. Python users can consult this page, which discusses how to implement this same idea of using a single environment and thus a single license token with multiple models.   Other programs that call Gurobi, such as R, can also easily trigger the problem when run in parallel, especially when many simultaneous parallel jobs are submitted and/or run.
+Note that all Gurobi license checkouts are handled by a single license server located in Ontario; it is therefore important to limit license checkout attempts as much as possible.  Rather than checking out a license for each invocation of Gurobi in a job---which may occur dozens or even hundreds of times---you should ensure that your program, whatever the language or computing environment used, only makes a single license checkout and reuses this license as required for the lifetime of the job.  This will improve your job's performance because contacting a remote license server is very costly in time; moreover, responsiveness of our license server for everyone using Gurobi will also improve.  Failure to use Gurobi carefully in this regard may ultimately result in random intermittent license checkout failures for all users.  If this happens, you will be contacted and asked to kill all your jobs until your program is fixed and tested to ensure the problem is resolved.   Some documentation on this subject for C++ programs may be found here, explaining how to create a single Gurobi environment which can then be used for all your models. Python users can consult this page, which discusses how to implement this same idea of using a single environment and thus a single license token with multiple models.   Other programs that call Gurobi, such as R, can also easily trigger the problem when run in parallel, especially when many simultaneous parallel jobs are submitted and/or run.
+
+There are two other conditions that your jobs should satisfy to ensure the license server is not overloaded. The first is that all of your jobs running on all Alliance clusters are not consuming more than 1000 licenses since there are only 4096 license.  This maybe checked by logging into any cluster and issuing :
+  module load gurobi
+  gurobi_cl --tokens | grep $USER | wc -l  (should be < 1000)
+
+The second condition is that each running gurobi job should be using just 1 license (less commonly 2). Assuming all of your Gurobi jobs are running on the cluster that you are logged into, the average license usage per jobs maybe checked by running:
+  module load gurobi
+  echo "$(gurobi_cl --tokens | grep $USER | wc -l) / $(squeue -h -r -u $USER -t running | wc -l)" | bc -l (should be <= 2)
+If however you are running jobs on many clusters, then instead this modifed form of the previous command (which runs much slower) should be used :
+  module load gurobi
+  echo $(for n in $(gurobi_cl --tokens | grep $USER | awk "{print $1}"); do host $n; done | grep address | wc -l) / $(squeue -u $USER -h -t running -r | wc -l) | bc -l (should be <= 2)
+Note that if you run either command on a cluster where there are no gurobi jobs running then a "Runtime error Divide by zero error" message will be output accordingly.
+
+If you will be submitting many Gurobi jobs to the scheduler in a loop, the following sample script may be used to ensure the jobs start gradually instead of all at once.  Submitting jobs this way will in turn ensure licenses are checked out gradually rather than all at once and hence control the load imposed on our Gurobi license server.  The script uses the slurm dependency after option introduced in Advanced Job Submission.
+
+ [l2(nibi):~] cat submit.sh
+ i=1; jobid=$(sbatch --parsable --output=slurm-%j-$i.out script.sh)
+ for i in {2..1000}; do
+  jobid=$(sbatch --parsable --dependency=after:$jobid --output=slurm-%j-$i.out script.sh)
+  [ "$?" -ne 0 ] && exit 1
+ done
 
 == Interactive allocations ==
 
@@ -77,11 +98,11 @@ Once a Slurm script has been prepared for a Gurobi problem, it can be submitted 
 
 === Data example ===
 
-The following Slurm script utilizes the Gurobi command-line interface to solve a simple coin production model written in LP format.  The last line demonstrates how parameters can be passed directly to the Gurobi command-line tool gurobi_cl using simple command line arguments.  For help selecting which parameters are best used for a particular problem and for choosing optimal values, refer to both the Performance and Parameters and Algorithms and Search sections found in the Gurobi Knowledge Base as well as the extensive online Gurobi documentation.
+The following Slurm script utilizes the Gurobi command-line interface to solve a simple coin production model written in LP format.  The last line demonstrates how parameters can be passed directly to the Gurobi command-line tool "gurobi_cl" using simple command line arguments.  For help choosing values see the Performance and Parameters and Algorithms and Search sections found in the Gurobi Knowledge Base and the online Gurobi documentation.
 
 === Python example ===
 
-This is an example Slurm script for solving a simple facility location model with Gurobi Python.  The example shows how to set the threads  parameter equal to the number of cores allocated to a job by dynamically generating a gurobi.env file into the working directory when using the Gurobi python interface.  This must be done for each submitted job, otherwise Gurobi will (by default) start as many execute threads as there are physical cores on the compute node potentially slowing down the job and negatively impacting other user jobs running on the same node.
+This is an example Slurm script for solving a simple facility location model with Gurobi Python.  The example shows how to set the threads  parameter equal to the number of cores allocated to a job by dynamically generating a gurobi.env file into the working directory when using the Gurobi python interface.  This must be done for each submitted job, otherwise Gurobi will (by default) start as many execute threads as there are physical cores on the compute node, potentially slowing down the job and negatively impacting other user jobs running on the same node.
 
 == Using Gurobi in Python virtual environments ==
 
@@ -143,4 +164,11 @@ A demo case of using Gurobi with Jupyter notebooks on our systems can be found i
 
 == Cite Gurobi ==
 
-Please see How do I cite Gurobi software for an academic publication?
+How do I cite Gurobi software for an academic publication?
+
+== Getting Help ==
+
+The Gurobi general Help Center is located here.
+Gurobot a new Gurobi AI Agent is available here.
+The official online Gurobi documentation is here.
+For help using Gurobi on the Alliance  submit a ticket.

@@ -2,7 +2,7 @@
 title: "Standard software environments/en"
 url: "https://docs.alliancecan.ca/wiki/Standard_software_environments/en"
 category: "General"
-last_modified: "2025-10-15T14:45:17Z"
+last_modified: "2026-11-05T15:07:58Z"
 page_id: 14669
 display_title: "Standard software environments"
 ---
@@ -14,14 +14,20 @@ Our software environments are provided through a set of modules which allow you 
 
 Standard environments identify combinations of specific compiler and MPI modules that are used most commonly by our team to build other software. These combinations are grouped in modules named StdEnv.
 
-As of February 2023, there are four such standard environments, versioned 2023, 2020, 2018.3 and 2016.4, with each new version incorporating major improvements. Only versions 2020 and 2023 are actively supported.
+As of November 2026, there are five such standard environments, versioned 2026, 2023, 2020, 2018.3 and 2016.4, with each new version incorporating major improvements. Only versions 2026 and 2023 are actively supported.
 
 This page describes these changes and explains why you should upgrade to a more recent version.
 
 In general, new versions of software packages will get installed with the newest software environment.
 
+=== StdEnv/2026 ===
+This is the most recent iteration of our software environment.
+It uses GCC 15.3.0, Intel 2026.1, cuda 13.3 and Open MPI 5.0.10 as defaults.
+
+To activate this environment, use the command
+
 === StdEnv/2023 ===
-This is the most recent iteration of our software environment. It uses GCC 12.3.0, Intel 2023.1, and Open MPI 4.1.5 as defaults.
+It uses GCC 12.3.0, Intel 2023.1, and Open MPI 4.1.5 as defaults.
 
 To activate this environment, use the command
 

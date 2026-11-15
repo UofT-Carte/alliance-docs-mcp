@@ -1,14 +1,15 @@
 ---
-title: "Killarney/en"
-url: "https://docs.alliancecan.ca/wiki/Killarney/en"
+title: "Killarney"
+url: "https://docs.alliancecan.ca/wiki/Killarney"
 category: "General"
-last_modified: "2026-05-06T20:29:02Z"
-page_id: 28159
+last_modified: "2026-11-09T20:12:50Z"
+page_id: 27762
 display_title: "Killarney"
 ---
 
 Availability: June 9, 2025
 Login node: killarney.alliancecan.ca
+Open OnDemand: https://ondemand.killarney.vectorinstitute.ai
 Globus collection: TBA
 System Status Page: https://status.alliancecan.ca/system/Killarney
 
@@ -17,21 +18,22 @@ Killarney is a cluster dedicated to the needs of the Canadian scientific Artific
 This cluster is part of the Pan-Canadian AI Compute Environment (PAICE).
 
 ==Site-specific policies==
-Killarney is currently open to Vector affiliated PIs with CCAI Chairs as well as researchers within an AI program at a Canadian university or applying AI methods for their research.
+Killarney is currently open to Vector affiliated PIs with CCAI Chairs, as well as researchers within an AI program at a Canadian university, or applying AI methods for their research.
+
+Killarney remote filesystems (/home, /scratch, etc) are mounted using NFS v3, which does not support ACLs; as such, commands such as setfacl are not supported. If you need to share data with users outside of your group, please email ops-help@vectorinstitute.ai requesting a shared directory be created.
 
 ==Access==
-To access Killarney, each researcher must request access in the CCDB.
-
-Principal Investigators must be granted an AIP-type RAP (prefix aip- ) by their AI Institution,
+Principal Investigators must first be granted an AIP-type RAP (prefix aip- ) by their AI Institution,
 or by applying for General Access to PAICE Systems.
 
-For the PI to sponsor researchers in their AIP RAP, the PI must:
-* Go to the "Resource Allocation Projects" table on the CCDB Home page.
-* Locate the RAPI of your AIP project (with the aip- prefix) and click on it to reach the RAP management page.
-* At the bottom of the RAP management page, click on "Manage RAP memberships."
-* Enter the CCRI of the user you want to add in the "Add Members" section.
+To sponsor researchers in their AIP RAP, the PI must:
+# In the Resource Allocation Projects table on the CCDB home page, click on the RAPI project to display the RAP management page.
+# At the top of the RAP management page, click on Manage RAP memberships.
+# in the Add Members section, enter the CCRI of the users you want to add.
 
-To ensure the integrity and security of this resource, Vector enforces geo-blocking on Killarney as one of its cyber-security controls. Vector restricts access to and from countries identified in the Government of Canada's Cyber Threat Assessment.
+Once members are registered by the PI, they must request access in the CCDB, and have at least one SSH key in CCDB
+
+To ensure integrity and security, Vector enforces geo-blocking on Killarney as one of its cyber-security controls. Vector restricts access to and from countries identified in the Government of Canada's Cyber Threat Assessment.
 
 ==Killarney hardware specifications==
 

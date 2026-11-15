@@ -2,7 +2,7 @@
 title: "COMSOL/en"
 url: "https://docs.alliancecan.ca/wiki/COMSOL/en"
 category: "General"
-last_modified: "2026-05-15T15:27:26Z"
+last_modified: "2026-11-05T20:04:50Z"
 page_id: 6233
 display_title: "COMSOL"
 ---

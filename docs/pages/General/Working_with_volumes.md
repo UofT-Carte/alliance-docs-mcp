@@ -2,7 +2,7 @@
 title: "Working with volumes/en"
 url: "https://docs.alliancecan.ca/wiki/Working_with_volumes/en"
 category: "General"
-last_modified: "2026-06-18T17:33:41Z"
+last_modified: "2026-11-08T16:20:29Z"
 page_id: 21268
 display_title: "Working with volumes"
 ---
@@ -105,3 +105,51 @@ To detach a volume, log in to the OpenStack dashboard (see the list of links to 
 *If attached to /dev/vda, it is a boot volume; you must delete the attached VM before the volume can be detached otherwise you will get the error message Unable to detach volume.
 
 *With volumes attached to /dev/vdb, /dev/vdc, etc. you do not need to delete the VM it is attached to before proceeding. In the Actions column drop-down list, select Manage Attachments, click on the Detach Volume button and again on the next Detach Volume button to confirm.
+
+=Changing the type of an existing volume=
+
+OpenStack clouds (like Arbutus) can provide multiple volume types with different storage performance characteristics.
+The two primary volume types available on Arbutus are:
+
+Volume type     	Storage                            	Recommended use
+rbd1            	Hard disk drive (HDD) based storage	General-purpose storage and workloads where high storage performance is not required or large size is desired
+high_performance	NVMe-based storage                 	Operating Systems, Databases and other I/O-intensive or latency-sensitive workloads. Note: Quota is very limited on this volume type.
+
+Before changing a volume type
+We recommend that you:
+# Back up important data. As with any storage operation, ensure that important data is backed up before making changes.
+# Check available quota. The destination storage tier may have different quota or availability constraints.
+# Plan for the operation to take some time. Changing the backing storage of a large volume may require data to be migrated between storage systems.
+# Avoid unnecessary disk activity during migration. For important or write-intensive applications, consider scheduling the change during a maintenance period.
+
+Existing volumes can be changed from rbd1 to high_performance without creating a new volume. This can be done in both the Web Interface or CLI:
+
+==Changing an existing volume using the Dashboard==
+
+Before starting, we recommend backing up any important data on the volume. This example will explain the process of migrating a volume from rbd1 to high_performance volume type.
+
+# Log in to the OpenStack Horizon dashboard.
+# Select the appropriate project.
+# From the navigation menu, select Project → Volumes -> Volumes.
+# Locate the volume you want to change.
+# In the Actions column, open the drop-down menu for the volume and select Change Volume Type.
+# In the Change Volume Type dialog:
+## For Type, select high_performance.
+## For Migration Policy, select On Demand.
+# Click Change Volume Type to begin the operation.
+# Return to the Volumes page and monitor the volume's status. While the operation is underway, the volume may show a status of Retyping.
+# When the operation is complete, verify that the volume's Type is now high_performance.
+
+Important: Changing between rbd1 and high_performance may require the volume's data to be migrated between different storage backends. The operation can therefore take some time, particularly for larger volumes. Do not assume that a volume-type change is instantaneous.
+
+==Changing an existing volume using the CLI==
+
+Using the OpenStack command-line client, first identify the volume:
+
+Check its current volume type:
+
+Then request that the volume be changed to the high_performance type:
+
+You can monitor the volume while the change is taking place:
+
+Once the operation has completed, verify that the volume type is reported as high_performance.

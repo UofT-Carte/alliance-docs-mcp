@@ -2,7 +2,7 @@
 title: "Technical documentation/en"
 url: "https://docs.alliancecan.ca/wiki/Technical_documentation/en"
 category: "Technical Reference"
-last_modified: "2025-09-05T17:48:21Z"
+last_modified: "2026-11-06T15:41:19Z"
 page_id: 20210
 display_title: "Technical documentation"
 ---
@@ -78,3 +78,5 @@ FAQ: Frequently Asked Questions
 * Centre for Advanced Computing
 * Calcul Québec
 * ACENET
+** ACENET Training
+** ACENET Technical Wiki

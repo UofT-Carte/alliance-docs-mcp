@@ -1,6 +1,6 @@
 # Alliance Documentation - Page Directory
-# Generated: 2026-11-08T12:25:20.724060+00:00
-# Total pages: 479
+# Generated: 2026-11-15T13:06:32.704264+00:00
+# Total pages: 482
 
 - A tutorial on 'tar' (User Guide): https://docs.alliancecan.ca/wiki/A_tutorial_on_%27tar%27/en
 - ABINIT (General): https://docs.alliancecan.ca/wiki/ABINIT/en
@@ -56,7 +56,7 @@
 - Automating VM creation (General): https://docs.alliancecan.ca/wiki/Automating_VM_creation/en
 - Automation in the context of multifactor authentication/en (General): https://docs.alliancecan.ca/wiki/Automation_in_the_context_of_multifactor_authentication/en
 - Autotools (General): https://docs.alliancecan.ca/wiki/Autotools/en
-- Available software (General): https://docs.alliancecan.ca/wiki/Available_software/en
+- Available software/en (General): https://docs.alliancecan.ca/wiki/Available_software/en
 - BEAST (General): https://docs.alliancecan.ca/wiki/BEAST/en
 - BLAS and LAPACK (General): https://docs.alliancecan.ca/wiki/BLAS_and_LAPACK/en
 - BLAST/en (General): https://docs.alliancecan.ca/wiki/BLAST/en
@@ -217,6 +217,7 @@
 - JupyterNotebook/en (General): https://docs.alliancecan.ca/wiki/JupyterNotebook/en
 - Kentutils (General): https://docs.alliancecan.ca/wiki/Kentutils
 - Keras (General): https://docs.alliancecan.ca/wiki/Keras/en
+- Killarney (General): https://docs.alliancecan.ca/wiki/Killarney
 - Killarney/en (General): https://docs.alliancecan.ca/wiki/Killarney/en
 - LAMMPS (General): https://docs.alliancecan.ca/wiki/LAMMPS/en
 - LS-DYNA (General): https://docs.alliancecan.ca/wiki/LS-DYNA
@@ -254,6 +255,7 @@
 - Migration2016:Migrating to Waterloo Storage (Migration2016): https://docs.alliancecan.ca/wiki/Migration2016:Migrating_to_Waterloo_Storage
 - Mii (General): https://docs.alliancecan.ca/wiki/Mii/en
 - Mist (General): https://docs.alliancecan.ca/wiki/Mist/en
+- Mist (General): https://docs.alliancecan.ca/wiki/Mist
 - Modules (General): https://docs.alliancecan.ca/wiki/Modules/en
 - Modules avx (General): https://docs.alliancecan.ca/wiki/Modules_avx
 - Modules avx2 (General): https://docs.alliancecan.ca/wiki/Modules_avx2
@@ -374,6 +376,7 @@
 - SSH configuration file (General): https://docs.alliancecan.ca/wiki/SSH_configuration_file/en
 - SSH host keys (General): https://docs.alliancecan.ca/wiki/SSH_host_keys/en
 - SSH security improvements (General): https://docs.alliancecan.ca/wiki/SSH_security_improvements/en
+- SSH tunnelling (General): https://docs.alliancecan.ca/wiki/SSH_tunnelling
 - SSH tunnelling/en (General): https://docs.alliancecan.ca/wiki/SSH_tunnelling/en
 - SSH/en (General): https://docs.alliancecan.ca/wiki/SSH/en
 - Samtools (General): https://docs.alliancecan.ca/wiki/Samtools/en
@@ -391,7 +394,7 @@
 - Slicer (General): https://docs.alliancecan.ca/wiki/Slicer/en
 - Snowflurry (General): https://docs.alliancecan.ca/wiki/Snowflurry/en
 - SpaCy (General): https://docs.alliancecan.ca/wiki/SpaCy/en
-- Standard software environments (General): https://docs.alliancecan.ca/wiki/Standard_software_environments/en
+- Standard software environments/en (General): https://docs.alliancecan.ca/wiki/Standard_software_environments/en
 - Star-CCM+ (General): https://docs.alliancecan.ca/wiki/Star-CCM%2B
 - Star-CCM+/en (General): https://docs.alliancecan.ca/wiki/Star-CCM%2B/en
 - Stata (General): https://docs.alliancecan.ca/wiki/Stata
@@ -403,7 +406,7 @@
 - Systems overview (General): https://docs.alliancecan.ca/wiki/Systems_overview
 - TamIA/en (General): https://docs.alliancecan.ca/wiki/TamIA/en
 - Tar (General): https://docs.alliancecan.ca/wiki/Tar/en
-- Technical documentation (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_documentation/en
+- Technical documentation/en (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_documentation/en
 - Technical glossary for the resource allocation competitions (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_glossary_for_the_resource_allocation_competitions/en
 - Technical support/en (Technical Reference): https://docs.alliancecan.ca/wiki/Technical_support/en
 - TensorFlow (General): https://docs.alliancecan.ca/wiki/TensorFlow/en

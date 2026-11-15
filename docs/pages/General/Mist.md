@@ -1,10 +1,10 @@
 ---
-title: "Mist/en"
-url: "https://docs.alliancecan.ca/wiki/Mist/en"
+title: "Mist"
+url: "https://docs.alliancecan.ca/wiki/Mist"
 category: "General"
-last_modified: "2025-01-09T20:24:31Z"
-page_id: 27533
+last_modified: "2026-11-08T18:12:38Z"
+page_id: 23143
 display_title: "Mist"
 ---
 
-This page is under construction.  Please see https://docs.scinet.utoronto.ca/index.php/Mist for now.
+The Mist cluster was decommissioned on 2025-09-16.  Mist users should move to the  GPU subcluster on Trillium; for details, see the SciNet Mist page.

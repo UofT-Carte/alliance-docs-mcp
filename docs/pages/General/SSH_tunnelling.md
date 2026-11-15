@@ -1,9 +1,9 @@
 ---
-title: "SSH tunnelling/en"
-url: "https://docs.alliancecan.ca/wiki/SSH_tunnelling/en"
+title: "SSH tunnelling"
+url: "https://docs.alliancecan.ca/wiki/SSH_tunnelling"
 category: "General"
-last_modified: "2026-09-03T14:40:07Z"
-page_id: 7403
+last_modified: "2026-11-09T18:38:37Z"
+page_id: 4785
 display_title: "SSH tunnelling"
 ---
 
@@ -48,11 +48,10 @@ three commands in your job script. You will need the following information:
 * The port number of the license service (here LICPORT).
 
 You should obtain this information from whoever maintains the license server.
-That server also must allow connections from the login nodes; for
-Trillium, the outgoing IP address will be 142.150.188.58.
+That server must allow connections from the cluster's gateway: on Trillium, the gateway is tri-gw with IP address 142.150.188.58. On clusters that do  not have a dedicated gateway, one of the login nodes is used.
 
-With this information, one can now set up the SSH tunnel.  For nibi, an alternative solution is to request a firewall exception
-for the license server LICSERVER and its specific port LICPORT. The gateway server (GATEWAY) on Trillium is tri-gw while on nibi you would pick one of the login nodes (l1, l2, ... l5). You also need to choose which port number (COMPUTEPORT) to use on the compute node.  The SSH command to issue in the job script is then:
+With this information, one can now set up the SSH tunnel.  For Nibi, an alternative solution is to request a firewall exception
+for the license server LICSERVER and its specific port LICPORT. The gateway server (GATEWAY) on Trillium is tri-gw while on Nibi you would pick one of the login nodes (l1, l2, ... l5). You also need to choose which port number (COMPUTEPORT) to use on the compute node.  The SSH command to issue in the job script is then:
 
 ssh GATEWAY -L COMPUTEPORT:LICSERVER:LICPORT -N -f
 

@@ -2,7 +2,7 @@
 title: "Parallel Debugging with DDT"
 url: "https://docs.alliancecan.ca/wiki/Parallel_Debugging_with_DDT"
 category: "General"
-last_modified: "2021-03-18T20:52:44Z"
+last_modified: "2026-11-06T16:47:14Z"
 page_id: 16291
 display_title: "Parallel Debugging with DDT"
 ---
@@ -12,11 +12,11 @@ display_title: "Parallel Debugging with DDT"
 The Distributed Debugging Tool (DDT) is a powerful commercial debugger
 with a graphical user interface (GUI).  It’s main intended use is for
 debugging parallel MPI codes, though it can also be used with serial, threaded (OpenMP / pthreads), and GPU (CUDA; also mixed MPI and CUDA) programs.  The product was
-developed by Allinea (U.K.). It is installed on Graham cluster. The DDT software page can be
+developed by Allinea (U.K.). It is available on our clusters through the ddt-cpu and ddt-gpu modules.  The DDT software page can be
 found here.
 
 DDT supports C, C++, and Fortran 77 / 90 / 95 / 2003.  Detailed
-documentation (the User Guide) is available as a PDF file on Graham, in
+documentation (the User Guide) is available as a PDF file in
 
  ${EBROOTALLINEA}/doc
 
@@ -47,7 +47,7 @@ or mpicc for mixed MPI/CUDA code:
 
 ==Launching DDT==
 
-DDT is a GUI application, so one has to set up the environment properly to run X-windows (graphical) applications on Graham:
+DDT is a GUI application, so one has to set up the environment properly to run X-windows (graphical) applications on the clusteres:
 
 * Microsoft Windows: use free mobaxterm app
 * Linux / Unix: nothing to install
@@ -62,14 +62,14 @@ DDT is an interactive GUI application, so before using it one has to first alloc
 
 Once the resource becomes available, load the corresponding DDT module:
 
- module load allinea-cpu  , or
- module load allinea-gpu
+ module load ddt-cpu  , or
+ module load ddt-gpu
 
-For MPI codes, one also has to execute the following command:
+For DDT versions older than 22.0.2, MPI codes also require:
 
  export OMPI_MCA_pml=ob1
 
-or else the Message queue display feature will not work.
+otherwise the Message queue display feature will not work.
 
 To debug a code, simply type
 
@@ -172,7 +172,7 @@ a line of code (in the "Search" menu, or Ctrl-G).
 
 ==Message queues==
 
-Attention: this feature will not work on graham unless this command is executed first, before running ddt:
+Attention: for DDT versions older than 22.0.2, this feature will not work unless this command is executed first, before running ddt:
 
  export OMPI_MCA_pml=ob1
 

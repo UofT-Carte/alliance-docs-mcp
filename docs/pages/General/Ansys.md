@@ -1,9 +1,9 @@
 ---
-title: "Ansys/en"
-url: "https://docs.alliancecan.ca/wiki/Ansys/en"
+title: "Ansys"
+url: "https://docs.alliancecan.ca/wiki/Ansys"
 category: "General"
-last_modified: "2026-08-14T18:30:01Z"
-page_id: 34444
+last_modified: "2026-11-06T16:01:50Z"
+page_id: 4568
 display_title: "Ansys"
 ---
 
@@ -49,7 +49,7 @@ Send items 1 → 3 by email to technical support and mention which Alliance clus
 
 To test if your ansys.lic is configured and working properly with your license server, run the following sequence of commands on the cluster where you will be submitting jobs.
 
-  [login-node:~] cd /tmp
+[login-node:~] cd /tmp
  [login-node:/tmp] salloc --time1:0:0 --mem1000M --accountdef-YOURUSERID
  [compute-node/tmp] module load StdEnv/2023; module load ansys/2025R2.04
  [compute-node:/tmp] $EBROOTANSYS/v$(echo ${EBVERSIONANSYS:2:2}${EBVERSIONANSYS:5:1})/licensingclient/linx64/lmutil lmstat -c $ANSYSLMD_LICENSE_FILE | grep "ansyslmd: UP" 1> /dev/null && echo Success  echo Fail
@@ -58,7 +58,7 @@ Fail output indicates a problem with the licensing setup somewhere, and jobs wil
 
 If there is an Ansys license server checkout problem, the following message will appear in Slurm output files when Fluent jobs are started by Slurm scripts in the queue *OR* when Fluent is started interactively, simply by doing the following:
 
-  [compute-node:/tmp] fluent -g 2d -n 2
+[compute-node:/tmp] fluent -g 2d -n 2
  Connected License Server List:
  Hit return to exit.
 
@@ -90,13 +90,13 @@ Most users will likely want to load the latest module version equipped with the 
 
 == SHARCNET license ==
 
-The SHARCNET Ansys license is free for academic use by any Alliance researcher on any Alliance system.   The installed software does not have any solver or geometry limits.  The SHARCNET license may be used for Publishable Academic Research, but not for any private/commercial purposes as this is strictly prohibited by the license terms.  The SHARCNET Ansys license is based on the Multiphysics Campus Solution and includes products such as: HF, EM, Electronics HPC, Mechanical, CFD, ROCKY and LS-DYNA as described here. Lumerical software is included in recent Ansys module versions, however it is NOT covered by the SHARCNET license.  SpaceClaim software is not installed with any Ansys module since there is no Linux version available; it is technically covered by the SHARCNET license however.
+The SHARCNET Ansys license is free for academic use by any Alliance researcher on any Alliance system.   The installed software does not have any solver or geometry limits.  The SHARCNET license may be used for Publishable Academic Research, but not for any private/commercial purposes as this is strictly prohibited by the academic-usage license terms.  The SHARCNET Ansys license is based on the Multiphysics Campus Solution and includes products such as: HF, EM, Electronics HPC, Mechanical, CFD, ROCKY and LS-DYNA as described here. Lumerical software is included in recent Ansys module versions, however it is NOT covered by the SHARCNET license.  SpaceClaim software is not installed with any Ansys module since there is no Linux version available; it is technically covered by the SHARCNET license however.
 
  ⚖️ Scaling tests should be run before launching long jobs to determine the optimal scalable job size so that the limited licenses and hardware is used as efficiently as possible, and total job run and startup times are minimized.  Parallel jobs that do not achieve at least 50% CPU utilization will probably be flagged by the system, resulting in a follow up by an Alliance team member.
 
 ==== License limits ====
 
-The SHARCNET Ansys license is made available on a first come first serve basis.  It currently permits each researcher to run a maximum of simultaneous 16 jobs using a total of up to 512 HPC cores across all clusters, therefore any of the following maximum job size combinations can be run simultaneously: 1x512, 2x256, 4x128, 8x64, 16x32 or more commonly one of these full node combinations: 1x384, 2x192 or 1x192 cores.  Note however that the SHARCNET license is oversubscribed so there is potential for jobs to fail on startup if all (or nearly all) of the 1986 anshpc licenses in the SHARCNET license pool are in use.  Should this occur, you will need to manually resubmit your job to the queue.   As there have been an increasing number of license shortage (DENIED) instances where jobs fail on startup, the total anshpc core limit per researcher will be decreased from 512 to 384 on April 1, 2026.  If you need to use more than 384 HPC cores for your research, either use the local Ansys License server at your institution if one is available, OR open a ticket to request purchasing additional licenses for the SHARCNET license and these would be reserved for your own or your groups exclusive use.
+The SHARCNET Ansys license is made available on a first come first serve basis.  It currently permits each researcher to run a maximum of simultaneous 5 jobs using a total of up to 384 anshpc core licenses across all clusters. Therefore any researcher could for example: run 2 simultaneous full node 192 core jobs (since each typical compute node currently has 192 cores), or, run upto 5 simultaneous 80 core jobs (since each ansys job gets 4 additional anshpc core licenses by default).  The SHARCNET license is oversubscribed so there is always a potential for a job to fail on startup if all (or nearly all) of the 1986 anshpc licenses in the SHARCNET license pool are in use.  If this happens an error message explaining the reason will be printed at the end bottom of the corresponding slurm output file before the job exits.  These events are rare but if it happens you will need to manually resubmit your job to the queue.  If you need to use more than 384 cores for your research, then inquire if your local institution has a larger license that you can use instead.  If your institution doesnt have a ansys server, then open a ticket to inquire about purchasing additional licenses for the SHARCNET license server where these would be reserved for your groups exclusive use.  If a large enough number of researchers or PIs indicate need for more licenses then a case could be made to increase the SHARCNET license which would then allow the per researcher limit to be increased.
 
 ==== License file ====
 
@@ -211,7 +211,7 @@ Resource utilization
 
 Once your Additive job has been running for a few minutes, a snapshot of its resource utilization on the compute node(s) can be obtained with the srun command.  Sample output corresponding to an eight-core submission script is shown next.  We see that two nodes were selected by the scheduler:
 
- [gra-login1:~] srun --overlap --jobid=myjobid top -bn1 -u $USER | grep R | grep -v top
+[gra-login1:~] srun --overlap --jobid=myjobid top -bn1 -u $USER | grep R | grep -v top
    PID USER   PR  NI    VIRT    RES    SHR S  %CPU %MEM    TIME+  COMMAND
  22843 demo   20   0 2272124 256048  72796 R  88.0  0.2  1:06.24  ansys.e
  22849 demo   20   0 2272118 256024  72822 R  99.0  0.2  1:06.37  ansys.e
