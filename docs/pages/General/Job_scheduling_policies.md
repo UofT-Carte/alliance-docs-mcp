@@ -2,7 +2,7 @@
 title: "Job scheduling policies/en"
 url: "https://docs.alliancecan.ca/wiki/Job_scheduling_policies/en"
 category: "General"
-last_modified: "2026-04-01T16:46:02Z"
+last_modified: "2026-11-12T16:21:40Z"
 page_id: 4074
 display_title: "Job scheduling policies"
 ---
@@ -15,7 +15,7 @@ However if you submit large numbers of jobs, or jobs that require large
 amounts of resources, you may be able to improve your productivity
 by understanding the policies affecting job scheduling.
 
-===Priority and fair-share ===
+== Priority and fair-share ==
 
 The order in which jobs are considered for scheduling is determined by priority.
 Priority on our systems is determined using the "fair tree" algorithm, described here and here.
@@ -26,12 +26,16 @@ The project might hold a grant of CPU or GPU time from a Resource Allocation Com
 
 Every project has a target usage level.  RAC projects have target levels determined by the number of CPU-years or GPU-years granted with each RAC award.  Non-RAC projects (i.e. def- accounts) all have equal target levels, and that equal value is adjusted every few minutes based on the number of projects that are active on the cluster.
 
+See also: Allocations and compute scheduling.
+
+=== Target and recent usage with sshare ===
+
 As an example let us imagine a research group with the account code def-prof1. Members of this imaginary group have user names prof1, grad2 and postdoc3. We can examine the group's usage and share information with the sshare command as shown below. Note that we must append _cpu or _gpu to the end of the account code, as appropriate, since CPU and GPU use are tracked separately.
 
- [prof1@gra-login4 ~]$ sshare -l -A def-prof1_cpu -u prof1,grad2,postdoc3
+ [prof1@login1 ~]$ sshare -l -A def-prof1_cpu -u prof1,grad2,postdoc3
         Account       User  RawShares  NormShares  RawUsage  ... EffectvUsage  ...    LevelFS  ...
  -------------- ---------- ---------- -----------  --------  ... ------------  ... ----------  ...
- def-prof1_cpu                 434086    0.001607   1512054  ...     0.000043  ...  37.357207  ...
+ def-prof1_cpu                     72    0.001607   1512054  ...     0.000043  ...  37.357207  ...
   def-prof1_cpu      prof1          1    0.100000         0  ...     0.000000  ...        inf  ...
   def-prof1_cpu      grad2          1    0.100000     54618  ...     0.036122  ...   2.768390  ...
   def-prof1_cpu   postdoc3          1    0.100000    855517  ...     0.565798  ...   0.176741  ...
@@ -48,17 +52,45 @@ The priority of jobs belonging to def-prof1 group as compared to the priority of
 The project by itself, or the user within a project, is referred to as an "association" in the Slurm documentation.
 * Account, obviously, is the project name with _cpu or _gpu appended.
 * User: Notice that the first line of output, the highlighted line, does not include a user name.
-* RawShares is proportional to the number of CPU-years that was granted to the project for use on this cluster in the Resource Allocation Competition. All non-RAC accounts have small equal numbers of shares.  For numeric reasons, inactive accounts (which do not have pending or running jobs) are given only one share.  Activity is checked periodically, so if you submit a job with an inactive account, it may take up to 15 minutes before the account shows the expected RawShares and LevelFS.
+* RawShares is proportional to the number of CPU-years or GPU-years that was granted to the project for use on this cluster in the Resource Allocation Competition. All non-RAC accounts have small equal numbers of shares.
+** For numeric reasons, inactive def- accounts (which do not have pending or running jobs) are given only one share.  Activity is checked periodically, so if you submit a job with an inactive account, it may take up to 15 minutes before the account shows the expected RawShares and LevelFS.
 * NormShares is the number of shares assigned to the user or account divided by the total number of assigned shares within the level. So for the first line, the NormShares of 0.001607 is the fraction of the shares held by the project, relative to all other projects. The NormShares of 0.10000 on the other three lines are the fraction of shares held by each member of the project relative to the other members. (This project has ten members, but we only asked for information about three.)
 * RawUsage is calculated from the total number of resource-seconds (that is, CPU time, GPU time, and memory) that have been charged to this account.  Past usage is discounted with a half-life of one week, so usage more than a few weeks in the past will have only a small effect on priority.
 * EffectvUsage is the association's usage normalized with its parent; that is, the project's usage relative to other projects, the user's relative to other users in that project. In this example, postdoc3 has 56.6% of the project's usage, and grad2 has 3.6%.
-* LevelFS is the association's fairshare value compared to its siblings, calculated as NormShares / EffectvUsage. If an association is over-served, the value is between 0 and 1. If an association is under-served, the value is greater than 1. Associations with no usage receive the highest possible value, infinity. For inactive accounts, as described above for RawShares, this value equals a meaningless small number close to 0.0001.
+* LevelFS is the association's fairshare value compared to its siblings, calculated as NormShares / EffectvUsage.
+** If an association is over-served, the value is between 0 and 1.
+** If an association is under-served, the value is greater than 1. Associations with no usage receive the highest possible value, infinity.
+** For inactive def- accounts having RawShares set to one, the LevelFS equals a meaningless small number close to 0.0001.
 
 A project which consistently uses its target amount will have a LevelFS near 1.0. If the project uses more than its target, then its LevelFS will be below 1.0 and the priority of new jobs belonging to that project will also be low. If the project uses less than its target usage  then its LevelFS will be greater than 1.0 and new jobs will enjoy high priority.
 
-See also: Allocations and compute scheduling.
+In practice, the normalization factors used for NormShares and EffectvUsage are not the same. Consequently, LevelFS is not exactly equal to 1.0 when the usage matches the target. The sshare2 utility can correct this discrepancy.
 
-=== Whole nodes versus cores ===
+=== Target and recent usage with sshare2 ===
+
+The sshare2 utility receives a reduced set of arguments and prints only the most relevant fields. Here is an example with the same account used in the previous section.
+
+ [prof1@login1 ~]$ sshare2 -A def-prof1_cpu
+ Account               RawShares  RecentUsage   PercentUse   Scaled_LevelFS
+ -------------------- ---------- ------------ ------------ ----------------
+ def-prof1_cpu                72            2        2.41%        41.555277
+
+The different fields are:
+
+* RawShares: same value as that reported by sshare.
+* RecentUsage: this is the sshare's RawUsage value downscaled by a factor that removes its time component (in seconds), which makes the result in the same units and scale as the RawShares.
+** Note: the RecentUsage behaves like a weighted average where the most recent usage has the most value. That is why the recent usage can look different than the average usage displayed on the Alliance Slurm portal, especially when the usage is not constant over time.
+* PercentUse: equivalent to RecentUsage / RawShares, as a percentage.
+** When RawShares is 0 or 1, the result is NA because the account has expired or is inactive, respectively.
+* Scaled_LevelFS: equivalent to RawShares / RecentUsage and similar to sshare's LevelFS, but a value of 1.0 really means a recent usage equivalent to the target.
+
+For convenience, when no account is specified on the command line, sshare2 displays the information for all accounts associated to the current user. Optionally, the -n flag can be specified to remove the table header.
+
+ [prof1@login1 ~]$ sshare2 -n
+ def-prof1_cpu                72            2        2.41%        41.555277
+ def-prof1_gpu                 1            0           NA    872691.969325
+
+== Whole nodes versus cores ==
 
 Applications which can efficiently use more cores than are found in a single node may benefit from being scheduled on whole nodes. Some clusters have nodes reserved for jobs which request one or more entire nodes. See whole nodes on the page Advanced MPI scheduling for example scripts and further discussion.
 
@@ -68,7 +100,7 @@ If you have huge amounts of serial work and can efficiently use META-Farm, GNU P
 or other techniques to pack
 serial processes onto a single node, you are also welcome to use whole-node scheduling.
 
-=== Time limits ===
+== Time limits ==
 
 Trillium accepts jobs of up to 24 hours run-time, Fir, Narval, Nibi and Rorqual up to 7 days.
 These limits are subject to change at the discretion of each site's sysadmin team.
@@ -91,6 +123,7 @@ Without backfill scheduling, each partition is scheduled strictly in priority or
 Backfilling will primarily benefit jobs with short time limits, e.g. under 3 hours.
 
 == Percentage of the nodes you have access to ==
+
 This section aims at giving some insight into how the general-purpose clusters (Fir, Narval, Nibi, Rorqual) are partitioned.
 
 First, the nodes are partitioned into four different categories:
@@ -175,4 +208,5 @@ There may be a limit on the number of jobs you can have in the system at any one
 On Narval, Nibi and Rorqual, normal accounts can have no more than 1000 jobs in a pending or running state at any time.  Each task of a job array counts as one job.  The limit is applied using Slurm's MaxSubmit parameter.
 
 == Changes over time ==
+
 See Scheduling policy updates to see changes which might affect the behaviour of your job scripts, and when the changes were implemented.
